@@ -1,0 +1,39 @@
+// Permite usar la app sin internet. La página se pide primero a la red (para recibir mejoras);
+// las imágenes e íconos se sirven desde la copia guardada.
+const VERSION = 'mf-v1';
+const ARCHIVOS = [
+  './', 'index.html', 'manifest.webmanifest',
+  'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png', 'icons/maskable-512.png',
+  'img/portada.webp', 'img/bienvenida.webp', 'img/catalogo.webp', 'img/equipo.webp', 'img/ideas.webp'
+];
+
+self.addEventListener('install', e => {
+  e.waitUntil(caches.open(VERSION).then(c => c.addAll(ARCHIVOS)).then(() => self.skipWaiting()));
+});
+
+self.addEventListener('activate', e => {
+  e.waitUntil(
+    caches.keys().then(ks => Promise.all(ks.filter(k => k !== VERSION).map(k => caches.delete(k))))
+      .then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener('fetch', e => {
+  const req = e.request;
+  if (req.method !== 'GET' || new URL(req.url).origin !== location.origin) return;
+
+  if (req.mode === 'navigate') {
+    e.respondWith(
+      fetch(req).then(r => { const copia = r.clone(); caches.open(VERSION).then(c => c.put('index.html', copia)); return r; })
+        .catch(() => caches.match('index.html'))
+    );
+    return;
+  }
+
+  e.respondWith(
+    caches.match(req).then(guardado => guardado || fetch(req).then(r => {
+      if (r.ok) { const copia = r.clone(); caches.open(VERSION).then(c => c.put(req, copia)); }
+      return r;
+    }))
+  );
+});

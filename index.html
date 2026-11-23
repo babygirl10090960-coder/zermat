@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mis Fragancias</title>
+<meta name="description" content="Tu negocio de fragancias desde casa: clientas, muestras, cobros, mensajes para WhatsApp y tu equipo.">
+<meta name="theme-color" content="#b0476f">
+<meta name="referrer" content="no-referrer">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Mis Fragancias">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="preload" as="image" href="img/portada.webp">
+<style>
+/* Layout: app de una columna para celular, navegación fija abajo */
+:root{
+  --bg:#fbf6f8; --card:#ffffff; --ink:#2b1d24; --muted:#7a6670; --line:#eedde5;
+  --brand:#b0476f; --brand-ink:#ffffff; --soft:#f7e6ee; --ok:#2f8a5b; --warn:#c07a12; --bad:#c0392b;
+  --shadow:0 1px 3px rgba(80,20,50,.08),0 4px 14px rgba(80,20,50,.06);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1a1216; --card:#251a20; --ink:#f5e9ef; --muted:#b9a2ad; --line:#3a2a32;
+  --brand:#e07aa1; --brand-ink:#1a1216; --soft:#3a2430; --ok:#5cc28e; --warn:#e6a64a; --bad:#ef7a6c;
+  --shadow:none; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#1a1216; --card:#251a20; --ink:#f5e9ef; --muted:#b9a2ad; --line:#3a2a32;
+  --brand:#e07aa1; --brand-ink:#1a1216; --soft:#3a2430; --ok:#5cc28e; --warn:#e6a64a; --bad:#ef7a6c;
+  --shadow:none; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:84px}
+header{background:var(--brand);color:var(--brand-ink);padding-block:18px 14px;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+header h1{margin:0;font-size:1.3rem}
+header p{margin:2px 0 0;opacity:.9;font-size:.9rem}
+#sync{font-size:.75rem;opacity:.85}
+main{max-width:720px;margin:0 auto;padding-block:16px;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.card,.msg{min-width:0;overflow-wrap:anywhere}
+button:focus-visible,.btn:focus-visible,input:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+h2{font-size:1.1rem;margin:22px 0 10px}
+h3{font-size:1rem;margin:0 0 4px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:var(--shadow)}
+.muted{color:var(--muted);font-size:.9rem}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.spread{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+button,.btn{font:inherit;border:0;border-radius:10px;padding:9px 14px;background:var(--brand);color:var(--brand-ink);cursor:pointer;font-weight:600;text-decoration:none;display:inline-block}
+button.sec{background:var(--soft);color:var(--ink)}
+button.ghost{background:transparent;color:var(--brand);padding:6px 8px}
+button.small{padding:6px 10px;font-size:.85rem}
+button.danger{background:transparent;color:var(--bad)}
+input,textarea,select{font:inherit;width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+textarea{min-height:170px;resize:vertical}
+label{display:block;font-size:.85rem;color:var(--muted);margin:10px 0 4px}
+.pill{display:inline-block;font-size:.75rem;padding:2px 8px;border-radius:99px;background:var(--soft);color:var(--ink);margin-right:4px}
+.pill.warn{background:var(--warn);color:#fff}.pill.ok{background:var(--ok);color:#fff}.pill.bad{background:var(--bad);color:#fff}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
+.stat b{display:block;font-size:1.4rem;color:var(--brand)}
+.stat span{font-size:.75rem;color:var(--muted)}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:10px}
+.chips button{white-space:nowrap}
+.msg{white-space:pre-wrap;font-size:.92rem;background:var(--bg);border-radius:10px;padding:10px;margin:8px 0;border:1px dashed var(--line)}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:6px max(4px, env(safe-area-inset-right, 0px)) calc(6px + env(safe-area-inset-bottom, 0px)) max(4px, env(safe-area-inset-left, 0px))}
+nav button{background:none;color:var(--muted);display:flex;flex-direction:column;align-items:center;font-size:.72rem;padding:4px 6px;font-weight:500}
+nav button .i{font-size:1.35rem;line-height:1.2}
+nav button.on{color:var(--brand);font-weight:700}
+.check{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line)}
+.check:last-child{border:0}
+.check input{width:22px;height:22px;flex:none;margin-top:1px;accent-color:var(--brand)}
+.check.done span{text-decoration:line-through;color:var(--muted)}
+dialog{border:0;border-radius:16px;padding:0;width:min(560px,calc(100% - 24px));background:var(--card);color:var(--ink)}
+dialog::backdrop{background:rgba(30,10,20,.45)}
+.dlg{padding:16px}
+.dlg-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:99px;font-size:.9rem;opacity:0;transition:opacity .2s;pointer-events:none;z-index:99}
+.toast.show{opacity:1}
+.empty{text-align:center;color:var(--muted);padding:20px 10px}
+ul.tips{padding-left:20px;margin:6px 0}ul.tips li{margin:4px 0}
+details summary{cursor:pointer;font-weight:600}
+.hidden{display:none}
+.banner{position:relative;border-radius:16px;overflow:hidden;margin-bottom:12px;min-height:150px;display:flex;align-items:flex-end;background:var(--soft)}
+.banner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.banner .velo{position:absolute;inset:0;background:linear-gradient(180deg,rgba(43,29,36,0) 20%,rgba(43,29,36,.78) 100%)}
+.banner .txt{position:relative;padding:14px;color:#fff;width:100%}
+.banner .txt h2{margin:0 0 2px;font-size:1.25rem;color:#fff}
+.banner .txt p{margin:0;font-size:.9rem;opacity:.95}
+.banner.alto{min-height:210px}
+.acciones{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.acciones button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px 6px;font-size:.82rem;background:var(--card);color:var(--ink);border:1px solid var(--line);box-shadow:var(--shadow)}
+.acciones button .i{font-size:1.4rem}
+.lock{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px}
+.lock img{width:84px;height:84px;border-radius:20px}
+.lock input{max-width:220px;text-align:center;font-size:1.6rem;letter-spacing:.5em}
+.aviso{border-left:4px solid var(--warn)}
+.lock.hidden{display:none}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+</style>
+</head>
+<body>
+<div class="lock hidden" id="lock">
+  <img src="icons/icon-192.png" alt="">
+  <h2 style="margin:0">Mis Fragancias</h2>
+  <p class="muted" style="margin:0">Escribe tu PIN para entrar</p>
+  <input id="pinIn" type="password" inputmode="numeric" maxlength="6" autocomplete="off" aria-label="PIN">
+  <button id="pinBtn">Entrar</button>
+  <p class="muted" id="pinMsg" role="alert"></p>
+  <button class="ghost small" id="pinOlvide">Olvidé mi PIN</button>
+</div>
+<header>
+  <h1>🌸 Mis Fragancias</h1>
+  <p id="saludo">Tu negocio Zermat desde casa</p>
+  <p id="sync">Conectando…</p>
+</header>
+<main id="app"></main>
+
+<nav>
+  <button data-tab="hoy" class="on"><span class="i">🏠</span>Hoy</button>
+  <button data-tab="clientas"><span class="i">💁‍♀️</span>Clientas</button>
+  <button data-tab="mensajes"><span class="i">💬</span>Mensajes</button>
+  <button data-tab="equipo"><span class="i">👭</span>Equipo</button>
+  <button data-tab="mas"><span class="i">✨</span>Más</button>
+</nav>
+
+<dialog id="dlg"><div class="dlg" id="dlgBody"></div></dialog>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===================== Datos ===================== */
+const KEY = 'misFragancias.v1';
+const hoyISO = () => new Date().toISOString().slice(0,10);
+const uid = () => Math.random().toString(36).slice(2,10);
+const defaults = () => ({
+  ajustes:{miNombre:'',miWhats:'',pais:'1',desde:'',inscripcion:'',comision:'',anticipo:'',promo:''},
+  clientas:[], equipo:[], perfumes:[], plan:{semana:'',hechos:[]}, seguridad:null, ultimoRespaldo:''
+});
+const LOCAL = 'Guardado en este aparato';
+let S;
+try{ S = Object.assign(defaults(), JSON.parse(localStorage.getItem(KEY)||'{}')); }catch(e){ S = defaults(); }
+
+/* Nube: tus datos se guardan en tu cuenta, en una carpeta privada que solo tú ves */
+let nube = null, subiendo = false, pendiente = false, timerNube = null;
+function estadoSync(t){ const el=document.getElementById('sync'); if(el) el.textContent=t; }
+function guardar(){
+  try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){}
+  if(!nube) return;
+  clearTimeout(timerNube); timerNube = setTimeout(subir, 800);
+}
+async function subir(){
+  if(!nube) return;
+  if(subiendo){ pendiente = true; return; }
+  subiendo = true; estadoSync('Guardando…');
+  try{ await nube.set({estado: JSON.stringify(S), actualizado: new Date().toISOString()}); estadoSync('☁️ Guardado en tu cuenta (privado)'); }
+  catch(e){ estadoSync(e && e.code==='quota_exceeded' ? '⚠️ Tu espacio está lleno. Descarga un respaldo.' : '⚠️ No se pudo guardar en tu cuenta. '+LOCAL+'.'); }
+  subiendo = false;
+  if(pendiente){ pendiente = false; subir(); }
+}
+async function conectarNube(){
+  try{
+    if(!window.claude || !window.claude.use){ estadoSync('📱 '+LOCAL); return; }
+    const [db, user] = await Promise.all([claude.use('db'), claude.use('user')]);
+    if(!db || !user){ estadoSync('📱 '+LOCAL); return; }
+    const id = await user.id();
+    if(!id){ estadoSync('📱 '+LOCAL); return; }
+    const ref = db.doc('data/users/' + id + '/estado');
+    const snap = await ref.get();
+    nube = ref;
+    if(snap.exists){
+      try{ S = Object.assign(defaults(), JSON.parse(snap.data().estado||'{}')); localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){}
+      estadoSync('☁️ Guardado en tu cuenta (privado)'); render();
+    } else if(S.clientas.length || S.perfumes.length || S.equipo.length || S.ajustes.miNombre){
+      subir();
+    } else estadoSync('☁️ Guardado en tu cuenta (privado)');
+  }catch(e){ estadoSync('📱 '+LOCAL); }
+}
+
+const esc = s => String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const dias = iso => iso ? Math.floor((new Date(hoyISO()) - new Date(iso))/864e5) : 0;
+const fmtFecha = iso => iso ? new Date(iso+'T12:00').toLocaleDateString('es-MX',{day:'numeric',month:'short'}) : '';
+const dinero = n => '$' + (Number(n)||0).toLocaleString('es-MX',{maximumFractionDigits:2});
+
+/* ===================== Mensajes ===================== */
+const CATS = ['Vender','Clientas','Estados','Grupos y negocios','Equipo','Fechas'];
+const MENSAJES = [
+ {id:'muestra',cat:'Vender',t:'🎁 Al regalar una muestra',x:'¡Hola {nombre}! 🌸 Te traje una muestra de {perfume}, una de mis fragancias favoritas de Zermat. Pruébala unos días y me cuentas qué te parece 😊 Si te gusta, el frasco completo cuesta {precio} y te lo puedo apartar.'},
+ {id:'seguimiento',cat:'Vender',t:'💬 Seguimiento de muestra (a los 3 días)',x:'¡Hola {nombre}! ¿Cómo te fue con la muestra de {perfume}? 😊 ¿Te gustó cómo te duró? Esta semana te lo puedo entregar en {dia} y si quieres lo puedes pagar en 2 quincenas 💕'},
+ {id:'conocidas',cat:'Vender',t:'👋 Primer mensaje a conocidas',x:'¡Hola {nombre}! ¿Cómo estás? 😊 Te cuento que ahora estoy vendiendo fragancias y productos Zermat ✨ Tengo perfumes muy ricos para dama y caballero desde {desde}. Si quieres te mando el catálogo o te llevo muestras para que los pruebes, ¡sin compromiso! 🌸'},
+ {id:'apartado',cat:'Vender',t:'💳 Ofrecer apartado o pagos',x:'¿Te gustó pero no es buen momento? 😊 ¡No te preocupes! Te lo aparto con {anticipo} y el resto me lo pagas en 2 quincenas o cuando te quede mejor 💕'},
+ {id:'tarde',cat:'Vender',t:'🏡 Invitación a tarde de fragancias',x:'¡Hola {nombre}! 🌸 Te invito a una tarde de fragancias en mi casa el {dia} a las {hora} ☕✨ Vamos a probar perfumes y cremas, platicar y pasarla bonito. ¡Puedes traer a una amiga! ¿Te espero? 💕'},
+ {id:'referidas',cat:'Clientas',t:'🤝 Pedir referidas',x:'¡Gracias por tu compra, {nombre}! 💖 Te quiero pedir un favor: si conoces a alguien a quien le gusten los perfumes, ¿me recomendarías? Por cada amiga que me compre te regalo una muestra o un descuento en tu próxima compra 🎁'},
+ {id:'recompra',cat:'Clientas',t:'🔁 Clienta que ya compró (2–3 meses)',x:'¡Hola {nombre}! 🌸 ¿Cómo vas con tu {perfume}? Ya debe estar por acabarse 😄 ¿Quieres que te aparte otro, o te gustaría probar algo nuevo? Este mes tengo {promo} ✨'},
+ {id:'cobro',cat:'Clientas',t:'💵 Recordatorio de pago (amable)',x:'¡Hola {nombre}! 😊 Te escribo para recordarte con cariño el pago pendiente de {saldo} de tu {perfume}. ¿Cuándo te queda bien que pase o me transfieres? ¡Gracias por tu confianza! 💕'},
+ {id:'gracias',cat:'Clientas',t:'💖 Gracias por tu compra',x:'¡Muchas gracias por tu compra, {nombre}! 💖 Espero que disfrutes mucho tu {perfume}. Cualquier cosa que necesites aquí estoy 🌸'},
+ {id:'est1',cat:'Estados',t:'✨ Perfume del día',x:'✨ Perfume del día: {perfume} ✨\nAroma: {aroma}\nIdeal para: el diario / salir de noche / regalar\n💲 {precio}\n📩 Escríbeme y te lo aparto 💕'},
+ {id:'est2',cat:'Estados',t:'🎁 Sets de regalo',x:'¿Tienes un cumpleaños, aniversario o quieres quedar bien? 🎁 Te armo un set de regalo con perfume + crema desde {desde}. ¡Escríbeme! 💌'},
+ {id:'est3',cat:'Estados',t:'💸 Huele rico sin gastar de más',x:'💸 Huele rico sin gastar de más 💸\nPerfumes Zermat desde {desde}. Aceptamos pagos en quincenas 🙌\nPregúntame por tu favorito 🌸'},
+ {id:'est4',cat:'Estados',t:'📦 Entregas de la semana',x:'📦 ¡Entregas de esta semana listas! Gracias a todas mis clientas por su confianza 💖 ¿Tú también quieres el tuyo? Escríbeme 😊'},
+ {id:'fb',cat:'Grupos y negocios',t:'📢 Publicación para grupos de Facebook',x:'🌸 PERFUMES ZERMAT 🌸\nFragancias para dama y caballero que duran todo el día ✨\n💲 Desde {desde}\n💳 Apartado y pagos en quincenas\n🚗 Entrega en {zona}\n🎁 Pregunta por muestras GRATIS\n📲 WhatsApp: {miWhats}'},
+ {id:'negocio',cat:'Grupos y negocios',t:'💇‍♀️ Para estética, salón o boutique',x:'¡Hola! Me llamo {miNombre} y vendo fragancias Zermat 🌸 Me gustaría dejarle un probador y unas tarjetas en su negocio. Por cada venta que salga de aquí le doy {comision} o un producto de regalo. ¿Le interesaría? 😊'},
+ {id:'invitar',cat:'Equipo',t:'👭 Invitar a una clienta a vender',x:'¡Hola {nombre}! 😊 Veo que te encantan los productos Zermat, así que te quiero contar algo: tú también puedes comprarlos con descuento y ganar un dinero extra vendiéndolos desde tu casa, en tus tiempos 💕 Empezar cuesta {inscripcion} y yo te enseño todo paso a paso. ¿Te platico más?'},
+ {id:'buscar',cat:'Equipo',t:'📣 Buscar vendedoras',x:'💼 ¿Buscas un ingreso extra desde casa? 💼\nEstoy formando mi equipo de ventas de fragancias y cosméticos Zermat 🌸\n✅ Tú pones tus horarios\n✅ Compras con descuento\n✅ Te enseño a vender paso a paso\nInscripción: {inscripcion}\n📲 Escríbeme y te explico sin compromiso 😊'},
+ {id:'bienvenida',cat:'Equipo',t:'🎉 Bienvenida a tu nueva integrante',x:'¡Bienvenida al equipo, {nombre}! 🎉💖 Estoy muy feliz de tenerte. Te voy a agregar a nuestro grupo, donde comparto fotos, textos y ofertas que puedes usar. Tu primer reto: regala 5 muestras esta semana. ¡Aquí estoy para ayudarte en todo! 🌸'},
+ {id:'animo',cat:'Equipo',t:'💪 Ánimo para tu equipo',x:'¡Hola {nombre}! 💪 ¿Cómo vas con tus ventas esta semana? Recuerda: cada muestra que regalas es una venta en camino 🌸 Si necesitas fotos, textos o ayuda con una clienta, aquí estoy 💕'},
+ {id:'fecha',cat:'Fechas',t:'💐 Fecha especial',x:'💐 ¡Se acerca {ocasion}! 💐\nRegala un perfume que le va a encantar 🎁\nSets desde {desde}, con envoltura de regalo incluida ✨\nAparta el tuyo antes del {fecha} 📲'},
+];
+
+function rellenar(texto, ctx={}){
+  const a = S.ajustes;
+  const val = {
+    miNombre:a.miNombre, miWhats:a.miWhats, desde:a.desde&&('$'+String(a.desde).replace(/^\$/,'')),
+    inscripcion:a.inscripcion&&('$'+String(a.inscripcion).replace(/^\$/,'')),
+    comision:a.comision&&('$'+String(a.comision).replace(/^\$/,'')),
+    anticipo:a.anticipo&&('$'+String(a.anticipo).replace(/^\$/,'')),
+    promo:a.promo, zona:a.zona, ...ctx
+  };
+  return texto.replace(/\{(\w+)\}/g,(m,k)=> (val[k]!==undefined && val[k]!=='' && val[k]!==null) ? val[k] : '['+({miNombre:'tu nombre',miWhats:'tu número',saldo:'cantidad'}[k]||k)+']');
+}
+
+/* ===================== Utilidades UI ===================== */
+const $ = s => document.querySelector(s);
+function toast(t){ const el=$('#toast'); el.textContent=t; el.classList.add('show'); clearTimeout(toast._t); toast._t=setTimeout(()=>el.classList.remove('show'),1800); }
+const dlg = $('#dlg');
+function abrir(html){ $('#dlgBody').innerHTML = html; dlg.showModal(); }
+function cerrar(){ dlg.close(); despuesDeGuardar = null; }
+dlg.addEventListener('click',e=>{ if(e.target===dlg) cerrar(); });
+
+async function copiar(t){
+  try{ await navigator.clipboard.writeText(t); }
+  catch(e){ const ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); }
+  toast('¡Copiado! 📋');
+}
+function telWa(tel){
+  let d = String(tel||'').replace(/\D/g,'');
+  if(!d) return '';
+  const p = String(S.ajustes.pais||'').replace(/\D/g,'');
+  if(p && d.length<=10) d = p + d;
+  return d;
+}
+const urlWhats = (texto, tel) => 'https://wa.me/'+(telWa(tel)||'')+'?text='+encodeURIComponent(texto);
+
+/* Confirmación dentro de la página */
+let accionConfirmar = null;
+function confirmar(texto, fn, boton='Sí, borrar'){
+  accionConfirmar = fn;
+  abrir(`<h3>¿Estás segura?</h3><p>${esc(texto)}</p>
+    <div class="dlg-actions"><button style="background:var(--bad);color:#fff" onclick="const f=accionConfirmar;accionConfirmar=null;cerrar();f()">${esc(boton)}</button><button class="sec" onclick="cerrar()">Cancelar</button></div>`);
+}
+
+/* Ventana para editar un mensaje y mandarlo */
+let compCtx = null;
+function componer(id, ctx={}, tel=''){
+  const m = MENSAJES.find(x=>x.id===id);
+  compCtx = {tel, onSent:ctx._onSent};
+  ventanaTexto(m.t, rellenar(m.x,ctx), tel, 'Revisa y cambia lo que esté entre [corchetes].');
+}
+function ventanaTexto(titulo, texto, tel='', nota=''){
+  abrir(`<h3>${esc(titulo)}</h3>
+    ${nota?`<p class="muted">${esc(nota)}</p>`:''}
+    <textarea id="compTxt">${esc(texto)}</textarea>
+    <div class="dlg-actions">
+      <button onclick="copiar(document.getElementById('compTxt').value)">📋 Copiar</button>
+      <a class="btn" id="waLink" target="_blank" rel="noopener" onclick="enviado()">🟢 WhatsApp${tel?'':' (elegir chat)'}</a>
+      <button class="sec" onclick="cerrar()">Cerrar</button>
+    </div>
+    <p class="muted" style="margin-bottom:0">Si WhatsApp no se abre, usa "Copiar" y pégalo en el chat.</p>`);
+  const ta=$('#compTxt'), a=$('#waLink');
+  const act=()=>{ a.href=urlWhats(ta.value, tel); };
+  ta.oninput=act; act();
+}
+function enviado(){
+  if(compCtx && compCtx.onSent){ const f=compCtx.onSent; compCtx.onSent=null; setTimeout(f,300); }
+  setTimeout(cerrar,300);
+}
+
+/* ===================== Pestañas ===================== */
+let tab = 'hoy', catSel = 'Vender', filtroCli = '';
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{ tab=b.dataset.tab; document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x===b)); render(); scrollTo(0,0); });
+
+function render(){
+  $('#saludo').textContent = S.ajustes.miNombre ? `¡Hola, ${S.ajustes.miNombre}! 💕` : 'Tu negocio Zermat desde casa';
+  ({hoy:vHoy,clientas:vClientas,mensajes:vMensajes,equipo:vEquipo,mas:vMas})[tab]();
+}
+
+/* ---------- HOY ---------- */
+const PLAN = [
+  'Configurar WhatsApp Business y subir 10 fragancias al catálogo',
+  'Preparar 20 muestras y regalarlas',
+  'Publicar un estado diario con un perfume diferente',
+  'Escribirle a 10 conocidas y pedir 2 referidas a cada una',
+  'Organizar una tarde de fragancias con amigas',
+  'Invitar a 2–3 clientas entusiastas a vender conmigo'
+];
+function semanaActual(){ const d=new Date(); const j=new Date(d.getFullYear(),0,1); return d.getFullYear()+'-'+Math.ceil(((d-j)/864e5+j.getDay()+1)/7); }
+
+function pendientes(){
+  const L=[];
+  S.clientas.forEach(c=>{
+    c.muestras.forEach(m=>{ if(!m.seguida && dias(m.fecha)>=3) L.push({orden:1,ic:'🎁',t:`Seguimiento de muestra a ${c.nombre}`,d:`${m.perfume||'muestra'} · hace ${dias(m.fecha)} días`,
+      acc:`componer('seguimiento',{nombre:${JSON.stringify(c.nombre)},perfume:${JSON.stringify(m.perfume||'')},_onSent:()=>marcarMuestra('${c.id}','${m.id}')},${JSON.stringify(c.tel)})`,
+      hecho:`marcarMuestra('${c.id}','${m.id}')`}); });
+    c.compras.forEach(p=>{
+      const saldo=(Number(p.precio)||0)-(Number(p.abonado)||0);
+      if(saldo>0) L.push({orden:2,ic:'💵',t:`Cobrar a ${c.nombre}`,d:`${dinero(saldo)} pendiente · ${p.perfume||''}`,
+        acc:`componer('cobro',{nombre:${JSON.stringify(c.nombre)},perfume:${JSON.stringify(p.perfume||'')},saldo:'${dinero(saldo)}'},${JSON.stringify(c.tel)})`,
+        hecho:`abonar('${c.id}','${p.id}')`, hechoTxt:'Registrar pago'});
+    });
+    const ult = c.compras.slice().sort((a,b)=>b.fecha.localeCompare(a.fecha))[0];
+    if(ult && !ult.avisado && dias(ult.fecha)>=60) L.push({orden:3,ic:'🔁',t:`Ofrecer recompra a ${c.nombre}`,d:`Compró ${ult.perfume||''} hace ${dias(ult.fecha)} días`,
+      acc:`componer('recompra',{nombre:${JSON.stringify(c.nombre)},perfume:${JSON.stringify(ult.perfume||'')},_onSent:()=>marcarAvisado('${c.id}','${ult.id}')},${JSON.stringify(c.tel)})`,
+      hecho:`marcarAvisado('${c.id}','${ult.id}')`});
+  });
+  S.equipo.forEach(e=>{
+    if(!e.bienvenida) L.push({orden:0,ic:'🎉',t:`Darle la bienvenida a ${e.nombre}`,d:'Nueva en tu equipo',
+      acc:`componer('bienvenida',{nombre:${JSON.stringify(e.nombre)},_onSent:()=>marcarBienvenida('${e.id}')},${JSON.stringify(e.tel)})`,
+      hecho:`marcarBienvenida('${e.id}')`});
+  });
+  return L.sort((a,b)=>a.orden-b.orden);
+}
+function marcarMuestra(cid,mid){ const m=cli(cid).muestras.find(x=>x.id===mid); m.seguida=true; guardar(); render(); }
+function marcarAvisado(cid,pid){ const p=cli(cid).compras.find(x=>x.id===pid); p.avisado=true; guardar(); render(); }
+function marcarBienvenida(eid){ S.equipo.find(x=>x.id===eid).bienvenida=true; guardar(); render(); }
+
+function vHoy(){
+  if(S.plan.semana!==semanaActual()){ S.plan={semana:semanaActual(),hechos:[]}; guardar(); }
+  const mes = hoyISO().slice(0,7);
+  let ventasMes=0, porCobrar=0;
+  S.clientas.forEach(c=>c.compras.forEach(p=>{ if(p.fecha.startsWith(mes)) ventasMes+=Number(p.precio)||0; porCobrar+=Math.max(0,(Number(p.precio)||0)-(Number(p.abonado)||0)); }));
+  const P = pendientes();
+  const sinAjustes = !S.ajustes.miNombre || !S.ajustes.miWhats;
+  $('#app').innerHTML = `
+    ${sinAjustes?`<div class="banner alto"><img src="img/bienvenida.webp" alt="Flores al sol"><div class="velo"></div><div class="txt"><h2>¡Bienvenida! 🌸</h2><p>Aquí llevas tus clientas, muestras, cobros y tu equipo. Empieza poniendo tus datos.</p><button style="margin-top:10px" onclick="irA('mas');setTimeout(()=>document.querySelector('[data-a=miNombre]')?.focus(),100)">Poner mis datos</button></div></div>`
+      :`<div class="banner"><img src="img/portada.webp" alt="Frasco de perfume con luz dorada"><div class="velo"></div><div class="txt"><h2>${esc(saludoHora())}, ${esc(S.ajustes.miNombre)} 💕</h2><p>${P.length?`Tienes ${P.length} pendiente${P.length===1?'':'s'} hoy`:'Todo al día. ¡A vender!'}</p></div></div>`}
+    <div class="acciones">
+      <button onclick="accionRapida('muestra')"><span class="i">🎁</span>Anotar muestra</button>
+      <button onclick="accionRapida('venta')"><span class="i">🛍️</span>Anotar venta</button>
+      <button onclick="${S.perfumes.length?'mandarCatalogo()':`irA('mas');toast('Primero agrega tus perfumes')`}"><span class="i">📲</span>Mandar catálogo</button>
+    </div>
+    ${avisoRespaldo()}
+    <div class="stats">
+      <div class="stat"><b>${dinero(ventasMes)}</b><span>Vendido este mes</span></div>
+      <div class="stat"><b>${dinero(porCobrar)}</b><span>Por cobrar</span></div>
+      <div class="stat"><b>${S.clientas.length}</b><span>Clientas</span></div>
+    </div>
+    <h2>📋 Pendientes de hoy</h2>
+    ${P.length? P.map(p=>`<div class="card"><div class="spread"><div><h3>${p.ic} ${esc(p.t)}</h3><div class="muted">${esc(p.d)}</div></div></div>
+      <div class="row" style="margin-top:10px"><button class="small" onclick="${esc(p.acc)}">💬 Escribirle</button><button class="small sec" onclick="${esc(p.hecho)}">✔ ${p.hechoTxt||'Listo'}</button></div></div>`).join('')
+      : `<div class="card empty">🌸 No tienes pendientes. ¡Regala unas muestras y anótalas en Clientas!</div>`}
+    <h2>🗓️ Mi plan de la semana</h2>
+    <div class="card">${PLAN.map((t,i)=>{const on=S.plan.hechos.includes(i);return `<label class="check ${on?'done':''}"><input type="checkbox" ${on?'checked':''} onchange="togPlan(${i})"><span>${esc(t)}</span></label>`}).join('')}
+      <p class="muted" style="margin:8px 0 0">${S.plan.hechos.length}/${PLAN.length} hechos · se reinicia cada semana</p></div>`;
+}
+function saludoHora(){ const h=new Date().getHours(); return h<12?'Buenos días':h<19?'Buenas tardes':'Buenas noches'; }
+let despuesDeGuardar = null;
+function accionRapida(tipo){
+  const sig = id => tipo==='venta' ? formCompra(id) : formMuestra(id);
+  const lista = S.clientas.slice().sort((a,b)=>a.nombre.localeCompare(b.nombre));
+  abrir(`<h3>${tipo==='venta'?'🛍️ ¿A quién le vendiste?':'🎁 ¿A quién le diste la muestra?'}</h3>
+    ${lista.length>6?'<input id="qBus" placeholder="🔎 Buscar" style="margin-bottom:8px">':''}
+    <div id="qLista" style="max-height:45vh;overflow:auto">${lista.map(c=>`<button class="sec" data-n="${esc(c.nombre.toLowerCase())}" style="width:100%;text-align:left;margin:3px 0" onclick="(${tipo==='venta'?'formCompra':'formMuestra'})('${c.id}')">${esc(c.nombre)}</button>`).join('') || '<p class="muted">Aún no tienes clientas.</p>'}</div>
+    <div class="dlg-actions"><button onclick="despuesDeGuardar=id=>${tipo==='venta'?'formCompra':'formMuestra'}(id);formClienta()">+ Clienta nueva</button><button class="sec" onclick="cerrar()">Cancelar</button></div>`);
+  const b=$('#qBus'); if(b) b.oninput=()=>document.querySelectorAll('#qLista button').forEach(x=>x.hidden=!x.dataset.n.includes(b.value.toLowerCase()));
+}
+function togPlan(i){ const h=S.plan.hechos; const k=h.indexOf(i); k<0?h.push(i):h.splice(k,1); guardar(); render(); }
+function irA(t){ document.querySelector(`nav button[data-tab="${t}"]`).click(); }
+
+/* ---------- CLIENTAS ---------- */
+const cli = id => S.clientas.find(c=>c.id===id);
+function vClientas(){
+  const q = filtroCli.toLowerCase();
+  const lista = S.clientas.filter(c=>!q || c.nombre.toLowerCase().includes(q)).sort((a,b)=>a.nombre.localeCompare(b.nombre));
+  $('#app').innerHTML = `
+    <div class="row"><input id="busca" placeholder="🔎 Buscar clienta" value="${esc(filtroCli)}" style="flex:1"><button onclick="formClienta()">+ Nueva</button></div>
+    <div style="margin-top:12px">${lista.length? lista.map(tarjetaClienta).join('') : `<div class="card empty">Aún no tienes clientas anotadas.<br>Agrega a la primera persona a la que le regales una muestra 🎁</div>`}</div>`;
+  const b=$('#busca'); b.oninput=()=>{ filtroCli=b.value; const pos=b.selectionStart; vClientas(); const n=$('#busca'); n.focus(); n.setSelectionRange(pos,pos); };
+}
+function tarjetaClienta(c){
+  const saldo = c.compras.reduce((s,p)=>s+Math.max(0,(Number(p.precio)||0)-(Number(p.abonado)||0)),0);
+  const ult = c.compras.slice().sort((a,b)=>b.fecha.localeCompare(a.fecha))[0];
+  const mp = c.muestras.filter(m=>!m.seguida).length;
+  const N = JSON.stringify(c.nombre), T = JSON.stringify(c.tel), UP = JSON.stringify(ult?.perfume||'');
+  return `<div class="card">
+    <div class="spread"><div><h3>${esc(c.nombre)}</h3><div class="muted">${esc(c.tel||'Sin teléfono')}${c.notas?' · '+esc(c.notas):''}</div></div>
+      <button class="ghost small" onclick="formClienta('${c.id}')">Editar</button></div>
+    <div style="margin:6px 0">
+      ${saldo>0?`<span class="pill bad">Debe ${dinero(saldo)}</span>`:''}
+      ${mp?`<span class="pill warn">${mp} muestra(s) sin seguimiento</span>`:''}
+      ${ult?`<span class="pill">Última compra: ${esc(ult.perfume||'')} · ${fmtFecha(ult.fecha)}</span>`:''}
+    </div>
+    <details><summary class="muted">Historial (${c.compras.length} compras, ${c.muestras.length} muestras)</summary>
+      ${c.compras.slice().sort((a,b)=>b.fecha.localeCompare(a.fecha)).map(p=>{const s=(Number(p.precio)||0)-(Number(p.abonado)||0);return `<div class="spread" style="padding:6px 0;border-bottom:1px solid var(--line)"><div>🛍️ ${esc(p.perfume)} · ${dinero(p.precio)}<div class="muted">${fmtFecha(p.fecha)} ${s>0?'· debe '+dinero(s):'· pagado ✅'}</div></div><div class="row">${s>0?`<button class="small sec" onclick="abonar('${c.id}','${p.id}')">Abono</button>`:''}<button class="small danger" onclick="borrarItem('${c.id}','compras','${p.id}')">✕</button></div></div>`}).join('')}
+      ${c.muestras.slice().reverse().map(m=>`<div class="spread" style="padding:6px 0;border-bottom:1px solid var(--line)"><div>🎁 Muestra: ${esc(m.perfume)}<div class="muted">${fmtFecha(m.fecha)} ${m.seguida?'· seguimiento hecho ✅':''}</div></div><button class="small danger" onclick="borrarItem('${c.id}','muestras','${m.id}')">✕</button></div>`).join('')}
+    </details>
+    <div class="row" style="margin-top:10px">
+      <button class="small" onclick="formCompra('${c.id}')">🛍️ Venta</button>
+      <button class="small sec" onclick="formMuestra('${c.id}')">🎁 Muestra</button>
+      <button class="small sec" onclick="elegirMensaje('${c.id}')">💬 Mensaje</button>
+    </div></div>`;
+}
+function opcionesPerfume(){ return `<datalist id="dlPerf">${S.perfumes.map(p=>`<option value="${esc(p.nombre)}">`).join('')}</datalist>`; }
+function formClienta(id){
+  const c = id?cli(id):{nombre:'',tel:'',notas:''};
+  abrir(`<h3>${id?'Editar':'Nueva'} clienta</h3>
+    <label>Nombre</label><input id="fNom" value="${esc(c.nombre)}">
+    <label>Teléfono / WhatsApp</label><input id="fTel" type="tel" value="${esc(c.tel)}" placeholder="Ej. 773 555 1234">
+    <label>Notas (qué aromas le gustan, cumpleaños…)</label><input id="fNot" value="${esc(c.notas)}">
+    <div class="dlg-actions"><button onclick="guardarClienta('${id||''}')">Guardar</button><button class="sec" onclick="cerrar()">Cancelar</button>
+    ${id?`<button class="danger" onclick="borrarClienta('${id}')">Borrar</button>`:''}</div>`);
+  setTimeout(()=>$('#fNom').focus(),50);
+}
+function guardarClienta(id){
+  const nombre=$('#fNom').value.trim(); if(!nombre){ toast('Escribe el nombre'); return; }
+  if(id){ Object.assign(cli(id),{nombre,tel:$('#fTel').value.trim(),notas:$('#fNot').value.trim()}); }
+  else { const nueva={id:uid(),nombre,tel:$('#fTel').value.trim(),notas:$('#fNot').value.trim(),compras:[],muestras:[]}; S.clientas.push(nueva);
+    if(despuesDeGuardar){ const f=despuesDeGuardar; despuesDeGuardar=null; guardar(); render(); f(nueva.id); return; } }
+  despuesDeGuardar=null; guardar(); cerrar(); render(); toast('Guardada 💕');
+}
+function borrarClienta(id){ confirmar('Se borrará a esta clienta y todo su historial.', ()=>{ S.clientas=S.clientas.filter(c=>c.id!==id); guardar(); render(); toast('Borrada'); }); }
+function borrarItem(cid,tipo,iid){ confirmar('Se borrará este registro.', ()=>{ const c=cli(cid); c[tipo]=c[tipo].filter(x=>x.id!==iid); guardar(); render(); }); }
+function precioDe(nombre){ const p=S.perfumes.find(x=>x.nombre.toLowerCase()===String(nombre).toLowerCase()); return p?p.precio:''; }
+function formCompra(cid){
+  abrir(`<h3>🛍️ Venta a ${esc(cli(cid).nombre)}</h3>${opcionesPerfume()}
+    <label>Producto</label><input id="fPer" list="dlPerf" oninput="const p=precioDe(this.value); if(p) document.getElementById('fPre').value=p">
+    <label>Precio</label><input id="fPre" type="number" inputmode="decimal">
+    <label>¿Cuánto te pagó hoy?</label><input id="fAbo" type="number" inputmode="decimal" placeholder="Si pagó todo, pon el precio completo">
+    <label>Fecha</label><input id="fFec" type="date" value="${hoyISO()}">
+    <div class="dlg-actions"><button onclick="guardarCompra('${cid}')">Guardar</button><button class="sec" onclick="cerrar()">Cancelar</button></div>`);
+}
+function guardarCompra(cid){
+  const c=cli(cid), perfume=$('#fPer').value.trim(), precio=Number($('#fPre').value)||0;
+  if(!perfume||!precio){ toast('Pon producto y precio'); return; }
+  const abo=$('#fAbo').value===''?precio:Number($('#fAbo').value)||0;
+  c.compras.push({id:uid(),perfume,precio,abonado:abo,fecha:$('#fFec').value||hoyISO()});
+  c.muestras.forEach(m=>m.seguida=true);
+  guardar(); cerrar(); render(); toast('¡Venta anotada! 🎉');
+  setTimeout(()=>componer('gracias',{nombre:c.nombre,perfume},c.tel),300);
+}
+function abonar(cid,pid){
+  const p=cli(cid).compras.find(x=>x.id===pid); const s=(Number(p.precio)||0)-(Number(p.abonado)||0);
+  abrir(`<h3>💵 Registrar pago</h3><p class="muted">${esc(p.perfume)} · debe ${dinero(s)}</p>
+    <label>¿Cuánto te pagó?</label><input id="fAb" type="number" inputmode="decimal" value="${s}">
+    <div class="dlg-actions"><button onclick="(()=>{const p=cli('${cid}').compras.find(x=>x.id==='${pid}');p.abonado=(Number(p.abonado)||0)+(Number(document.getElementById('fAb').value)||0);guardar();cerrar();render();toast('Pago anotado ✅')})()">Guardar</button><button class="sec" onclick="cerrar()">Cancelar</button></div>`);
+}
+function formMuestra(cid){
+  abrir(`<h3>🎁 Muestra para ${esc(cli(cid).nombre)}</h3>${opcionesPerfume()}
+    <label>¿Qué perfume le diste?</label><input id="fPer" list="dlPerf">
+    <label>Fecha</label><input id="fFec" type="date" value="${hoyISO()}">
+    <p class="muted">En 3 días te aparecerá en "Hoy" para darle seguimiento.</p>
+    <div class="dlg-actions"><button onclick="guardarMuestra('${cid}')">Guardar</button><button class="sec" onclick="cerrar()">Cancelar</button></div>`);
+}
+function guardarMuestra(cid){
+  const c=cli(cid), perfume=$('#fPer').value.trim();
+  c.muestras.push({id:uid(),perfume,fecha:$('#fFec').value||hoyISO(),seguida:false});
+  guardar(); cerrar(); render(); toast('Muestra anotada 🎁');
+  setTimeout(()=>componer('muestra',{nombre:c.nombre,perfume,precio:precioDe(perfume)?dinero(precioDe(perfume)):undefined},c.tel),300);
+}
+function elegirMensaje(cid){
+  const c=cli(cid); const ult=c.compras.slice().sort((a,b)=>b.fecha.localeCompare(a.fecha))[0];
+  const ids=['conocidas','muestra','seguimiento','apartado','tarde','gracias','referidas','recompra','invitar'];
+  abrir(`<h3>💬 Mensaje para ${esc(c.nombre)}</h3>
+    ${ids.map(id=>{const m=MENSAJES.find(x=>x.id===id);return `<button class="sec" style="width:100%;text-align:left;margin:4px 0" onclick='componer("${id}",${esc(JSON.stringify({nombre:c.nombre,perfume:ult?.perfume||undefined}))},${esc(JSON.stringify(c.tel))})'>${esc(m.t)}</button>`}).join('')}
+    <div class="dlg-actions"><button class="sec" onclick="cerrar()">Cerrar</button></div>`);
+}
+
+/* ---------- MENSAJES ---------- */
+function vMensajes(){
+  $('#app').innerHTML = `
+    <p class="muted">Toca un mensaje para revisarlo, copiarlo o mandarlo por WhatsApp. Tus datos de "Más → Mis datos" se ponen solos.</p>
+    <div class="chips">${CATS.map(c=>`<button class="small ${c===catSel?'':'sec'}" onclick="catSel='${c}';vMensajes()">${c}</button>`).join('')}</div>
+    ${MENSAJES.filter(m=>m.cat===catSel).map(m=>`<div class="card"><h3>${esc(m.t)}</h3><div class="msg">${esc(rellenar(m.x))}</div>
+      <div class="row"><button class="small" onclick="componer('${m.id}')">✏️ Usar</button><button class="small sec" onclick="copiar(${esc(JSON.stringify(rellenar(m.x)))})">📋 Copiar</button></div></div>`).join('')}`;
+}
+
+/* ---------- EQUIPO ---------- */
+function vEquipo(){
+  $('#app').innerHTML = `
+    <div class="banner"><img src="img/equipo.webp" alt="Frasco de esencia" loading="lazy"><div class="velo"></div><div class="txt"><h2>👭 Mi equipo</h2><p>${S.equipo.length} integrante${S.equipo.length===1?'':'s'} · acompáñalas en su primera semana</p></div></div>
+    <div class="spread"><p class="muted" style="margin:0">Las personas que venden contigo.</p><button onclick="formEquipo()">+ Nueva</button></div>
+    <div style="margin-top:12px">${S.equipo.length? S.equipo.map(e=>`<div class="card">
+      <div class="spread"><div><h3>${esc(e.nombre)}</h3><div class="muted">${esc(e.tel||'')} · se unió ${fmtFecha(e.fecha)}</div></div><button class="ghost small" onclick="formEquipo('${e.id}')">Editar</button></div>
+      <div style="margin:8px 0"><span class="muted">Reto: 5 muestras</span>
+        <div class="row" style="margin-top:4px">${[1,2,3,4,5].map(n=>`<span style="font-size:1.3rem;opacity:${n<=(e.reto||0)?1:.25}">🎁</span>`).join('')}
+        <button class="small sec" onclick="reto('${e.id}',1)">+1</button>${(e.reto||0)>0?`<button class="small ghost" onclick="reto('${e.id}',-1)">−1</button>`:''}</div></div>
+      ${e.notas?`<p class="muted">${esc(e.notas)}</p>`:''}
+      <div class="row"><button class="small" onclick='componer("animo",${esc(JSON.stringify({nombre:e.nombre}))},${esc(JSON.stringify(e.tel))})'>💪 Darle ánimo</button>
+      <button class="small sec" onclick='componer("bienvenida",${esc(JSON.stringify({nombre:e.nombre}))},${esc(JSON.stringify(e.tel))})'>🎉 Bienvenida</button></div>
+    </div>`).join('') : `<div class="card empty">Aún no tienes equipo.<br>Invita a tus clientas más entusiastas 👭</div>`}</div>
+    <h2>📣 Para invitar</h2>
+    <div class="row"><button class="sec" onclick="componer('invitar')">👭 Invitar a una clienta</button><button class="sec" onclick="componer('buscar')">📣 Buscar vendedoras</button></div>
+    <h2>💡 Consejos</h2>
+    <div class="card"><ul class="tips">
+      <li>Empieza por tus mejores clientas: ya conocen y aman los productos.</li>
+      <li>Habla del beneficio: "ingreso extra desde casa, en tus horarios".</li>
+      <li>Muestra tus resultados: fotos de pedidos, entregas y premios.</li>
+      <li>Acompáñalas en su primera venta y haz un grupo de WhatsApp del equipo.</li>
+      <li>Sé honesta con cuánto cuesta entrar y cuánto se gana de verdad.</li>
+    </ul></div>`;
+}
+function formEquipo(id){
+  const e = id?S.equipo.find(x=>x.id===id):{nombre:'',tel:'',fecha:hoyISO(),notas:''};
+  abrir(`<h3>${id?'Editar':'Nueva'} integrante</h3>
+    <label>Nombre</label><input id="fNom" value="${esc(e.nombre)}">
+    <label>Teléfono / WhatsApp</label><input id="fTel" type="tel" value="${esc(e.tel)}">
+    <label>Fecha en que se unió</label><input id="fFec" type="date" value="${esc(e.fecha)}">
+    <label>Notas</label><input id="fNot" value="${esc(e.notas)}">
+    <div class="dlg-actions"><button onclick="guardarEquipo('${id||''}')">Guardar</button><button class="sec" onclick="cerrar()">Cancelar</button>
+    ${id?`<button class="danger" onclick="confirmar('Se borrará a esta integrante de tu lista.',()=>{S.equipo=S.equipo.filter(x=>x.id!=='${id}');guardar();render();})">Borrar</button>`:''}</div>`);
+}
+function guardarEquipo(id){
+  const nombre=$('#fNom').value.trim(); if(!nombre){ toast('Escribe el nombre'); return; }
+  const d={nombre,tel:$('#fTel').value.trim(),fecha:$('#fFec').value||hoyISO(),notas:$('#fNot').value.trim()};
+  if(id) Object.assign(S.equipo.find(x=>x.id===id),d); else S.equipo.push({id:uid(),reto:0,bienvenida:false,...d});
+  guardar(); cerrar(); render(); toast('Guardada 💕');
+}
+function reto(id,n){ const e=S.equipo.find(x=>x.id===id); e.reto=Math.max(0,Math.min(5,(e.reto||0)+n)); guardar(); render(); if(e.reto===5&&n>0) toast(`¡${e.nombre} completó su reto! 🎉`); }
+
+/* ---------- MÁS ---------- */
+function vMas(){
+  const a=S.ajustes;
+  $('#app').innerHTML = `
+    <div class="banner"><img src="img/catalogo.webp" alt="Frascos de perfume" loading="lazy"><div class="velo"></div><div class="txt"><h2>🧴 Mi catálogo</h2><p>${S.perfumes.length} fragancia${S.perfumes.length===1?'':'s'} con precio</p></div></div>
+    <div class="card">
+      ${S.perfumes.length? S.perfumes.map(p=>`<div class="spread" style="padding:6px 0;border-bottom:1px solid var(--line)"><div><b>${esc(p.nombre)}</b> · ${dinero(p.precio)}<div class="muted">${esc(p.aroma||'')}</div></div>
+        <div class="row"><button class="small sec" onclick='componer("est1",${esc(JSON.stringify({perfume:p.nombre,aroma:p.aroma||undefined,precio:dinero(p.precio)}))})'>Estado</button><button class="small danger" onclick="S.perfumes=S.perfumes.filter(x=>x.id!=='${p.id}');guardar();render()">✕</button></div></div>`).join('')
+        : '<p class="muted">Agrega tus fragancias con su precio. Las usarás al anotar ventas y para mandar tu catálogo.</p>'}
+      <div class="row" style="margin-top:10px"><input id="pNom" placeholder="Nombre" style="flex:2;min-width:120px"><input id="pPre" type="number" inputmode="decimal" placeholder="Precio" style="flex:1;min-width:80px"></div>
+      <input id="pAro" placeholder="Aroma (floral, dulce, fresco…)" style="margin-top:8px">
+      <div class="row" style="margin-top:8px"><button class="small" onclick="agregarPerfume()">+ Agregar</button>${S.perfumes.length?`<button class="small sec" onclick="mandarCatalogo()">📲 Mandar catálogo</button>`:''}</div>
+    </div>
+
+    <h2>👤 Mis datos</h2>
+    <div class="card">
+      <label>Mi nombre</label><input data-a="miNombre" value="${esc(a.miNombre)}">
+      <label>Mi WhatsApp</label><input data-a="miWhats" type="tel" value="${esc(a.miWhats)}">
+      <label>Código de país para WhatsApp (1 = EE. UU., 52 = México)</label><input data-a="pais" inputmode="numeric" value="${esc(a.pais)}">
+      <label>Zona de entrega</label><input data-a="zona" value="${esc(a.zona||'')}" placeholder="Ej. Chicago y alrededores">
+      <label>Perfumes desde ($)</label><input data-a="desde" inputmode="decimal" value="${esc(a.desde)}">
+      <label>Anticipo para apartar ($)</label><input data-a="anticipo" inputmode="decimal" value="${esc(a.anticipo)}">
+      <label>Comisión para negocios aliados ($)</label><input data-a="comision" inputmode="decimal" value="${esc(a.comision)}">
+      <label>Costo de inscripción ($) — confírmalo con tu líder</label><input data-a="inscripcion" inputmode="decimal" value="${esc(a.inscripcion)}">
+      <label>Promoción del mes</label><input data-a="promo" value="${esc(a.promo)}" placeholder="Ej. 2x1 en cremas">
+      <p class="muted">Se guarda solo ✔</p>
+    </div>
+
+    <h2>💡 Ideas para vender más</h2>
+    <div class="banner"><img src="img/ideas.webp" alt="Productos de belleza sobre una mesa" loading="lazy"><div class="velo"></div><div class="txt"><h2>Vende más desde casa</h2><p>Muestras, WhatsApp y fechas especiales</p></div></div>
+    <div class="card">
+      <details open><summary>🎁 Muestras</summary><ul class="tips"><li>Frasquitos de 2–5 ml con etiqueta: perfume, precio y tu WhatsApp.</li><li>A los 3 días pregunta "¿qué te pareció?" (la app te avisa).</li></ul></details>
+      <details><summary>🏡 Tu casa como perfumería</summary><ul class="tips"><li>Una repisa bonita con testers.</li><li>Tarde de fragancias: 5–8 amigas, café y galletas; regalo a la anfitriona si sus invitadas compran.</li></ul></details>
+      <details><summary>📱 WhatsApp</summary><ul class="tips"><li>WhatsApp Business con catálogo y mensaje de bienvenida.</li><li>Un estado diario: un perfume por día, con foto o video.</li><li>Lista de difusión para ofertas del mes.</li></ul></details>
+      <details><summary>💁‍♀️ Conseguir clientas</summary><ul class="tips"><li>Familia, vecinas, trabajo, escuela, iglesia, gimnasio.</li><li>Referidas con premio.</li><li>Grupos de Facebook de tu ciudad.</li><li>Estéticas, salones de uñas y boutiques con comisión.</li><li>Videos cortos: "perfumes que huelen caro", "mi top 3".</li></ul></details>
+      <details><summary>💳 Facilidades</summary><ul class="tips"><li>Apartado y pagos en quincenas.</li><li>Paquetes: perfume + crema, sets de regalo.</li></ul></details>
+      <details><summary>🗓️ Fechas que venden solas</summary><ul class="tips"><li>Día de las Madres, San Valentín, Navidad, graduaciones, Día del Padre, cumpleaños, quinceañeras.</li><li>Empieza a promocionar 2–3 semanas antes.</li></ul>
+        <div class="row">${['Día de las Madres','San Valentín','Navidad','Día del Padre','graduaciones'].map(o=>`<button class="small sec" onclick='componer("fecha",${esc(JSON.stringify({ocasion:o==='graduaciones'?'la temporada de graduaciones':'el '+o}))})'>${o}</button>`).join('')}</div></details>
+      <p class="muted" style="margin-top:10px">⚠️ Revisa el reglamento de distribuidoras de Zermat antes de vender en Mercado Libre/Amazon o usar su logo.</p>
+    </div>
+
+    <h2>📲 App y seguridad</h2>
+    <div class="card">
+      ${yaInstalada()?'<p style="margin-top:0">✅ Ya estás usando la app instalada.</p>':`<div class="spread"><div><h3>Instalar en tu celular</h3><p class="muted" style="margin:0">Ábrela desde tu pantalla de inicio, como cualquier app. Funciona aunque no tengas internet.</p></div></div><button class="small" style="margin-top:8px" onclick="instalar()">📲 Instalar app</button>`}
+      <hr style="border:0;border-top:1px solid var(--line);margin:14px 0">
+      <div class="spread"><div><h3>🔒 Bloqueo con PIN</h3><p class="muted" style="margin:0">${S.seguridad?.pin?'Activado. Se pide al abrir la app y después de 5 minutos sin usarla.':'Desactivado. Actívalo para proteger los datos de tus clientas.'}</p></div></div>
+      <button class="small ${S.seguridad?.pin?'sec':''}" style="margin-top:8px" onclick="configurarPin()">${S.seguridad?.pin?'Cambiar o quitar PIN':'Activar PIN'}</button>
+    </div>
+
+    <h2>💾 Respaldo</h2>
+    <div class="card">
+      <p class="muted">${nube?'Tus datos se guardan en tu cuenta de Claude, en un espacio privado que solo tú ves.':'Tus datos se guardan solo en este aparato, nunca en internet. Si cambias de teléfono, descarga un respaldo aquí y cárgalo en el nuevo.'} ${S.ultimoRespaldo?`Último respaldo: ${fmtFecha(S.ultimoRespaldo)}.`:'Aún no tienes respaldo.'}</p>
+      <div class="row"><button class="small" onclick="exportar()">⬇️ Descargar respaldo</button><button class="small sec" onclick="document.getElementById('imp').click()">⬆️ Cargar respaldo</button>
+      <input type="file" id="imp" accept=".json,application/json" class="hidden" onchange="importar(this.files[0])"></div>
+    </div>`;
+  document.querySelectorAll('[data-a]').forEach(i=>i.oninput=()=>{ S.ajustes[i.dataset.a]=i.value.trim(); guardar(); $('#saludo').textContent = S.ajustes.miNombre?`¡Hola, ${S.ajustes.miNombre}! 💕`:'Tu negocio Zermat desde casa'; });
+}
+function agregarPerfume(){
+  const nombre=$('#pNom').value.trim(), precio=Number($('#pPre').value)||0;
+  if(!nombre||!precio){ toast('Pon nombre y precio'); return; }
+  S.perfumes.push({id:uid(),nombre,precio,aroma:$('#pAro').value.trim()}); guardar(); render(); toast('Agregado 🧴');
+}
+function mandarCatalogo(){
+  const t = '🌸 *Mi catálogo de fragancias Zermat* 🌸\n\n' + S.perfumes.map(p=>`✨ ${p.nombre} — ${dinero(p.precio)}${p.aroma?'\n   '+p.aroma:''}`).join('\n') +
+    `\n\n💳 Apartado y pagos en quincenas\n🎁 Pregunta por muestras\n📲 ${S.ajustes.miWhats||'[tu número]'}${S.ajustes.miNombre?'\n— '+S.ajustes.miNombre:''}`;
+  compCtx = null;
+  ventanaTexto('📲 Catálogo', t);
+}
+function marcarRespaldo(){ S.ultimoRespaldo = hoyISO(); guardar(); render(); toast('Respaldo guardado 💾'); }
+async function exportar(){
+  const texto = JSON.stringify(S,null,2);
+  const nombre = 'mis-fragancias-respaldo-'+hoyISO()+'.json';
+  if(window.claude && window.claude.use){
+    try{
+      const dl = await claude.use('downloads');
+      if(dl){ await dl.save({filename:nombre, data:texto}); marcarRespaldo(); return; }
+    }catch(e){ if(e && e.code==='cancelled') return; }
+  } else {
+    try{
+      const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([texto],{type:'application/json'})); a.download=nombre;
+      document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+      marcarRespaldo(); return;
+    }catch(e){}
+  }
+  compCtx = null;
+  abrir(`<h3>💾 Respaldo</h3><p class="muted">Copia este texto y guárdalo (por ejemplo, mándatelo por correo).</p><textarea id="compTxt" readonly>${esc(texto)}</textarea>
+    <div class="dlg-actions"><button onclick="copiar(document.getElementById('compTxt').value)">📋 Copiar</button><button class="sec" onclick="cerrar()">Cerrar</button></div>`);
+}
+function importar(f){
+  if(!f) return; const r=new FileReader();
+  r.onload=()=>{ try{ const d=JSON.parse(r.result); if(!d.clientas) throw 0;
+    confirmar('Tus datos actuales se reemplazarán con los del respaldo.', ()=>{ S=Object.assign(defaults(),d); guardar(); render(); toast('Respaldo cargado ✅'); }, 'Sí, cargar respaldo');
+  }catch(e){ toast('Ese archivo no es un respaldo válido'); } };
+  r.readAsText(f);
+}
+
+/* ===================== App instalable, PIN y respaldo ===================== */
+let eventoInstalar = null;
+window.addEventListener('beforeinstallprompt', e=>{ e.preventDefault(); eventoInstalar = e; if(tab==='mas') render(); });
+async function instalar(){
+  if(eventoInstalar){ eventoInstalar.prompt(); try{ await eventoInstalar.userChoice; }catch(e){} eventoInstalar=null; render(); return; }
+  abrir(`<h3>📲 Instalar en tu celular</h3>
+    <p><b>iPhone (Safari):</b> toca el botón Compartir <span aria-hidden="true">⬆️</span> y luego "Agregar a inicio".</p>
+    <p><b>Android (Chrome):</b> toca el menú ⋮ y luego "Instalar app" o "Agregar a pantalla principal".</p>
+    <div class="dlg-actions"><button onclick="cerrar()">Entendido</button></div>`);
+}
+const yaInstalada = () => window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+
+async function hashPin(pin){
+  const sal = S.seguridad?.sal || '';
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(sal + ':' + pin));
+  return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+function configurarPin(){
+  const activo = !!S.seguridad?.pin;
+  abrir(`<h3>🔒 Bloqueo con PIN</h3>
+    <p class="muted">Pide un PIN cada vez que abras la app, para que nadie más vea tus clientas si toman tu teléfono.</p>
+    <label for="nPin">${activo?'Nuevo PIN':'PIN'} (4 a 6 números)</label><input id="nPin" type="password" inputmode="numeric" maxlength="6" autocomplete="new-password">
+    <label for="nPin2">Repite el PIN</label><input id="nPin2" type="password" inputmode="numeric" maxlength="6" autocomplete="new-password">
+    <div class="dlg-actions"><button onclick="guardarPin()">Guardar PIN</button>${activo?'<button class="danger" onclick="quitarPin()">Quitar PIN</button>':''}<button class="sec" onclick="cerrar()">Cancelar</button></div>`);
+}
+async function guardarPin(){
+  const a=$('#nPin').value, b=$('#nPin2').value;
+  if(!/^\d{4,6}$/.test(a)){ toast('El PIN debe tener de 4 a 6 números'); return; }
+  if(a!==b){ toast('Los PIN no son iguales'); return; }
+  const sal = [...crypto.getRandomValues(new Uint8Array(16))].map(b=>b.toString(16).padStart(2,'0')).join('');
+  S.seguridad = {sal, pin:''}; S.seguridad.pin = await hashPin(a);
+  guardar(); cerrar(); render(); toast('PIN activado 🔒');
+}
+function quitarPin(){ S.seguridad = null; guardar(); cerrar(); render(); toast('PIN quitado'); }
+let intentos = 0;
+function bloquear(){
+  if(!S.seguridad?.pin) return;
+  const L=$('#lock'); L.classList.remove('hidden'); document.body.style.overflow='hidden';
+  const inp=$('#pinIn'); inp.value=''; setTimeout(()=>inp.focus(),50);
+  const probar = async ()=>{
+    if(intentos>=5){ $('#pinMsg').textContent='Demasiados intentos. Espera 30 segundos.'; return; }
+    if(await hashPin(inp.value)===S.seguridad.pin){ intentos=0; L.classList.add('hidden'); document.body.style.overflow=''; $('#pinMsg').textContent=''; }
+    else { intentos++; inp.value=''; $('#pinMsg').textContent='PIN incorrecto'; if(intentos>=5) setTimeout(()=>{intentos=0;$('#pinMsg').textContent='';},30000); }
+  };
+  $('#pinBtn').onclick=probar; inp.onkeydown=e=>{ if(e.key==='Enter') probar(); };
+  $('#pinOlvide').onclick=()=>{
+    $('#pinMsg').innerHTML='Si olvidaste tu PIN, la única forma de entrar es borrar los datos de este aparato y cargar un respaldo. <button class="small danger" id="pinBorrar">Borrar datos de este aparato</button>';
+    $('#pinBorrar').onclick=()=>{ try{ localStorage.removeItem(KEY); }catch(e){} S=defaults(); L.classList.add('hidden'); document.body.style.overflow=''; render(); toast('Datos borrados. Puedes cargar tu respaldo en Más.'); };
+  };
+}
+let oculta = 0;
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden') oculta=Date.now(); else if(oculta && Date.now()-oculta>5*60*1000){ oculta=0; bloquear(); } });
+
+function avisoRespaldo(){
+  const hay = S.clientas.length || S.perfumes.length;
+  const ult = S.ultimoRespaldo ? dias(S.ultimoRespaldo) : 999;
+  return hay && ult>=14 ? `<div class="card aviso"><h3>💾 Haz un respaldo</h3><p class="muted">${S.ultimoRespaldo?`Tu último respaldo fue hace ${ult} días.`:'Todavía no has guardado un respaldo.'} Tus datos viven en este aparato; si se pierde o se borra, el respaldo los recupera.</p><button class="small" onclick="exportar()">⬇️ Descargar respaldo</button></div>` : '';
+}
+
+try{ navigator.storage && navigator.storage.persist && navigator.storage.persist(); }catch(e){}
+if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost')){ window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{})); }
+
+render();
+bloquear();
+conectarNube();
+</script>
+</body>
+</html>
