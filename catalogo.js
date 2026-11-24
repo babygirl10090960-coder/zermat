@@ -1,0 +1,98 @@
+/* Catálogo de fragancias Zermat USA.
+   Precios, notas y fotos tomados de zermatusa.com el 23 de noviembre de 2026 (precio de lista, sin promociones).
+   Cada campaña cambia: revisa los precios en tu catálogo y corrígelos aquí.
+
+   para:  'dama' | 'caballero' | 'todos'
+   tipo:  'EDP' (Eau de Parfum, dura más) | 'EDT' (Eau de Toilette, más ligera)
+   fam:   qué tan fuerte es cada familia de aroma (1 a 3). Familias:
+          citrico, acuatico, aromatico (lavanda, hierbas), floral, frutal, dulce (vainilla, chocolate),
+          amaderado, oriental (especias, ámbar, cuero, oud)
+   int:   intensidad 1 suave · 2 media · 3 intensa
+   foto:  archivo en img/productos/ */
+window.CATALOGO = [
+  /* ── Dama ── */
+  { id:'caribe', nombre:'Caribe', para:'dama', tipo:'EDP', precio:59.90, int:2,
+    fam:{frutal:3, floral:2, citrico:1}, notas:'Frutas tropicales, jazmín, hibisco, almizcle y ámbar', handle:'caribe-eau-de-parfum' },
+  { id:'caribe-rose', nombre:'Caribe Rose', para:'dama', tipo:'EDP', precio:59.90, int:2,
+    fam:{floral:3, frutal:1}, notas:'Rosa, peonía, jazmín, lirio y almizcle', handle:'caribe-rose-eau-de-parfum' },
+  { id:'amorel', nombre:'Amorel', para:'dama', tipo:'EDP', precio:56.90, int:2,
+    fam:{frutal:3, floral:2, dulce:1}, notas:'Mandarina, frambuesa, rosa y azahar', handle:'amorel-eau-de-parfum' },
+  { id:'status-dama', nombre:'Status para dama', para:'dama', tipo:'EDP', precio:49.90, int:2,
+    fam:{floral:3, oriental:1}, notas:'Rosa, violeta y clavel', handle:'status-eau-de-parfum' },
+  { id:'feelings-dreamy', nombre:'Feelings Be Dreamy', para:'dama', tipo:'EDP', precio:24.90, int:1,
+    fam:{frutal:2, floral:2, dulce:2, citrico:1}, notas:'Mandarina, piña, ylang-ylang, flor de loto y vainilla', handle:'feelings-be-dreamy-eau-de-parfum' },
+  { id:'eiffel', nombre:'Eiffel', para:'dama', tipo:'EDP', precio:44.90, int:2,
+    fam:{floral:3}, notas:'Rosa, jazmín y almizcle', handle:'eiffel-eau-de-parfum' },
+  { id:'eiffel-night', nombre:'Eiffel Night', para:'dama', tipo:'EDP', precio:44.90, int:2,
+    fam:{floral:2, frutal:2, dulce:2}, notas:'Mandarina, jazmín y avellana cremosa', handle:'eiffel-night-eau-de-parfum' },
+  { id:'diamant', nombre:'Diamant', para:'dama', tipo:'EDP', precio:65.90, int:3,
+    fam:{floral:3, frutal:2, dulce:1, amaderado:1}, notas:'Lichi, frutos rojos, pera, rosa, caramelo, vainilla y sándalo', handle:'diamant-eau-de-parfum' },
+  { id:'alicia', nombre:'Alicia by Alicia Machado', para:'dama', tipo:'EDP', precio:56.90, int:2,
+    fam:{citrico:2, floral:2, dulce:2, oriental:1}, notas:'Naranja, bergamota, rosa, jazmín, haba tonka y vainilla', handle:'alicia-by-alicia-machado-eau-de-parfum' },
+  { id:'stefanni', nombre:'Stefanni', para:'dama', tipo:'EDP', precio:47.90, int:2,
+    fam:{citrico:2, floral:2}, notas:'Bergamota, toronja, jazmín, rosa y ámbar', handle:'stefanni-eau-de-parfum' },
+  { id:'pink-charm', nombre:'Pink Charm', para:'dama', tipo:'EDP', precio:54.90, int:3,
+    fam:{dulce:3, frutal:2}, notas:'Piña, fresas con crema y caramelo', handle:'pink-charm-eau-de-parfum' },
+  { id:'secret-jungle', nombre:'Secret Jungle', para:'dama', tipo:'EDP', precio:54.90, int:2,
+    fam:{frutal:3, dulce:2, floral:1}, notas:'Cereza jugosa, flores luminosas y vainilla', handle:'fragancia-dama-secret-jungle-100-ml' },
+  { id:'sweet-cherry', nombre:'Sweet Cherry & Chocolat', para:'dama', tipo:'EDP', precio:43.90, int:3,
+    fam:{dulce:3, frutal:2}, notas:'Cereza, grosella, azahar, chocolate y vainilla', handle:'sweet-cherry-and-chocolat-eau-de-parfum' },
+  { id:'girl-blush', nombre:'Girl Blush', para:'dama', tipo:'EDP', precio:44.90, int:2,
+    fam:{dulce:2, frutal:2, floral:1}, notas:'Granada, fresia, chocolate blanco, jazmín y vainilla', handle:'girl-blush-eau-de-parfum' },
+  { id:'latin-passion', nombre:'Latin Passion', para:'dama', tipo:'EDP', precio:59.90, int:3,
+    fam:{frutal:2, oriental:2, floral:1}, notas:'Frutos rojos, especias, jazmín, rosa y ámbar', handle:'latin-passion-eau-de-parfum' },
+  { id:'seduccion', nombre:'Seducción Senzuel', para:'dama', tipo:'EDP', precio:39.90, int:2,
+    fam:{floral:3, amaderado:1}, notas:'Lirio de los valles, rosa y sándalo', handle:'seduccion-senzuel-eau-de-parfum' },
+  { id:'radiance', nombre:'Radiance Vivaze', para:'dama', tipo:'EDP', precio:39.90, int:1,
+    fam:{frutal:2, floral:2, citrico:1}, notas:'Manzana, jazmín y cedro', handle:'radiance-vivaze-eau-de-parfum' },
+
+  /* ── Caballero ── */
+  { id:'status-caballero', nombre:'Status para caballero', para:'caballero', tipo:'EDT', precio:56.90, int:2,
+    fam:{aromatico:3, amaderado:2, citrico:1}, notas:'Menta, lavanda, romero, geranio, sándalo y cedro', handle:'status-eau-de-toilette' },
+  { id:'sky-line', nombre:'Sky Line', para:'caballero', tipo:'EDT', precio:59.90, int:2,
+    fam:{citrico:3, aromatico:2, amaderado:2, acuatico:1}, notas:'Toronja rosa, bergamota, manzana verde, lavanda, cedro y vetiver', handle:'sky-line-eau-de-toilette' },
+  { id:'kiwi-ocean', nombre:'Kiwi Ocean', para:'caballero', tipo:'EDT', precio:59.90, int:1,
+    fam:{acuatico:3, frutal:2, citrico:1}, notas:'Kiwi, notas marinas, bergamota, sandía y almizcle', handle:'kiwi-ocean-eau-de-toilette-travel-mini' },
+  { id:'kiwi-urban', nombre:'Kiwi Urban', para:'caballero', tipo:'EDT', precio:59.90, int:2,
+    fam:{aromatico:2, oriental:2, amaderado:2, citrico:1}, notas:'Toronja, lavanda, romero, azafrán, cardamomo, oud y cedro', handle:'kiwi-urban-eau-de-toilette-and-miniature' },
+  { id:'player', nombre:'Player', para:'caballero', tipo:'EDP', precio:59.90, int:3,
+    fam:{citrico:2, oriental:2, amaderado:2, frutal:1}, notas:'Bergamota, lima, melón, canela, pimienta negra y sándalo', handle:'player-eau-de-parfum' },
+  { id:'player-intense', nombre:'Player Intense', para:'caballero', tipo:'EDT', precio:59.90, int:2,
+    fam:{citrico:2, acuatico:2, amaderado:2}, notas:'Bergamota, lima, notas ozónicas, palo de rosa, cedro y ámbar', handle:'player-intense-eau-de-toilette' },
+  { id:'under-control', nombre:'Under Control', para:'caballero', tipo:'EDT', precio:40.90, int:2,
+    fam:{acuatico:2, citrico:1, oriental:1, dulce:1}, notas:'Notas marinas, toronja, pimienta negra, piña y vainilla', handle:'under-control-eau-de-toilette' },
+  { id:'embleme-h', nombre:'Emblème para caballero', para:'caballero', tipo:'EDT', precio:66.90, int:3,
+    fam:{aromatico:2, amaderado:2, dulce:1, frutal:1}, notas:'Bergamota, grosella negra, lavanda, pachulí y vainilla', handle:'embleme-eau-de-toilette' },
+  { id:'million', nombre:'Million Senzuel', para:'caballero', tipo:'EDT', precio:39.90, int:3,
+    fam:{oriental:3, amaderado:2, citrico:1}, notas:'Mandarina, maderas cálidas y cuero', handle:'million-senzuel-eau-de-toilette' },
+  { id:'aventure', nombre:'Aventure Vivaze', para:'caballero', tipo:'EDT', precio:39.90, int:1,
+    fam:{citrico:2, aromatico:2, amaderado:1}, notas:'Bergamota, lavanda y cedro', handle:'aventure-vivaze-eau-de-toilette' },
+  { id:'feelings-strong', nombre:'Feelings Be Strong', para:'caballero', tipo:'EDP', precio:24.90, int:1,
+    fam:{citrico:2, aromatico:2, amaderado:1}, notas:'Bergamota, toronja, lavanda, geranio y vetiver', handle:'feelings-be-strong-eau-de-parfum' },
+
+  /* ── Para todos (colección Deluxe y unisex) ── */
+  { id:'kiwi', nombre:'Kiwi', para:'todos', tipo:'EDT', precio:59.90, int:1,
+    fam:{citrico:3, amaderado:1}, notas:'Lima, bergamota y cedro', handle:'kiwi-eau-de-toilette-travel-mini' },
+  { id:'soul', nombre:'Soul', para:'todos', tipo:'EDP', precio:59.90, int:2,
+    fam:{citrico:2, floral:2}, notas:'Bergamota, toronja, jazmín, rosa y ámbar', handle:'soul-eau-de-parfum-travel-mini' },
+  { id:'spiced-vanilla', nombre:'Spiced Vanilla Deluxe', para:'todos', tipo:'EDP', precio:44.90, int:3,
+    fam:{dulce:3, oriental:3, amaderado:1}, notas:'Especias, tabaco, jengibre, vainilla, cacao y haba tonka', handle:'spiced-vanilla-deluxe-eau-de-parfum' },
+  { id:'boise-santal', nombre:'Boisé de Santal Deluxe', para:'todos', tipo:'EDP', precio:44.90, int:3,
+    fam:{amaderado:3, oriental:2, aromatico:1}, notas:'Pimienta, bergamota, lavanda, sándalo, ámbar y haba tonka', handle:'boise-de-santal-deluxe-eau-de-parfum' },
+  { id:'vent-bleu', nombre:'Vent Bleu Deluxe', para:'todos', tipo:'EDP', precio:44.90, int:2,
+    fam:{citrico:2, aromatico:2, amaderado:2, acuatico:1}, notas:'Bergamota, lima, manzana, lavanda, cedro y abeto', handle:'vent-bleu-deluxe-eau-de-parfum' },
+  { id:'oud-noir', nombre:'Oud Noir Deluxe', para:'todos', tipo:'EDP', precio:44.90, int:3,
+    fam:{oriental:3, amaderado:3}, notas:'Nuez moscada, oud, pachulí, incienso y ámbar', handle:'oud-noir-deluxe-eau-de-parfum' },
+  { id:'enigmatique', nombre:'Enigmatique Cuir Deluxe', para:'todos', tipo:'EDP', precio:44.90, int:3,
+    fam:{oriental:3, amaderado:2, floral:1}, notas:'Cuero negro, cardamomo, pachulí, jazmín y ámbar', handle:'enigmatique-cuir-deluxe-eau-de-parfum' },
+  { id:'mystique-angel', nombre:'Mystique Angel Deluxe', para:'todos', tipo:'EDP', precio:44.90, int:3,
+    fam:{dulce:3, oriental:2, floral:1}, notas:'Coñac, canela, vainilla, jazmín, sándalo y haba tonka', handle:'mystique-angel-deluxe-eau-de-parfum' },
+  { id:'fleur-amour', nombre:'Fleur de Amour Deluxe', para:'todos', tipo:'EDP', precio:44.90, int:2,
+    fam:{dulce:2, floral:2, frutal:1}, notas:'Neroli, malvavisco, almendra, azahar, frambuesa y vainilla', handle:'fleur-de-amour-deluxe-eau-de-parfum' },
+  { id:'cerise-sucree', nombre:'Cerise Sucrée Deluxe', para:'todos', tipo:'EDP', precio:44.90, int:3,
+    fam:{dulce:3, frutal:2, oriental:1}, notas:'Cereza, rosa, canela, almendra, vainilla y clavo', handle:'cerise-sucree-deluxe-eau-de-parfum' },
+  { id:'safran-rouge', nombre:'Safran Rouge Deluxe', para:'todos', tipo:'EDP', precio:44.90, int:3,
+    fam:{oriental:3, floral:2}, notas:'Azafrán, ámbar, flores blancas, almizcle y musgo', handle:'safran-rouge-deluxe-eau-de-parfum' },
+  { id:'vibrant-velvet', nombre:'Vibrant Velvet Deluxe', para:'todos', tipo:'EDP', precio:44.90, int:2,
+    fam:{frutal:2, citrico:2, dulce:1}, notas:'Limón siciliano, maracuyá, naranja, almizcle y vainilla', handle:'vibrant-velvet-deluxe-eau-de-parfum' }
+];

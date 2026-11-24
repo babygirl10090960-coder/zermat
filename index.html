@@ -101,18 +101,30 @@ section{padding-block:80px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
 .prod{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .2s, transform .2s}
 .prod:hover{box-shadow:0 14px 34px rgba(91,26,67,.12);transform:translateY(-2px)}
-.prod .arte{aspect-ratio:1/1;display:grid;place-items:center}
-.prod .arte svg{width:62%;height:auto;filter:drop-shadow(0 14px 18px rgba(42,15,34,.25))}
+.prod .arte{aspect-ratio:1/1;display:grid;place-items:center;background:#fff;border-bottom:1px solid var(--line);position:relative}
+.prod .arte{overflow:hidden}
+.prod .arte img{width:100%;height:100%;object-fit:contain;transform:scale(1.22);transition:transform .3s}
+.prod:hover .arte img{transform:scale(1.3)}
+.prod .tipo{position:absolute;top:10px;left:10px;background:var(--blush);color:var(--wine);font-size:.72rem;font-weight:600;border-radius:99px;padding:3px 9px}
 .prod .info{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
-.prod h3{font-size:1.35rem}
-.prod .para{font-size:.82rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.prod h3{font-size:1.3rem}
+.prod .para{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.prod .notas{font-size:.88rem;color:var(--muted);margin:0;line-height:1.4}
+.prod .precio{font-family:var(--display);font-size:1.35rem;color:var(--wine);font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chips span{font-size:.74rem;background:var(--paper);border:1px solid var(--line);border-radius:99px;padding:2px 8px;white-space:nowrap}
+.filtros.fam{margin-top:-12px;margin-bottom:22px}
+.filtros.fam button{font-size:.86rem;padding:7px 12px}
+.precios-nota{font-size:.82rem;color:var(--muted);margin:18px 0 0}
 .prod .acc{display:flex;gap:8px;margin-top:auto;padding-top:10px;flex-wrap:wrap}
 .prod .acc .btn{padding:10px 14px;font-size:.9rem;flex:1}
 @media (max-width:560px){
   .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
   .prod .info{padding:12px 12px 14px}
-  .prod h3{font-size:1.08rem}
-  .prod .para{font-size:.7rem}
+  .prod h3{font-size:1.05rem}
+  .prod .para{font-size:.68rem}
+  .prod .notas{display:none}
+  .prod .precio{font-size:1.15rem}
   .prod .acc{flex-direction:column;gap:6px}
   .prod .acc .btn{padding:9px 10px;font-size:.85rem}
 }
@@ -148,6 +160,77 @@ section{padding-block:80px}
 .beneficios .i{flex:none;width:40px;height:40px;border-radius:12px;background:var(--blush);display:grid;place-items:center;font-size:1.2rem}
 .beneficios b{display:block}
 .beneficios small{color:var(--muted);font-size:.92rem}
+
+/* Test de personalidad olfativa */
+.test{background:radial-gradient(900px 420px at 10% 0%, #fde3ec 0%, transparent 60%),var(--blush)}
+.test-caja{max-width:860px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:28px;box-shadow:0 24px 60px rgba(91,26,67,.10);padding:clamp(20px,4vw,44px);min-height:420px}
+.test-intro{text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px}
+.test-intro h2{font-size:clamp(2rem,4.4vw,3.2rem)}
+.test-intro p{color:var(--muted);max-width:52ch;margin:0}
+.almas-mini{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;font-size:.9rem}
+.almas-mini span{background:var(--blush);border-radius:99px;padding:6px 12px}
+.prog{display:flex;align-items:center;gap:12px;margin-bottom:22px;font-size:.88rem;color:var(--muted)}
+.prog .barra{flex:1;height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.prog .barra i{display:block;height:100%;background:linear-gradient(90deg,var(--rose),var(--gold));border-radius:99px;transition:width .35s ease}
+.preg h3{font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:6px}
+.preg .ayuda{color:var(--muted);margin:0 0 18px;font-size:.95rem}
+.ops{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px;margin-top:16px}
+.op{display:flex;align-items:center;gap:12px;text-align:left;font:500 1rem var(--body);color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:16px;padding:14px 16px;cursor:pointer;transition:border-color .15s, background .15s, transform .15s;min-height:60px}
+.op:hover{border-color:var(--rose-2);transform:translateY(-1px)}
+.op[aria-pressed="true"]{border-color:var(--rose);background:var(--blush);color:var(--wine);font-weight:600}
+.op .e{font-size:1.6rem;flex:none;width:36px;text-align:center}
+.test-nav{display:flex;justify-content:space-between;margin-top:20px}
+.lnk{background:none;border:0;color:var(--wine);font:600 .95rem var(--body);cursor:pointer;padding:8px 4px;text-decoration:underline;text-underline-offset:3px}
+.res-head{text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;margin-bottom:26px}
+.res-head .em{font-size:3.4rem;line-height:1}
+.res-head h2{font-size:clamp(2rem,4.6vw,3.2rem)}
+.res-head p{color:var(--muted);max-width:56ch;margin:0}
+.res-head .tags{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.res-head .tags span{background:var(--blush);color:var(--wine);border-radius:99px;padding:5px 12px;font-size:.88rem}
+.ganador{display:grid;grid-template-columns:220px 1fr;gap:22px;align-items:center;background:linear-gradient(135deg,#fff 0%,var(--blush) 100%);border:1.5px solid var(--rose-2);border-radius:22px;padding:18px}
+.ganador img{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;object-position:center;background:#fff;border-radius:16px;transform:none}
+.ganador .match{display:inline-block;background:var(--wine);color:#fff;border-radius:99px;padding:4px 12px;font-size:.85rem;font-weight:600}
+.ganador h3{font-size:clamp(1.6rem,3.4vw,2.2rem);margin:8px 0 4px}
+.ganador p{margin:4px 0;color:var(--muted)}
+@media (max-width:620px){.ganador{grid-template-columns:1fr}.ganador img{max-width:180px;margin:0 auto}}
+.mini-sub{font-family:var(--display);font-size:1.3rem;margin:28px 0 12px}
+.alts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px}
+.alt{display:flex;gap:12px;align-items:center;border:1px solid var(--line);border-radius:16px;padding:10px;background:#fff}
+.alt img{width:76px;height:76px;object-fit:contain;flex:none;border-radius:10px;background:#fff}
+.alt b{display:block;font-family:var(--display);font-size:1.05rem}
+.alt small{color:var(--muted);display:block}
+.alt .lbl{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--rose);font-weight:600}
+.consejos{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.consejos li{display:flex;gap:10px;background:var(--paper);border-radius:14px;padding:12px 14px;font-size:.97rem}
+.consejos li::before{content:"✦";color:var(--gold);flex:none}
+.res-cta{margin-top:28px;background:var(--plum);color:#fff;border-radius:22px;padding:22px}
+.res-cta h3{font-size:1.5rem;margin-bottom:4px}
+.res-cta p{opacity:.85;margin:0 0 14px}
+.res-cta .campo label{color:#e9d6e0}
+.res-acc{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px}
+.ciencia{font-size:.82rem;color:var(--muted);text-align:center;max-width:62ch;margin:18px auto 0}
+
+/* Temporadas */
+.temps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media (max-width:980px){.temps{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.temps{grid-template-columns:1fr}}
+.temp{border-radius:var(--r);padding:20px;border:1px solid var(--line);background:#fff;display:flex;flex-direction:column;gap:8px}
+.temp .t{display:flex;align-items:center;gap:10px}
+.temp .t span{font-size:1.8rem}
+.temp h3{font-size:1.35rem}
+.temp p{margin:0;color:var(--muted);font-size:.94rem}
+.temp ul{list-style:none;padding:0;margin:6px 0 0;display:grid;gap:6px}
+.temp li{display:flex;align-items:center;gap:10px;font-size:.93rem}
+.temp li img{width:42px;height:42px;object-fit:contain;border-radius:8px;background:var(--paper)}
+.temp.verano{background:linear-gradient(180deg,#fff7e0,#fff)}
+.temp.primavera{background:linear-gradient(180deg,#fdeef4,#fff)}
+.temp.otono{background:linear-gradient(180deg,#f8ebdf,#fff)}
+.temp.invierno{background:linear-gradient(180deg,#eaeefa,#fff)}
+.reglas{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}
+@media (max-width:800px){.reglas{grid-template-columns:1fr}}
+.reglas div{background:var(--blush);border-radius:var(--r);padding:18px}
+.reglas b{display:block;font-family:var(--display);font-size:1.15rem;margin-bottom:4px}
+.reglas p{margin:0;color:var(--muted);font-size:.94rem}
 
 /* Mayoreo */
 .mayoreo{background:var(--plum);color:#fff;position:relative;overflow:hidden}
@@ -195,8 +278,9 @@ footer .legal{opacity:.7;max-width:60ch}
   <div class="wrap">
     <a class="logo" href="#inicio"><img src="icons/icon-192.png" alt="" width="34" height="34"><span id="marca">Fragancias Araceli</span></a>
     <nav aria-label="Secciones">
+      <a href="#aroma">Test de aroma</a>
       <a href="#fragancias">Fragancias</a>
-      <a href="#aroma">Muestra gratis</a>
+      <a href="#temporadas">Temporadas</a>
       <a href="#mayoreo">Mayoreo</a>
       <a href="#equipo">Vende conmigo</a>
     </nav>
@@ -212,11 +296,11 @@ footer .legal{opacity:.7;max-width:60ch}
         <h1>Fragancias que <em>se quedan</em> contigo.</h1>
         <p class="lead">Perfumes y cosméticos con entrega en Pilsen, La Villita y todo el sur de Chicago. Pruébalos antes de comprar: te regalo tu muestra.</p>
         <div class="ctas">
-          <a class="btn btn-rose" href="#aroma">Quiero mi muestra gratis</a>
+          <a class="btn btn-rose" href="#aroma">Descubre tu aroma en 1 minuto</a>
           <a class="btn btn-ghost" href="#fragancias">Ver fragancias</a>
         </div>
         <ul class="trust">
-          <li>Muestras gratis</li><li>Entrega a domicilio</li><li>Pagos en quincenas</li>
+          <li>Test de personalidad</li><li>Muestras gratis</li><li>Pagos en quincenas</li>
         </ul>
       </div>
       <div class="hero-img">
@@ -229,14 +313,17 @@ footer .legal{opacity:.7;max-width:60ch}
   <section id="fragancias">
     <div class="wrap">
       <div class="sec-head">
-        <div><p class="eyebrow">Catálogo</p><h2>Encuentra tu fragancia</h2><p>Pregúntame el precio del mes y las promociones. Cada catálogo trae ofertas nuevas.</p></div>
+        <div><p class="eyebrow">Catálogo</p><h2>Encuentra tu fragancia</h2><p>40 fragancias Zermat para dama, caballero y para todos. Filtra por el tipo de aroma que te gusta.</p></div>
         <div class="filtros" role="group" aria-label="Filtrar fragancias">
           <button type="button" data-f="todas" aria-pressed="true">Todas</button>
           <button type="button" data-f="dama" aria-pressed="false">Dama</button>
           <button type="button" data-f="caballero" aria-pressed="false">Caballero</button>
+          <button type="button" data-f="todos" aria-pressed="false">Para todos</button>
         </div>
       </div>
+      <div class="filtros fam" role="group" aria-label="Filtrar por tipo de aroma" id="filtroFam"></div>
       <div class="grid" id="productos"></div>
+      <p class="precios-nota" id="preciosNota"></p>
     </div>
   </section>
 
@@ -251,44 +338,30 @@ footer .legal{opacity:.7;max-width:60ch}
     </div>
   </section>
 
-  <section id="aroma">
-    <div class="wrap quiz">
-      <div>
-        <p class="eyebrow">Muestra gratis</p>
-        <h2 style="font-size:clamp(1.9rem,3.6vw,2.8rem)">Dime qué te gusta y te recomiendo tu aroma</h2>
-        <p style="color:var(--muted)">Contesta tres preguntas. Te escribo por WhatsApp con mis recomendaciones y te llevo tu muestra.</p>
-        <ul class="beneficios">
-          <li><span class="i" aria-hidden="true">🎁</span><div><b>Sin costo</b><small>La muestra es gratis y sin compromiso.</small></div></li>
-          <li><span class="i" aria-hidden="true">💳</span><div><b>Pagos cómodos</b><small>Aparta con un anticipo y paga en quincenas.</small></div></li>
-          <li><span class="i" aria-hidden="true">🚗</span><div><b>Entrega en tu zona</b><small>Pilsen, La Villita, Back of the Yards, Cicero y más.</small></div></li>
-        </ul>
-      </div>
-      <form class="panel" id="fMuestra" novalidate>
-        <fieldset><legend>¿Para quién es?</legend><div class="opciones">
-          <label><input type="radio" name="para" value="Para mí" checked><span>Para mí</span></label>
-          <label><input type="radio" name="para" value="Regalo para dama"><span>Regalo para dama</span></label>
-          <label><input type="radio" name="para" value="Regalo para caballero"><span>Regalo para caballero</span></label>
-        </div></fieldset>
-        <fieldset><legend>¿Qué aromas te gustan?</legend><div class="opciones">
-          <label><input type="checkbox" name="aroma" value="Dulce"><span>🍬 Dulce</span></label>
-          <label><input type="checkbox" name="aroma" value="Floral"><span>🌸 Floral</span></label>
-          <label><input type="checkbox" name="aroma" value="Fresco"><span>🌊 Fresco</span></label>
-          <label><input type="checkbox" name="aroma" value="Frutal"><span>🍓 Frutal</span></label>
-          <label><input type="checkbox" name="aroma" value="Amaderado"><span>🌲 Amaderado</span></label>
-          <label><input type="checkbox" name="aroma" value="No sé"><span>🤔 No sé</span></label>
-        </div></fieldset>
-        <fieldset><legend>¿Para cuándo?</legend><div class="opciones">
-          <label><input type="radio" name="uso" value="Diario" checked><span>Diario</span></label>
-          <label><input type="radio" name="uso" value="Salir de noche"><span>Salir de noche</span></label>
-          <label><input type="radio" name="uso" value="Un regalo especial"><span>Un regalo especial</span></label>
-        </div></fieldset>
-        <div class="campos">
-          <div class="campo"><label for="mNom">Tu nombre</label><input id="mNom" name="nombre" autocomplete="given-name" required></div>
-          <div class="campo"><label for="mZona">Tu zona</label><select id="mZona" name="zona"></select></div>
+  <section id="aroma" class="test">
+    <div class="wrap">
+      <div class="test-caja" id="test" aria-live="polite">
+        <div class="test-intro">
+          <p class="eyebrow">Test de personalidad olfativa</p>
+          <h2>¿Cuál es tu alma aromática?</h2>
+          <p>Contesta 9 preguntas sobre ti y te digo qué fragancia Zermat va con tu personalidad, cuál usar en verano y cuál en invierno, y cómo ponértela para que dure.</p>
+          <div class="almas-mini" id="almasMini"></div>
+          <button class="btn btn-rose" type="button" id="empezar" style="margin-top:8px">Empezar el test · 1 minuto</button>
+          <p class="nota">Gratis. Al final te regalo una muestra de tu fragancia.</p>
         </div>
-        <button class="btn btn-wa" type="submit" style="width:100%">Pedir mi muestra por WhatsApp</button>
-        <p class="nota">Se abre WhatsApp con tu mensaje listo. Tus datos solo los ve Araceli.</p>
-      </form>
+      </div>
+    </div>
+  </section>
+
+  <section id="temporadas" aria-labelledby="t-temp">
+    <div class="wrap">
+      <div class="sec-head"><div><p class="eyebrow">Guía de temporadas</p><h2 id="t-temp">Tu perfume según el clima</h2><p>En Chicago pasamos del calor al frío fuerte. El mismo perfume no se siente igual: el calor lo hace más intenso y el frío lo apaga.</p></div></div>
+      <div class="temps" id="temps"></div>
+      <div class="reglas">
+        <div><b>De día y para trabajar</b><p>Eau de Toilette o aromas frescos: cítricos, acuáticos y florales ligeros. 2 o 3 disparos.</p></div>
+        <div><b>De noche y para salir</b><p>Eau de Parfum con notas cálidas: vainilla, especias, ámbar y maderas. Póntelo 15 minutos antes.</p></div>
+        <div><b>Para que dure más</b><p>En piel hidratada, sin frotar las muñecas. En invierno, también en la bufanda o el abrigo.</p></div>
+      </div>
     </div>
   </section>
 
@@ -339,6 +412,7 @@ footer .legal{opacity:.7;max-width:60ch}
       <div class="sec-head"><div><p class="eyebrow">Preguntas</p><h2 id="t-faq">Lo que más me preguntan</h2></div></div>
       <div class="faq">
         <details><summary>¿Los productos son originales?</summary><p>Sí. Soy distribuidora independiente y compro directamente a Zermat.</p></details>
+        <details><summary>¿Los precios son los de Zermat?</summary><p>Sí, son los precios de lista de Zermat USA. Pregúntame por las promociones del mes y por pagos en quincenas.</p></details>
         <details><summary>¿Cuánto cuesta la muestra?</summary><p>Nada. Te regalo una muestra para que pruebes el aroma antes de comprar.</p></details>
         <details><summary>¿Cómo puedo pagar?</summary><p>Escríbeme y te digo las formas de pago. Puedes apartar con un anticipo y pagar el resto en quincenas.</p></details>
         <details><summary>¿A dónde entregan?</summary><p id="faqZonas">Entrego en Pilsen, La Villita y otras zonas de Chicago.</p></details>
@@ -361,67 +435,165 @@ footer .legal{opacity:.7;max-width:60ch}
 <a class="flotante" data-wa="Hola Araceli 🌸 Vi tu página y quiero información." href="#" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp"><svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.7 11.7 0 0 0 4.5 4c1.7.7 2.3.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.5-.3Z"/></svg></a>
 
 <script src="config.js"></script>
+<script src="catalogo.js"></script>
+<script src="perfil.js"></script>
 <script>
 (function(){
-  const T = window.TIENDA, $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+  const T = window.TIENDA, C = window.CATALOGO, P = window.PERFIL;
+  const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
   document.documentElement.classList.add('js');
   const params = new URLSearchParams(location.search);
   const origen = (params.get('src') || params.get('utm_source') || '').replace(/[^\w-]/g,'').slice(0,30);
   const num = (T.pais || '') + T.whatsapp;
   const wa = t => 'https://wa.me/' + num + '?text=' + encodeURIComponent(t);
   const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const precio = p => T.mostrarPrecios !== false && p.precio ? '$' + p.precio.toFixed(2) : '';
+  const foto = p => `img/productos/${p.id}.webp`;
+  const etiqueta = { dama:'Para dama', caballero:'Para caballero', todos:'Para todos' };
+  const famTop = p => Object.keys(p.fam).sort((a, b) => p.fam[b] - p.fam[a]).slice(0, 2);
+  const conOrigen = t => t + (origen ? '\nOrigen: ' + origen : '');
 
   $$('[data-wa]').forEach(a => a.href = wa(a.dataset.wa));
   $('#marca').textContent = $('#marcaPie').textContent = T.marca;
   $('#telPie').textContent = T.telefonoVisible;
   const opcZonas = T.zonas.map(z => `<option>${esc(z)}</option>`).join('') + '<option>Otra zona de Chicago</option>';
-  $('#mZona').innerHTML = $('#nZona').innerHTML = opcZonas;
+  $('#nZona').innerHTML = opcZonas;
   $('#zonas').innerHTML = T.zonas.map(z => `<span>${esc(z)}</span>`).join('');
   $('#faqZonas').textContent = 'Entrego en ' + T.zonas.slice(0,-1).join(', ') + ' y ' + T.zonas.at(-1) + '. Si estás en otra zona de Chicago, pregúntame.';
 
-  /* Frascos ilustrados: color y forma salen del nombre, así cada fragancia se ve distinta */
-  function hash(s){ let h = 0; for (const c of s) h = (h * 31 + c.charCodeAt(0)) >>> 0; return h; }
-  function frasco(nombre, para){
-    const h = hash(nombre + para), tono = para === 'caballero' ? 200 + h % 60 : para === 'dama' ? (320 + h % 70) % 360 : 25 + h % 40;
-    const c1 = `hsl(${tono} 60% 72%)`, c2 = `hsl(${tono} 55% 45%)`, fondo = `hsl(${tono} 60% 94%)`, forma = h % 3, id = 'g' + h;
-    const cuerpo = forma === 0 ? '<rect x="38" y="62" width="84" height="104" rx="16"/>'
-      : forma === 1 ? '<path d="M80 60c30 0 46 22 46 56s-18 52-46 52-46-18-46-52 16-56 46-56Z"/>'
-      : '<path d="M48 62h64l12 96a10 10 0 0 1-10 10H46a10 10 0 0 1-10-10Z"/>';
-    return { fondo, svg: `<svg viewBox="0 0 160 180" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient></defs>
-      <rect x="68" y="26" width="24" height="16" rx="3" fill="#d9c08d"/><rect x="60" y="10" width="40" height="20" rx="6" fill="#2a0f22"/><rect x="72" y="40" width="16" height="24" fill="#e9dccd"/>
-      <g fill="url(#${id})">${cuerpo}</g><rect x="58" y="100" width="44" height="30" rx="4" fill="rgba(255,255,255,.85)"/><path d="M50 74c-4 20-4 40 2 60" stroke="rgba(255,255,255,.5)" stroke-width="6" stroke-linecap="round" fill="none"/></svg>` };
+  /* ── Catálogo ── */
+  const filtro = { para:'todas', fam:'' };
+  $('#filtroFam').innerHTML = `<button type="button" data-fam="" aria-pressed="true">Todos los aromas</button>` +
+    Object.entries(P.FAM).map(([k, f]) => `<button type="button" data-fam="${k}" aria-pressed="false">${f.emoji} ${f.nombre}</button>`).join('');
+  function tarjeta(p){
+    return `<article class="prod"><div class="arte"><img src="${foto(p)}" alt="Frasco de ${esc(p.nombre)}" loading="lazy" width="640" height="640"><span class="tipo">${p.tipo}</span></div><div class="info">
+      <span class="para">${etiqueta[p.para]}</span><h3>${esc(p.nombre)}</h3>
+      <div class="chips">${famTop(p).map(k => `<span>${P.FAM[k].emoji} ${P.FAM[k].nombre}</span>`).join('')}</div>
+      <p class="notas">${esc(p.notas)}</p>
+      ${precio(p) ? `<span class="precio">${precio(p)}</span>` : ''}
+      <div class="acc"><a class="btn btn-rose" target="_blank" rel="noopener" href="${wa(conOrigen(`Hola Araceli 🌸 Me interesa ${p.nombre} (${etiqueta[p.para].toLowerCase()}). ¿Lo tienes disponible?\n\n#LEAD-PRODUCTO\nProducto: ${p.nombre}`))}">Lo quiero</a>
+      <a class="btn btn-line" target="_blank" rel="noopener" href="${wa(conOrigen(`Hola Araceli 🌸 ¿Me regalas una muestra de ${p.nombre}?\n\n#LEAD-MUESTRA\nProducto: ${p.nombre}`))}">Muestra</a></div></div></article>`;
   }
-  const etiqueta = { dama: 'Para dama', caballero: 'Para caballero', '': 'Fragancia' };
-  function pintar(f){
-    const L = T.productos.filter(p => f === 'todas' || p.para === f);
-    $('#productos').innerHTML = L.map(p => { const fr = frasco(p.nombre, p.para); const desc = (p.para ? etiqueta[p.para].toLowerCase() : '');
-      return `<article class="prod"><div class="arte" style="background:${fr.fondo}">${fr.svg}</div><div class="info">
-        <span class="para">${etiqueta[p.para] || 'Fragancia'}</span><h3>${esc(p.nombre)}</h3>${p.familia ? `<span style="color:var(--muted)">${esc(p.familia)}</span>` : ''}
-        <div class="acc"><a class="btn btn-rose" target="_blank" rel="noopener" href="${wa(`Hola Araceli 🌸 Me interesa la fragancia ${p.nombre}${desc ? ' ' + desc : ''}. ¿Qué precio tiene este mes?\n\n#LEAD-PRODUCTO\nProducto: ${p.nombre}${origen ? '\nOrigen: ' + origen : ''}`)}">Pedir precio</a>
-        <a class="btn btn-line" target="_blank" rel="noopener" href="${wa(`Hola Araceli 🌸 ¿Me regalas una muestra de ${p.nombre}?\n\n#LEAD-MUESTRA\nProducto: ${p.nombre}${origen ? '\nOrigen: ' + origen : ''}`)}">Muestra</a></div></div></article>`; }).join('');
+  function pintar(){
+    const L = C.filter(p => (filtro.para === 'todas' || p.para === filtro.para) && (!filtro.fam || (p.fam[filtro.fam] || 0) >= 2));
+    $('#productos').innerHTML = L.length ? L.map(tarjeta).join('') : '<p style="color:var(--muted)">No hay fragancias con ese filtro. Prueba otro tipo de aroma.</p>';
   }
-  $$('.filtros button').forEach(b => b.onclick = () => { $$('.filtros button').forEach(x => x.setAttribute('aria-pressed', x === b)); pintar(b.dataset.f); });
-  pintar('todas');
+  $$('[data-f]').forEach(b => b.onclick = () => { $$('[data-f]').forEach(x => x.setAttribute('aria-pressed', x === b)); filtro.para = b.dataset.f; pintar(); });
+  $$('[data-fam]').forEach(b => b.onclick = () => { $$('[data-fam]').forEach(x => x.setAttribute('aria-pressed', x === b)); filtro.fam = b.dataset.fam; pintar(); });
+  pintar();
+  if (T.mostrarPrecios !== false) $('#preciosNota').textContent = 'Precios de lista de Zermat USA, sin promociones. Pueden cambiar con cada catálogo: pregúntame por las ofertas del mes.';
 
-  /* Formularios: arman un mensaje ordenado que el panel de Araceli lee solo */
+  /* ── Guía de temporadas: las 3 fragancias que mejor van con cada clima ── */
+  const TEMPS = [
+    ['verano','☀️','Verano','Cítricos, acuáticos y aromáticos. Frescos y ligeros, que no empalagan con el calor.'],
+    ['primavera','🌷','Primavera','Florales y frutales. Alegres, para estrenar de día.'],
+    ['otono','🍂','Otoño','Maderas y dulces suaves. Más cálidos, duran más en la ropa.'],
+    ['invierno','❄️','Invierno','Vainilla, especias, ámbar y oud. Envolventes, para el frío fuerte.']
+  ];
+  const coseno = (a, b) => { let s = 0, na = 0, nb = 0; for (const k in a) { s += a[k] * (b[k] || 0); na += a[k] * a[k]; } for (const k in b) nb += b[k] * b[k]; return s / Math.sqrt(na * nb || 1); };
+  const usados = new Set();
+  $('#temps').innerHTML = TEMPS.map(([k, e, n, d]) => {
+    const mejores = C.map(p => ({ p, s: coseno(P.TEMP[k], p.fam) })).sort((a, b) => b.s - a.s).map(x => x.p).filter(p => !usados.has(p.id)).slice(0, 3);
+    mejores.forEach(p => usados.add(p.id));
+    return `<div class="temp ${k}"><div class="t"><span aria-hidden="true">${e}</span><h3>${n}</h3></div><p>${d}</p>
+      <ul>${mejores.map(p => `<li><img src="${foto(p)}" alt="" loading="lazy" width="42" height="42"><span><b>${esc(p.nombre)}</b><br><small style="color:var(--muted)">${etiqueta[p.para]}</small></span></li>`).join('')}</ul></div>`;
+  }).join('');
+
+  /* ── Test de personalidad olfativa ── */
+  const caja = $('#test'), intro = caja.innerHTML;
+  $('#almasMini').innerHTML = Object.values(P.ALMAS).map(a => `<span>${a.emoji} ${a.nombre.replace('Alma ','')}</span>`).join('');
+  let resp = [], paso = 0;
+  const guardarLocal = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} };
+  const leerLocal = k => { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch(e){ return null; } };
+
+  function empezar(){ resp = []; paso = 0; pregunta(); caja.scrollIntoView({ behavior:'smooth', block:'start' }); }
+  function pregunta(){
+    const p = P.PREG[paso], total = P.PREG.length;
+    caja.innerHTML = `<div class="prog"><span>Pregunta ${paso + 1} de ${total}</span><div class="barra" role="progressbar" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${paso}"><i style="width:${paso / total * 100}%"></i></div></div>
+      <div class="preg"><h3 id="qT" tabindex="-1">${esc(p.t)}</h3>${p.ayuda ? `<p class="ayuda">${esc(p.ayuda)}</p>` : ''}
+      <div class="ops" role="group" aria-labelledby="qT">${p.op.map((o, i) => `<button type="button" class="op" data-i="${i}" aria-pressed="${resp[paso] === i}"><span class="e" aria-hidden="true">${o.e}</span><span>${esc(o.t)}</span></button>`).join('')}</div></div>
+      <div class="test-nav">${paso ? '<button type="button" class="lnk" id="atras">← Anterior</button>' : '<span></span>'}<button type="button" class="lnk" id="salir">Salir</button></div>`;
+    requestAnimationFrame(() => { const b = caja.querySelector('.barra i'); if (b) b.style.width = ((paso + 1) / total * 100) + '%'; });
+    $$('.op').forEach(b => b.onclick = () => {
+      resp[paso] = +b.dataset.i; $$('.op').forEach(x => x.setAttribute('aria-pressed', x === b));
+      setTimeout(() => { if (++paso < total) pregunta(); else resultado(); }, 220);
+    });
+    const at = $('#atras'); if (at) at.onclick = () => { paso--; pregunta(); };
+    $('#salir').onclick = () => { caja.innerHTML = intro; conectarIntro(); };
+    $('#qT').focus({ preventScroll:true });
+  }
+
+  function resultado(guardado){
+    const r = P.calcular(guardado || resp, C);
+    if (!guardado) guardarLocal('mf.test', resp);
+    const a = r.almaDatos, g = r.top3[0], alts = r.top3.slice(1);
+    const famTxt = r.famOrden.map(k => P.FAM[k].emoji + ' ' + P.FAM[k].nombre).join(' · ');
+    const tempTxt = P.NOM_TEMP[r.set.temporada];
+    const lista = [g.p, ...alts.map(x => x.p)].map(p => p.nombre).join(', ');
+    caja.innerHTML = `<div class="res-head"><p class="eyebrow">Tu resultado</p><span class="em" aria-hidden="true">${a.emoji}</span><h2 tabindex="-1" id="rT">${esc(a.nombre)}</h2>
+        <p>${esc(a.desc)}</p>
+        <div class="tags"><span>Tu perfume resalta ${esc(a.resalta)}</span><span>Tus aromas: ${esc(famTxt)}</span><span>Tus colores: ${esc(a.colores)}</span></div></div>
+      <div class="ganador"><img src="${foto(g.p)}" alt="Frasco de ${esc(g.p.nombre)}" width="640" height="640">
+        <div><span class="match">${g.pct}% de afinidad</span><h3>${esc(g.p.nombre)}</h3>
+        <p><b>${etiqueta[g.p.para]}</b> · ${g.p.tipo === 'EDP' ? 'Eau de Parfum' : 'Eau de Toilette'}${precio(g.p) ? ' · ' + precio(g.p) : ''}</p>
+        <p>Notas: ${esc(g.p.notas)}.</p>
+        <p>Por qué va contigo: combina ${famTop(g.p).map(k => P.FAM[k].nombre.toLowerCase()).join(' y ')}, justo lo que buscas, y va bien para ${esc(tempTxt)}.</p></div></div>
+      <p class="mini-sub">También te pueden encantar</p>
+      <div class="alts">${alts.map(x => `<div class="alt"><img src="${foto(x.p)}" alt="" width="76" height="76" loading="lazy"><div><span class="lbl">${x.pct}% de afinidad</span><b>${esc(x.p.nombre)}</b><small>${esc(x.p.notas)}</small></div></div>`).join('')}</div>
+      ${r.verano && r.invierno ? `<p class="mini-sub">Tu dúo para todo el año</p>
+      <div class="alts">
+        <div class="alt"><img src="${foto(r.verano)}" alt="" width="76" height="76" loading="lazy"><div><span class="lbl">☀️ Para el calor</span><b>${esc(r.verano.nombre)}</b><small>${esc(r.verano.notas)}</small></div></div>
+        <div class="alt"><img src="${foto(r.invierno)}" alt="" width="76" height="76" loading="lazy"><div><span class="lbl">❄️ Para el frío</span><b>${esc(r.invierno.nombre)}</b><small>${esc(r.invierno.notas)}</small></div></div>
+      </div>` : ''}
+      <p class="mini-sub">Consejos para ti</p>
+      <ul class="consejos">${r.consejos.map(c => `<li>${esc(c)}</li>`).join('')}</ul>
+      <form class="res-cta" id="fTest" novalidate>
+        <h3>🎁 Te regalo una muestra de ${esc(g.p.nombre)}</h3>
+        <p>Pruébala unos días en tu piel. Si te enamora, te la llevo.</p>
+        <div class="campos">
+          <div class="campo"><label for="tNom">Tu nombre</label><input id="tNom" name="nombre" autocomplete="given-name" required></div>
+          <div class="campo"><label for="tZona">Tu zona</label><select id="tZona" name="zona">${opcZonas}</select></div>
+        </div>
+        <button class="btn btn-wa" type="submit" style="width:100%">Pedir mi muestra por WhatsApp</button>
+      </form>
+      <div class="res-acc"><button type="button" class="btn btn-line" id="compartir">📤 Compartir mi resultado</button><button type="button" class="btn btn-line" id="repetir">↺ Repetir el test</button></div>
+      <p class="ciencia">Cómo funciona: tus respuestas se convierten en un perfil de personalidad (inspirado en los cinco grandes rasgos: qué tan sociable, cariñosa, curiosa, organizada o intensa eres) y en las familias de aroma que prefieres. Ese perfil se compara con las notas de cada fragancia Zermat, ajustado al clima y a la intensidad que pediste. Es una guía para saber qué probar primero: cada piel cambia el aroma, por eso te regalo la muestra.</p>`;
+    $('#rT').focus({ preventScroll:true });
+    caja.scrollIntoView({ behavior:'smooth', block:'start' });
+    $('#fTest').onsubmit = e => { e.preventDefault(); const f = e.target;
+      enviar(f, conOrigen(`Hola Araceli 🌸 Hice el test de aroma en tu página. Me salió ${a.nombre} ${a.emoji} y quiero mi muestra de ${g.p.nombre}.\n\n#LEAD-MUESTRA\nNombre: ${val(f,'nombre')}\nZona: ${val(f,'zona')}\nPara: ${etiqueta[r.set.para]}${r.set.regalo ? ' (regalo)' : ''}\nPerfil: ${a.nombre}\nAromas: ${r.famOrden.map(k => P.FAM[k].nombre).join(', ')}\nRecomendado: ${lista}\nTemporada: ${tempTxt}\nUso: ${({diario:'Diario',noche:'Noche',especial:'Ocasiones especiales',todo:'De todo'})[r.set.uso]}\nProducto: ${g.p.nombre}`)); };
+    $('#repetir').onclick = () => { guardarLocal('mf.test', null); empezar(); };
+    $('#compartir').onclick = async () => {
+      const url = (T.url || location.origin + '/') + '?src=test#aroma';
+      const texto = `Mi alma aromática es ${a.nombre} ${a.emoji} y mi fragancia es ${g.p.nombre}. ¿Cuál es la tuya? Haz el test:`;
+      try { if (navigator.share) { await navigator.share({ title:'Test de aroma', text:texto, url }); return; } } catch(e){ return; }
+      location.href = 'https://wa.me/?text=' + encodeURIComponent(texto + ' ' + url);
+    };
+  }
+  function conectarIntro(){
+    $('#almasMini').innerHTML = Object.values(P.ALMAS).map(a => `<span>${a.emoji} ${a.nombre.replace('Alma ','')}</span>`).join('');
+    $('#empezar').onclick = empezar;
+  }
+  conectarIntro();
+  const previo = leerLocal('mf.test');
+  if (Array.isArray(previo) && previo.length === P.PREG.length) resultado(previo);
+
+  /* ── Formularios: arman un mensaje ordenado que el panel de Araceli lee solo ── */
   function enviar(form, texto){
     const req = [...form.querySelectorAll('[required]')].find(i => !i.value.trim());
     if (req){ req.focus(); req.setCustomValidity('Escribe este dato'); req.reportValidity(); req.oninput = () => req.setCustomValidity(''); return; }
     window.open(wa(texto), '_blank', 'noopener') || (location.href = wa(texto));
   }
   const val = (f, n) => (f.elements[n]?.value || '').trim();
-  $('#fMuestra').onsubmit = e => { e.preventDefault(); const f = e.target;
-    const aromas = [...f.querySelectorAll('[name=aroma]:checked')].map(i => i.value).join(', ') || 'No sé';
-    enviar(f, `Hola Araceli 🌸 Quiero mi muestra gratis.\n\n#LEAD-MUESTRA\nNombre: ${val(f,'nombre')}\nZona: ${val(f,'zona')}\nPara: ${val(f,'para')}\nAromas: ${aromas}\nUso: ${val(f,'uso')}${origen ? '\nOrigen: ' + origen : ''}`); };
   $('#fMayoreo').onsubmit = e => { e.preventDefault(); const f = e.target;
-    enviar(f, `Hola Araceli 🌸 Me interesa vender fragancias en mi negocio.\n\n#LEAD-MAYOREO\nNegocio: ${val(f,'negocio')}\nTipo: ${val(f,'tipo')}\nNombre: ${val(f,'contacto')}\nZona: ${val(f,'zona')}${origen ? '\nOrigen: ' + origen : ''}`); };
+    enviar(f, conOrigen(`Hola Araceli 🌸 Me interesa vender fragancias en mi negocio.\n\n#LEAD-MAYOREO\nNegocio: ${val(f,'negocio')}\nTipo: ${val(f,'tipo')}\nNombre: ${val(f,'contacto')}\nZona: ${val(f,'zona')}`)); };
   $('#fEquipo').onsubmit = e => { e.preventDefault(); const f = e.target;
-    enviar(f, `Hola Araceli 🌸 Me interesa vender contigo desde casa.\n\n#LEAD-EQUIPO\nNombre: ${val(f,'nombre')}${origen ? '\nOrigen: ' + origen : ''}`); };
+    enviar(f, conOrigen(`Hola Araceli 🌸 Me interesa vender contigo desde casa.\n\n#LEAD-EQUIPO\nNombre: ${val(f,'nombre')}`)); };
 
   /* Aparición suave al hacer scroll (la página se ve completa aunque esto no corra) */
   if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches){
     const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting){ x.target.classList.remove('oculto'); io.unobserve(x.target); } }), { rootMargin: '0px 0px -8% 0px' });
-    $$('.sec-head, .prod, .pasos li, .panel, .ventajas li').forEach(el => { if (el.getBoundingClientRect().top > innerHeight){ el.classList.add('aparece', 'oculto'); io.observe(el); } });
+    $$('.sec-head, .pasos li, .panel, .ventajas li, .temp').forEach(el => { if (el.getBoundingClientRect().top > innerHeight){ el.classList.add('aparece', 'oculto'); io.observe(el); } });
   }
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 })();

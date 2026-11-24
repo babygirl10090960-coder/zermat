@@ -724,7 +724,7 @@ function procesarLead(){
     S.interesadas.push({id:uid(),nombre,tel,origen:'Tienda web',notas:c.origen?'origen: '+c.origen:'',etapa:'platique',fecha:hoy,ultimo:hoy});
     guardar(); cerrar(); render(); componer('r_comento',{nombre},tel);
   } else {
-    const notas=[c.zona&&'Zona: '+c.zona, c.para, c.aromas&&'Le gusta: '+c.aromas, c.uso&&'Uso: '+c.uso, c.producto&&'Preguntó por: '+c.producto, c.origen&&'Origen: '+c.origen].filter(Boolean).join(' · ');
+    const notas=[c.zona&&'Zona: '+c.zona, c.para, c.perfil&&'Test: '+c.perfil, c.aromas&&'Le gusta: '+c.aromas, c.recomendado&&'Recomendadas: '+c.recomendado, c.temporada&&'Temporada: '+c.temporada, c.uso&&'Uso: '+c.uso, c.producto&&'Preguntó por: '+c.producto, c.origen&&'Origen: '+c.origen].filter(Boolean).join(' · ');
     let cl=S.clientas.find(x=>x.nombre.toLowerCase()===nombre.toLowerCase());
     if(!cl){ cl={id:uid(),nombre,tel,notas,compras:[],muestras:[]}; S.clientas.push(cl); } else { cl.notas=[cl.notas,notas].filter(Boolean).join(' · '); if(tel&&!cl.tel) cl.tel=tel; }
     guardar(); cerrar(); render();

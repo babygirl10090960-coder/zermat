@@ -8,18 +8,6 @@ window.TIENDA = {
   zonas: ['Pilsen', 'La Villita', 'Back of the Yards', 'Brighton Park', 'Gage Park', 'Archer Heights', 'McKinley Park', 'Cicero', 'Berwyn'],
   url: 'https://mis-fragancias.onrender.com/',
 
-  /* Fragancias que se muestran en la tienda. "familia" es opcional: ponla solo si la conoces. */
-  productos: [
-    { nombre: 'Caribe',                 para: 'dama' },
-    { nombre: 'Kiwi Ocean',             para: 'dama' },
-    { nombre: 'Amorel',                 para: 'dama' },
-    { nombre: 'Status',                 para: 'dama' },
-    { nombre: 'Sentimientos Be Dreamy', para: 'dama' },
-    { nombre: 'Feelings Be Dreamy',     para: 'dama' },
-    { nombre: 'Soul',                   para: '' },
-    { nombre: 'Spiced Vanilla',         para: '' },
-    { nombre: 'Status',                 para: 'caballero' },
-    { nombre: 'Skyline',                para: 'caballero' },
-    { nombre: 'Deep Spirit',            para: 'caballero' }
-  ]
+  /* Las fragancias, precios y fotos están en catalogo.js */
+  mostrarPrecios: true          // false = esconde los precios y solo dice 'Pedir precio'
 };
