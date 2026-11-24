@@ -98,6 +98,25 @@ details summary{cursor:pointer;font-weight:600}
 .lock input{max-width:220px;text-align:center;font-size:1.6rem;letter-spacing:.5em}
 .aviso{border-left:4px solid var(--warn)}
 .lock.hidden{display:none}
+.chips button{flex:none}
+.stat span{overflow-wrap:anywhere}
+#volante{display:none}
+@media print{
+  body.imprimiendo > *:not(#volante){display:none !important}
+  body.imprimiendo{padding:0;background:#fff}
+  body.imprimiendo #volante{display:block}
+  .vol{font-family:system-ui,sans-serif;color:#2b1d24;text-align:center;padding:10mm 12mm}
+  .vol-top{font-size:16pt;color:#b0476f;margin:0}
+  .vol h1{font-size:30pt;margin:6mm 0}
+  .vol ul{list-style:none;padding:0;font-size:16pt;line-height:1.7;margin:0}
+  .vol ul li::before{content:"✔ ";color:#b0476f}
+  .vol-qr{width:60mm;margin:8mm auto 2mm}
+  .vol-qr svg{width:100%;height:auto}
+  .vol-cta{font-size:12pt;margin:0}
+  .vol-yo{font-size:18pt;font-weight:700;margin:4mm 0 8mm}
+  .vol-tiras{display:grid;grid-template-columns:repeat(6,1fr);border-top:1px dashed #999}
+  .vol-tiras div{border-right:1px dashed #999;padding:4mm 1mm;font-size:9pt;writing-mode:vertical-rl;transform:rotate(180deg);height:45mm}
+}
 @media (prefers-reduced-motion:reduce){.toast{transition:none}}
 </style>
 </head>
@@ -130,6 +149,7 @@ details summary{cursor:pointer;font-weight:600}
 <dialog id="dlg"><div class="dlg" id="dlgBody"></div></dialog>
 <div class="toast" id="toast"></div>
 
+<script src="vendor/qrcode.min.js"></script>
 <script>
 /* ===================== Datos ===================== */
 const KEY = 'misFragancias.v1';
@@ -137,7 +157,7 @@ const hoyISO = () => new Date().toISOString().slice(0,10);
 const uid = () => Math.random().toString(36).slice(2,10);
 const defaults = () => ({
   ajustes:{miNombre:'',miWhats:'',pais:'1',desde:'',inscripcion:'',comision:'',anticipo:'',promo:''},
-  clientas:[], equipo:[], perfumes:[], plan:{semana:'',hechos:[]}, seguridad:null, ultimoRespaldo:''
+  clientas:[], equipo:[], perfumes:[], plan:{semana:'',hechos:[]}, seguridad:null, ultimoRespaldo:'', interesadas:[], planRec:null
 });
 const LOCAL = 'Guardado en este aparato';
 let S;
@@ -185,7 +205,7 @@ const fmtFecha = iso => iso ? new Date(iso+'T12:00').toLocaleDateString('es-MX',
 const dinero = n => '$' + (Number(n)||0).toLocaleString('es-MX',{maximumFractionDigits:2});
 
 /* ===================== Mensajes ===================== */
-const CATS = ['Vender','Clientas','Estados','Grupos y negocios','Equipo','Fechas'];
+const CATS = ['Vender','Clientas','Estados','Grupos y negocios','Equipo','Reclutar','Fechas'];
 const MENSAJES = [
  {id:'muestra',cat:'Vender',t:'🎁 Al regalar una muestra',x:'¡Hola {nombre}! 🌸 Te traje una muestra de {perfume}, una de mis fragancias favoritas de Zermat. Pruébala unos días y me cuentas qué te parece 😊 Si te gusta, el frasco completo cuesta {precio} y te lo puedo apartar.'},
  {id:'seguimiento',cat:'Vender',t:'💬 Seguimiento de muestra (a los 3 días)',x:'¡Hola {nombre}! ¿Cómo te fue con la muestra de {perfume}? 😊 ¿Te gustó cómo te duró? Esta semana te lo puedo entregar en {dia} y si quieres lo puedes pagar en 2 quincenas 💕'},
@@ -205,6 +225,13 @@ const MENSAJES = [
  {id:'invitar',cat:'Equipo',t:'👭 Invitar a una clienta a vender',x:'¡Hola {nombre}! 😊 Veo que te encantan los productos Zermat, así que te quiero contar algo: tú también puedes comprarlos con descuento y ganar un dinero extra vendiéndolos desde tu casa, en tus tiempos 💕 Empezar cuesta {inscripcion} y yo te enseño todo paso a paso. ¿Te platico más?'},
  {id:'buscar',cat:'Equipo',t:'📣 Buscar vendedoras',x:'💼 ¿Buscas un ingreso extra desde casa? 💼\nEstoy formando mi equipo de ventas de fragancias y cosméticos Zermat 🌸\n✅ Tú pones tus horarios\n✅ Compras con descuento\n✅ Te enseño a vender paso a paso\nInscripción: {inscripcion}\n📲 Escríbeme y te explico sin compromiso 😊'},
  {id:'bienvenida',cat:'Equipo',t:'🎉 Bienvenida a tu nueva integrante',x:'¡Bienvenida al equipo, {nombre}! 🎉💖 Estoy muy feliz de tenerte. Te voy a agregar a nuestro grupo, donde comparto fotos, textos y ofertas que puedes usar. Tu primer reto: regala 5 muestras esta semana. ¡Aquí estoy para ayudarte en todo! 🌸'},
+ {id:'r_fb',cat:'Reclutar',t:'📢 Publicación para grupos de Facebook',x:'🌸 ¿Te gustaría ganar un dinero extra desde casa? 🌸\n\nVendo fragancias y cosméticos Zermat y estoy formando mi equipo en {zona}.\n✅ Tú decides tus horarios\n✅ Compras tus productos con descuento\n✅ Te enseño paso a paso y te paso fotos y textos listos\n✅ Funciona desde el celular\n\nInscripción: {inscripcion}. Lo que ganes depende de lo que vendas, y yo te acompaño desde el primer día 💕\n\n📲 Escríbeme "INFO" o aquí: {enlace}'},
+ {id:'r_ig',cat:'Reclutar',t:'🎥 Texto para video de Instagram/TikTok',x:'Un día vendiendo perfumes desde casa 🌸📦\nPreparo muestras, entrego pedidos y todo lo organizo desde mi celular.\n¿Quieres intentarlo? Comenta "INFO" y te escribo 💕\n#ventasdesdecasa #zermat #ingresoextra #mamaemprendedora'},
+ {id:'r_estado',cat:'Reclutar',t:'📱 Estado de WhatsApp para reclutar',x:'💼 Busco 3 personas que quieran vender desde casa 🌸\nFragancias Zermat · tus horarios · te enseño todo.\nRespóndeme este estado y te cuento 😊'},
+ {id:'r_comento',cat:'Reclutar',t:'💬 Responder a quien escribió "INFO"',x:'¡Hola {nombre}! 😊 Gracias por tu interés. Te cuento rápido: vendo fragancias y cosméticos Zermat desde casa y te puedo inscribir para que tú también vendas. Compras con descuento, vendes a tu ritmo y yo te enseño todo. ¿Te queda bien que te llame 10 minutos hoy o mañana para explicarte? 💕'},
+ {id:'r_seg',cat:'Reclutar',t:'🔁 Seguimiento a una interesada',x:'¡Hola {nombre}! 🌸 ¿Pudiste pensar lo de vender conmigo? Si tienes dudas, con gusto te las resuelvo. Esta semana estoy ayudando a las nuevas con su primer pedido, así que es un buen momento para empezar 😊'},
+ {id:'r_reunion',cat:'Reclutar',t:'📹 Invitación a plática por videollamada',x:'¡Hola {nombre}! 😊 El {dia} a las {hora} voy a hacer una plática corta (20 minutos) por videollamada para explicar cómo vender Zermat desde casa: cuánto cuesta empezar, cómo se gana y cómo te ayudo. ¿Te mando el enlace? 💕'},
+ {id:'r_historia',cat:'Reclutar',t:'💖 Mi historia (para publicar)',x:'Hace un tiempo empecé a vender fragancias Zermat desde mi casa 🌸\nAl principio solo regalaba muestras a mis vecinas. Hoy tengo clientas que me compran cada mes y organizo todo desde mi celular.\nNo es dinero fácil: es constancia. Pero me encanta y lo hago a mi ritmo 💪\nSi tú también quieres intentarlo, escríbeme: {enlace}'},
  {id:'animo',cat:'Equipo',t:'💪 Ánimo para tu equipo',x:'¡Hola {nombre}! 💪 ¿Cómo vas con tus ventas esta semana? Recuerda: cada muestra que regalas es una venta en camino 🌸 Si necesitas fotos, textos o ayuda con una clienta, aquí estoy 💕'},
  {id:'fecha',cat:'Fechas',t:'💐 Fecha especial',x:'💐 ¡Se acerca {ocasion}! 💐\nRegala un perfume que le va a encantar 🎁\nSets desde {desde}, con envoltura de regalo incluida ✨\nAparta el tuyo antes del {fecha} 📲'},
 ];
@@ -216,7 +243,7 @@ function rellenar(texto, ctx={}){
     inscripcion:a.inscripcion&&('$'+String(a.inscripcion).replace(/^\$/,'')),
     comision:a.comision&&('$'+String(a.comision).replace(/^\$/,'')),
     anticipo:a.anticipo&&('$'+String(a.anticipo).replace(/^\$/,'')),
-    promo:a.promo, zona:a.zona, ...ctx
+    promo:a.promo, zona:a.zona, enlace:a.miWhats?'wa.me/'+telWa(a.miWhats):undefined, ...ctx
   };
   return texto.replace(/\{(\w+)\}/g,(m,k)=> (val[k]!==undefined && val[k]!=='' && val[k]!==null) ? val[k] : '['+({miNombre:'tu nombre',miWhats:'tu número',saldo:'cantidad'}[k]||k)+']');
 }
@@ -315,6 +342,11 @@ function pendientes(){
     if(ult && !ult.avisado && dias(ult.fecha)>=60) L.push({orden:3,ic:'🔁',t:`Ofrecer recompra a ${c.nombre}`,d:`Compró ${ult.perfume||''} hace ${dias(ult.fecha)} días`,
       acc:`componer('recompra',{nombre:${JSON.stringify(c.nombre)},perfume:${JSON.stringify(ult.perfume||'')},_onSent:()=>marcarAvisado('${c.id}','${ult.id}')},${JSON.stringify(c.tel)})`,
       hecho:`marcarAvisado('${c.id}','${ult.id}')`});
+  });
+  (S.interesadas||[]).forEach(i=>{
+    if(['nueva','platique','interesada'].includes(i.etapa) && dias(i.ultimo||i.fecha)>=2) L.push({orden:2,ic:'🌱',t:`Seguimiento a ${i.nombre}`,d:`${ETAPAS[i.etapa]} · último contacto hace ${dias(i.ultimo||i.fecha)} días`,
+      acc:`componer('${i.etapa==='nueva'?'r_comento':'r_seg'}',{nombre:${JSON.stringify(i.nombre)},_onSent:()=>contactoInteresada('${i.id}')},${JSON.stringify(i.tel)})`,
+      hecho:`contactoInteresada('${i.id}')`});
   });
   S.equipo.forEach(e=>{
     if(!e.bienvenida) L.push({orden:0,ic:'🎉',t:`Darle la bienvenida a ${e.nombre}`,d:'Nueva en tu equipo',
@@ -480,9 +512,121 @@ function vMensajes(){
 }
 
 /* ---------- EQUIPO ---------- */
+/* ---------- Reclutar ---------- */
+const ETAPAS = {nueva:'🆕 Nueva', platique:'💬 Ya le escribí', interesada:'✨ Interesada', inscrita:'🎉 Inscrita', no:'⏸️ Por ahora no'};
+const ORIGENES = ['Facebook','Instagram','TikTok','WhatsApp','Clienta','Volante','Conocida','Otro'];
+let subEq = 'equipo';
+function enlaceReclutar(){
+  const n = telWa(S.ajustes.miWhats);
+  return 'https://wa.me/'+n+'?text='+encodeURIComponent(`Hola${S.ajustes.miNombre?' '+S.ajustes.miNombre:''}, me interesa saber más de vender fragancias desde casa 🌸`);
+}
+function contactoInteresada(id){ const i=S.interesadas.find(x=>x.id===id); i.ultimo=hoyISO(); if(i.etapa==='nueva') i.etapa='platique'; guardar(); render(); }
+function etapa(id,e){
+  const i=S.interesadas.find(x=>x.id===id); i.etapa=e; i.ultimo=hoyISO();
+  if(e==='inscrita' && !S.equipo.some(x=>x.origen===id)){ S.equipo.push({id:uid(),nombre:i.nombre,tel:i.tel,fecha:hoyISO(),notas:i.notas||'',reto:0,bienvenida:false,origen:id}); toast(`¡${i.nombre} ya está en tu equipo! 🎉`); }
+  guardar(); render();
+}
+function formInteresada(id){
+  const i = id ? S.interesadas.find(x=>x.id===id) : {nombre:'',tel:'',origen:'Facebook',notas:''};
+  abrir(`<h3>${id?'Editar':'Nueva'} interesada</h3>
+    <label for="iN">Nombre</label><input id="iN" value="${esc(i.nombre)}">
+    <label for="iT">Teléfono / WhatsApp</label><input id="iT" type="tel" value="${esc(i.tel)}">
+    <label for="iO">¿De dónde llegó?</label><select id="iO">${ORIGENES.map(o=>`<option ${o===i.origen?'selected':''}>${o}</option>`).join('')}</select>
+    <label for="iX">Notas (qué le interesa, cuándo llamarle…)</label><input id="iX" value="${esc(i.notas||'')}">
+    <div class="dlg-actions"><button onclick="guardarInteresada('${id||''}')">Guardar</button><button class="sec" onclick="cerrar()">Cancelar</button>
+    ${id?`<button class="danger" onclick="confirmar('Se borrará a esta persona de tu lista.',()=>{S.interesadas=S.interesadas.filter(x=>x.id!=='${id}');guardar();render();})">Borrar</button>`:''}</div>`);
+  setTimeout(()=>$('#iN').focus(),50);
+}
+function guardarInteresada(id){
+  const d={nombre:$('#iN').value.trim(),tel:$('#iT').value.trim(),origen:$('#iO').value,notas:$('#iX').value.trim()};
+  if(!d.nombre){ toast('Escribe el nombre'); return; }
+  S.interesadas ||= [];
+  if(id) Object.assign(S.interesadas.find(x=>x.id===id),d); else S.interesadas.push({id:uid(),...d,etapa:'nueva',fecha:hoyISO(),ultimo:''});
+  guardar(); cerrar(); render(); toast('Guardada 🌱');
+}
+function qrSVG(texto, celda=5){
+  try{ const q=qrcode(0,'M'); q.addData(unescape(encodeURIComponent(texto))); q.make(); return q.createSvgTag({cellSize:celda,margin:2,scalable:true}); }catch(e){ return ''; }
+}
+const PLAN_REC = {
+  '💻 Desde la computadora':[
+    'Unirme a 3 grupos de Facebook de mi ciudad (empleo, mamás, compra-venta) y leer sus reglas',
+    'Publicar en 2 grupos que lo permitan, con foto de mis productos',
+    'Imprimir 10 volantes con mi código QR',
+    'Contestar comentarios y escribirle por mensaje a quien pregunte',
+    'Programar las publicaciones de la semana (Meta Business Suite)'],
+  '📱 Desde el teléfono':[
+    'Publicar un estado diario (producto, entrega o resultado)',
+    'Grabar un video corto de "un día vendiendo desde casa"',
+    'Invitar a 5 clientas contentas a vender conmigo',
+    'Dar seguimiento a todas mis interesadas',
+    'Hacer una plática corta por videollamada']
+};
+function togRec(k){ const h=S.planRec.hechos; const i=h.indexOf(k); i<0?h.push(k):h.splice(i,1); guardar(); render(); }
+function imprimirVolante(){
+  if(!S.ajustes.miWhats){ toast('Primero pon tu WhatsApp en Más → Mis datos'); return; }
+  let v=document.getElementById('volante'); if(!v){ v=document.createElement('div'); v.id='volante'; document.body.appendChild(v); }
+  v.innerHTML = `<div class="vol"><p class="vol-top">🌸 ¿Quieres ganar un dinero extra desde casa? 🌸</p>
+    <h1>Vende fragancias y cosméticos</h1>
+    <ul><li>Tú decides tus horarios</li><li>Compras con descuento</li><li>Te enseño paso a paso</li><li>Todo desde tu celular</li></ul>
+    <div class="vol-qr">${qrSVG(enlaceReclutar(),8)}</div>
+    <p class="vol-cta">Escanea con la cámara de tu celular y escríbeme por WhatsApp</p>
+    <p class="vol-yo">${esc(S.ajustes.miNombre||'')} · ${esc(S.ajustes.miWhats)}</p>
+    <div class="vol-tiras">${Array.from({length:6}).map(()=>`<div>🌸 Vende desde casa<br><b>${esc(S.ajustes.miWhats)}</b></div>`).join('')}</div></div>`;
+  document.body.classList.add('imprimiendo');
+  setTimeout(()=>{ window.print(); setTimeout(()=>document.body.classList.remove('imprimiendo'),500); },100);
+}
+function vReclutar(){
+  if(!S.planRec || S.planRec.semana!==semanaActual()){ S.planRec={semana:semanaActual(),hechos:[]}; }
+  const tieneW=!!S.ajustes.miWhats, enlace=tieneW?enlaceReclutar():'';
+  const total=Object.values(PLAN_REC).flat().length;
+  return `
+    <div class="card"><h3>🔗 Tu enlace para que te escriban</h3>
+      ${tieneW?`<p class="muted">Ponlo en tus publicaciones, en tu perfil de Instagram/TikTok y en tus estados. Al tocarlo, la persona te escribe por WhatsApp con un mensaje ya listo.</p>
+      <div class="row" style="flex-wrap:nowrap"><input readonly value="${esc(enlace)}" id="enl" style="flex:1;min-width:0;font-size:.8rem"><button class="small" onclick="copiar(document.getElementById('enl').value)">📋 Copiar</button></div>
+      <div style="display:flex;gap:12px;align-items:center;margin-top:12px;flex-wrap:wrap"><div style="width:130px;background:#fff;border-radius:10px;padding:6px">${qrSVG(enlace)}</div>
+      <div style="flex:1;min-width:160px"><p class="muted" style="margin:0 0 8px">Tu código QR: la persona lo escanea con la cámara y te escribe.</p><button class="small" onclick="imprimirVolante()">🖨️ Imprimir volante</button></div></div>`
+      :`<p class="muted">Pon tu WhatsApp en <b>Más → Mis datos</b> y aquí aparecerá tu enlace y tu código QR.</p><button class="small" onclick="irA('mas')">Poner mi WhatsApp</button>`}
+    </div>
+    <h2>🗓️ Plan de reclutamiento de la semana</h2>
+    <div class="card">${Object.entries(PLAN_REC).map(([g,L])=>`<p style="margin:4px 0;font-weight:700">${g}</p>`+L.map((t,i)=>{const k=g.slice(0,2)+i, on=S.planRec.hechos.includes(k); return `<label class="check ${on?'done':''}"><input type="checkbox" ${on?'checked':''} onchange="togRec('${k}')"><span>${esc(t)}</span></label>`}).join('')).join('')}
+      <p class="muted" style="margin:8px 0 0">${S.planRec.hechos.length}/${total} hechos · se reinicia cada semana</p></div>
+    <h2>📣 Textos listos para publicar</h2>
+    ${MENSAJES.filter(m=>m.cat==='Reclutar').map(m=>`<div class="card"><h3>${esc(m.t)}</h3><div class="msg">${esc(rellenar(m.x))}</div><div class="row"><button class="small" onclick="componer('${m.id}')">✏️ Usar</button><button class="small sec" onclick="copiar(${esc(JSON.stringify(rellenar(m.x)))})">📋 Copiar</button></div></div>`).join('')}
+    <h2>📍 Dónde encontrar personas</h2>
+    <div class="card"><ul class="tips">
+      <li><b>Tus clientas contentas:</b> son las que mejor venden, porque ya aman los productos.</li>
+      <li><b>Grupos de Facebook de tu ciudad:</b> empleo, mamás, latinos, compra-venta. Lee las reglas: muchos prohíben publicar negocios fuera del día permitido.</li>
+      <li><b>Instagram y TikTok:</b> videos cortos de tu día real. Pon tu enlace en la biografía.</li>
+      <li><b>Estados y listas de difusión de WhatsApp:</b> un estado diario y una invitación por semana.</li>
+      <li><b>Volantes:</b> con permiso, en lavanderías, tiendas latinas, salones y la iglesia.</li>
+      <li><b>Quien te dice "qué bonito, ¿cómo le haces?":</b> esa persona ya está interesada.</li>
+    </ul>
+    <p class="muted" style="margin:8px 0 0">⚖️ No prometas cantidades de dinero ni "ingresos seguros". Di cuánto cuesta empezar y que lo que se gana depende de lo que cada una venda. Así lo pide la ley de EE. UU. (FTC) y así la gente confía más en ti.</p></div>`;
+}
+function vInteresadas(){
+  const L=(S.interesadas||[]).slice().sort((a,b)=>(a.etapa==='no')-(b.etapa==='no')||(b.ultimo||b.fecha).localeCompare(a.ultimo||a.fecha));
+  const cuenta=e=>(S.interesadas||[]).filter(i=>i.etapa===e).length;
+  return `
+    <div class="stats" style="grid-template-columns:repeat(4,1fr)">${['nueva','platique','interesada','inscrita'].map(e=>`<div class="stat"><b>${cuenta(e)}</b><span>${ETAPAS[e]}</span></div>`).join('')}</div>
+    <div class="spread" style="margin:12px 0"><p class="muted" style="margin:0">Anota a cada persona que pregunte. La app te recuerda darle seguimiento a los 2 días.</p><button onclick="formInteresada()">+ Nueva</button></div>
+    ${L.length? L.map(i=>{const sig={nueva:'platique',platique:'interesada',interesada:'inscrita'}[i.etapa]; return `<div class="card">
+      <div class="spread"><div style="min-width:0"><h3>${esc(i.nombre)}</h3><div class="muted">${esc(i.tel||'Sin teléfono')} · vino de ${esc(i.origen)}${i.notas?' · '+esc(i.notas):''}</div></div><button class="ghost small" onclick="formInteresada('${i.id}')">Editar</button></div>
+      <div style="margin:6px 0"><span class="pill ${i.etapa==='inscrita'?'ok':i.etapa==='no'?'':'warn'}">${ETAPAS[i.etapa]}</span>${i.ultimo?`<span class="pill">Último contacto: ${fmtFecha(i.ultimo)}</span>`:''}</div>
+      <div class="row">
+        ${i.etapa!=='inscrita'&&i.etapa!=='no'?`<button class="small" onclick='componer("${i.etapa==='nueva'?'r_comento':'r_seg'}",${esc(JSON.stringify({nombre:i.nombre,_x:0}))},${esc(JSON.stringify(i.tel))});compCtx.onSent=()=>contactoInteresada("${i.id}")'>💬 Escribirle</button>`:''}
+        ${sig?`<button class="small sec" onclick="etapa('${i.id}','${sig}')">→ ${ETAPAS[sig]}</button>`:''}
+        ${i.etapa!=='no'&&i.etapa!=='inscrita'?`<button class="small ghost" onclick="etapa('${i.id}','no')">Por ahora no</button>`:''}
+        ${i.etapa==='no'?`<button class="small sec" onclick="etapa('${i.id}','platique')">Volver a intentar</button>`:''}
+      </div></div>`}).join('')
+      : `<div class="card empty">Aún no tienes interesadas.<br>Publica uno de los textos de <b>Reclutar</b> y anota aquí a quien te escriba 🌱</div>`}`;
+}
 function vEquipo(){
+  const tabs=[['equipo','👭 Mi equipo'],['interesadas',`🌱 Interesadas${(S.interesadas||[]).filter(i=>['nueva','platique','interesada'].includes(i.etapa)).length?' ('+(S.interesadas||[]).filter(i=>['nueva','platique','interesada'].includes(i.etapa)).length+')':''}`],['reclutar','📣 Reclutar']];
+  const chips=`<div class="chips">${tabs.map(([k,v])=>`<button class="small ${k===subEq?'':'sec'}" onclick="subEq='${k}';render()">${v}</button>`).join('')}</div>`;
+  if(subEq!=='equipo'){ $('#app').innerHTML = `<div class="banner"><img src="img/equipo.webp" alt="Frasco de esencia" loading="lazy"><div class="velo"></div><div class="txt"><h2>${subEq==='reclutar'?'📣 Haz crecer tu equipo':'🌱 Personas interesadas'}</h2><p>${S.equipo.length} en tu equipo · ${(S.interesadas||[]).length} interesada${(S.interesadas||[]).length===1?'':'s'}</p></div></div>${chips}${subEq==='reclutar'?vReclutar():vInteresadas()}`; return; }
   $('#app').innerHTML = `
     <div class="banner"><img src="img/equipo.webp" alt="Frasco de esencia" loading="lazy"><div class="velo"></div><div class="txt"><h2>👭 Mi equipo</h2><p>${S.equipo.length} integrante${S.equipo.length===1?'':'s'} · acompáñalas en su primera semana</p></div></div>
+    ${chips}
     <div class="spread"><p class="muted" style="margin:0">Las personas que venden contigo.</p><button onclick="formEquipo()">+ Nueva</button></div>
     <div style="margin-top:12px">${S.equipo.length? S.equipo.map(e=>`<div class="card">
       <div class="spread"><div><h3>${esc(e.nombre)}</h3><div class="muted">${esc(e.tel||'')} · se unió ${fmtFecha(e.fecha)}</div></div><button class="ghost small" onclick="formEquipo('${e.id}')">Editar</button></div>
@@ -494,7 +638,7 @@ function vEquipo(){
       <button class="small sec" onclick='componer("bienvenida",${esc(JSON.stringify({nombre:e.nombre}))},${esc(JSON.stringify(e.tel))})'>🎉 Bienvenida</button></div>
     </div>`).join('') : `<div class="card empty">Aún no tienes equipo.<br>Invita a tus clientas más entusiastas 👭</div>`}</div>
     <h2>📣 Para invitar</h2>
-    <div class="row"><button class="sec" onclick="componer('invitar')">👭 Invitar a una clienta</button><button class="sec" onclick="componer('buscar')">📣 Buscar vendedoras</button></div>
+    <div class="row"><button class="sec" onclick="componer('invitar')">👭 Invitar a una clienta</button><button class="sec" onclick="subEq='reclutar';render()">📣 Kit para reclutar</button></div>
     <h2>💡 Consejos</h2>
     <div class="card"><ul class="tips">
       <li>Empieza por tus mejores clientas: ya conocen y aman los productos.</li>

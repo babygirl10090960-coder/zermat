@@ -1,10 +1,10 @@
 // Permite usar la app sin internet. La página se pide primero a la red (para recibir mejoras);
 // las imágenes e íconos se sirven desde la copia guardada.
-const VERSION = 'mf-v2';
+const VERSION = 'mf-v3';
 const ARCHIVOS = [
   './', 'index.html', 'manifest.webmanifest',
   'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png', 'icons/maskable-512.png',
-  'img/portada.webp', 'img/bienvenida.webp', 'img/catalogo.webp', 'img/equipo.webp', 'img/ideas.webp'
+  'vendor/qrcode.min.js', 'img/portada.webp', 'img/bienvenida.webp', 'img/catalogo.webp', 'img/equipo.webp', 'img/ideas.webp'
 ];
 
 self.addEventListener('install', e => {
