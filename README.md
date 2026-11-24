@@ -1,22 +1,26 @@
-# Mis Fragancias
+# Fragancias Araceli
 
-App web para vender fragancias desde casa: clientas, muestras, ventas y cobros, mensajes listos para WhatsApp, catálogo y equipo de ventas.
+Tienda pública y panel de ventas para una distribuidora independiente Zermat en Chicago.
 
-- Funciona en el celular y se puede instalar en la pantalla de inicio.
-- Funciona sin internet.
-- Los datos se guardan solo en el aparato de cada persona (nunca en un servidor). Usa **Más → Respaldo** para guardar una copia.
-- Bloqueo opcional con PIN.
+- **Tienda** (`/`): catálogo, "encuentra tu aroma" con muestra gratis, mayoreo para negocios y "vende conmigo". Cada formulario abre WhatsApp con un mensaje marcado `#LEAD-…`.
+- **Panel** (`/admin.html`): clientas, muestras, ventas y cobros, metas, mensajes, equipo y reclutamiento, y **Negocios** (mayoreo) con 64 negocios y eventos de Chicago investigados. La **Bandeja** convierte los mensajes `#LEAD-…` en registros y prepara la respuesta.
+- Los datos del panel se guardan solo en el aparato de cada persona. Usa **Más → Respaldo**.
+- Funciona en celular, iPad y computadora, y sin internet.
 
 ## Archivos
 
 | Archivo | Para qué sirve |
 | --- | --- |
-| `index.html` | Toda la app |
-| `sw.js` | Permite usarla sin internet |
-| `manifest.webmanifest`, `icons/` | Para instalarla como app |
+| `index.html` | Tienda pública |
+| `config.js` | Nombre, WhatsApp, zonas y fragancias de la tienda |
+| `admin.html` | Panel de Araceli |
+| `negocios-chicago.js` | Negocios y eventos para mayoreo (confirmar que sigan abiertos) |
+| `sw.js`, `manifest.webmanifest`, `icons/` | App instalable y sin internet |
 | `img/` | Fotos (Unsplash, licencia libre) |
-| `render.yaml` | Configuración del sitio estático en Render y encabezados de seguridad |
+| `vendor/qrcode.min.js` | Códigos QR |
+| `robots.txt`, `sitemap.xml` | Para que Google encuentre la tienda |
+| `render.yaml` | Sitio estático en Render y encabezados de seguridad |
 
-## Publicar
+## Cambiar la tienda
 
-Es un sitio estático: no necesita compilarse. En Render se publica como **Static Site** con carpeta de publicación `.`.
+Edita `config.js` (número, zonas o fragancias), haz commit y push a `main`: Render publica solo.

@@ -1,0 +1,1204 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Panel · Fragancias Araceli</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Tu negocio de fragancias desde casa: clientas, muestras, cobros, mensajes para WhatsApp y tu equipo.">
+<meta name="theme-color" content="#b0476f">
+<meta name="referrer" content="no-referrer">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Mis Fragancias">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="preload" as="image" href="img/portada.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Outfit:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: app de una columna para celular, navegación fija abajo */
+:root{
+  --bg:#fbf6f8; --card:#ffffff; --ink:#2b1d24; --muted:#7a6670; --line:#eedde5;
+  --brand:#b0476f; --brand-ink:#ffffff; --soft:#f7e6ee; --ok:#2f8a5b; --warn:#c07a12; --bad:#c0392b;
+  --shadow:0 1px 3px rgba(80,20,50,.08),0 4px 14px rgba(80,20,50,.06);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1a1216; --card:#251a20; --ink:#f5e9ef; --muted:#b9a2ad; --line:#3a2a32;
+  --brand:#e07aa1; --brand-ink:#1a1216; --soft:#3a2430; --ok:#5cc28e; --warn:#e6a64a; --bad:#ef7a6c;
+  --shadow:none; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#1a1216; --card:#251a20; --ink:#f5e9ef; --muted:#b9a2ad; --line:#3a2a32;
+  --brand:#e07aa1; --brand-ink:#1a1216; --soft:#3a2430; --ok:#5cc28e; --warn:#e6a64a; --bad:#ef7a6c;
+  --shadow:none; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Outfit",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:84px}
+header{background:var(--brand);color:var(--brand-ink);padding-block:18px 14px;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+header h1{margin:0;font-size:1.3rem}
+header p{margin:2px 0 0;opacity:.9;font-size:.9rem}
+#sync{font-size:.75rem;opacity:.85}
+main{max-width:720px;margin:0 auto;padding-block:16px;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.card,.msg{min-width:0;overflow-wrap:anywhere}
+button:focus-visible,.btn:focus-visible,input:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+h2{font-size:1.1rem;margin:22px 0 10px}
+h3{font-size:1rem;margin:0 0 4px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:var(--shadow)}
+.muted{color:var(--muted);font-size:.9rem}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.spread{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+button,.btn{font:inherit;border:0;border-radius:10px;padding:9px 14px;background:var(--brand);color:var(--brand-ink);cursor:pointer;font-weight:600;text-decoration:none;display:inline-block}
+button.sec{background:var(--soft);color:var(--ink)}
+button.ghost{background:transparent;color:var(--brand);padding:6px 8px}
+button.small{padding:6px 10px;font-size:.85rem}
+button.danger{background:transparent;color:var(--bad)}
+input,textarea,select{font:inherit;width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+textarea{min-height:170px;resize:vertical}
+label{display:block;font-size:.85rem;color:var(--muted);margin:10px 0 4px}
+.pill{display:inline-block;font-size:.75rem;padding:2px 8px;border-radius:99px;background:var(--soft);color:var(--ink);margin-right:4px}
+.pill.warn{background:var(--warn);color:#fff}.pill.ok{background:var(--ok);color:#fff}.pill.bad{background:var(--bad);color:#fff}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
+.stat b{display:block;font-size:1.4rem;color:var(--brand)}
+.stat span{font-size:.75rem;color:var(--muted)}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:10px}
+.chips button{white-space:nowrap}
+.msg{white-space:pre-wrap;font-size:.92rem;background:var(--bg);border-radius:10px;padding:10px;margin:8px 0;border:1px dashed var(--line)}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:6px max(4px, env(safe-area-inset-right, 0px)) calc(6px + env(safe-area-inset-bottom, 0px)) max(4px, env(safe-area-inset-left, 0px))}
+nav button{background:none;color:var(--muted);display:flex;flex-direction:column;align-items:center;font-size:.72rem;padding:4px 6px;font-weight:500}
+nav button .i{font-size:1.35rem;line-height:1.2}
+nav button.on{color:var(--brand);font-weight:700}
+.check{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line)}
+.check:last-child{border:0}
+.check input{width:22px;height:22px;flex:none;margin-top:1px;accent-color:var(--brand)}
+.check.done span{text-decoration:line-through;color:var(--muted)}
+dialog{border:0;border-radius:16px;padding:0;width:min(560px,calc(100% - 24px));background:var(--card);color:var(--ink)}
+dialog::backdrop{background:rgba(30,10,20,.45)}
+.dlg{padding:16px}
+.dlg-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:99px;font-size:.9rem;opacity:0;transition:opacity .2s;pointer-events:none;z-index:99}
+.toast.show{opacity:1}
+.empty{text-align:center;color:var(--muted);padding:20px 10px}
+ul.tips{padding-left:20px;margin:6px 0}ul.tips li{margin:4px 0}
+details summary{cursor:pointer;font-weight:600}
+.hidden{display:none}
+.banner{position:relative;border-radius:16px;overflow:hidden;margin-bottom:12px;min-height:150px;display:flex;align-items:flex-end;background:var(--soft)}
+.banner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.banner .velo{position:absolute;inset:0;background:linear-gradient(180deg,rgba(43,29,36,0) 20%,rgba(43,29,36,.78) 100%)}
+.banner .txt{position:relative;padding:14px;color:#fff;width:100%}
+.banner .txt h2{margin:0 0 2px;font-size:1.25rem;color:#fff}
+.banner .txt p{margin:0;font-size:.9rem;opacity:.95}
+.banner.alto{min-height:210px}
+.acciones{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px}
+.acciones button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px 6px;font-size:.82rem;background:var(--card);color:var(--ink);border:1px solid var(--line);box-shadow:var(--shadow)}
+.acciones button .i{font-size:1.4rem}
+.lock{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px}
+.lock img{width:84px;height:84px;border-radius:20px}
+.lock input{max-width:220px;text-align:center;font-size:1.6rem;letter-spacing:.5em}
+.aviso{border-left:4px solid var(--warn)}
+.lock.hidden{display:none}
+h1,h2,h3{font-family:"Fraunces",Georgia,serif;letter-spacing:-.005em}
+header h1{font-size:1.4rem}
+.lista{display:grid;grid-template-columns:1fr;gap:12px}
+.lista > .card{margin:0}
+.nav-marca,.nav-tienda{display:none}
+nav button{border-radius:12px}
+@media (min-width:700px){
+  main{max-width:980px}
+  .lista{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .acciones{grid-template-columns:repeat(4,1fr)}
+  .banner{min-height:190px}
+}
+@media (min-width:960px){
+  body{padding-bottom:0;padding-left:236px}
+  nav{top:0;right:auto;width:236px;flex-direction:column;justify-content:flex-start;gap:4px;border-top:0;border-right:1px solid var(--line);padding:calc(18px + env(safe-area-inset-top,0px)) 14px 18px max(14px, env(safe-area-inset-left,0px))}
+  nav button{flex-direction:row;gap:12px;font-size:.98rem;padding:11px 14px;width:100%;justify-content:flex-start}
+  nav button .i{font-size:1.2rem}
+  nav button.on{background:var(--soft)}
+  .nav-marca{display:flex;align-items:center;gap:10px;padding:4px 8px 18px;font-family:"Fraunces",Georgia,serif;line-height:1.15;color:var(--ink)}
+  .nav-marca img{border-radius:10px}
+  .nav-tienda{display:block;margin-top:auto;padding:11px 14px;border-radius:12px;color:var(--brand);text-decoration:none;font-weight:600;border:1px solid var(--line)}
+  header{padding-left:32px;padding-right:32px}
+  main{max-width:1160px;padding-left:32px;padding-right:32px}
+  .lista.tres{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .toast{bottom:32px;left:calc(50% + 118px)}
+}
+.barra-fil{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.barra-fil select,.barra-fil input{width:auto;flex:1;min-width:140px}
+.score{display:inline-flex;align-items:center;gap:4px;font-weight:700;color:var(--brand)}
+.chips button{flex:none}
+.stat span{overflow-wrap:anywhere}
+#volante{display:none}
+@media print{
+  body.imprimiendo > *:not(#volante){display:none !important}
+  body.imprimiendo{padding:0;background:#fff}
+  body.imprimiendo #volante{display:block}
+  .vol{font-family:system-ui,sans-serif;color:#2b1d24;text-align:center;padding:10mm 12mm}
+  .vol-top{font-size:16pt;color:#b0476f;margin:0}
+  .vol h1{font-size:30pt;margin:6mm 0}
+  .vol ul{list-style:none;padding:0;font-size:16pt;line-height:1.7;margin:0}
+  .vol ul li::before{content:"✔ ";color:#b0476f}
+  .vol-qr{width:60mm;margin:8mm auto 2mm}
+  .vol-qr svg{width:100%;height:auto}
+  .vol-cta{font-size:12pt;margin:0}
+  .vol-yo{font-size:18pt;font-weight:700;margin:4mm 0 8mm}
+  .vol-tiras{display:grid;grid-template-columns:repeat(6,1fr);border-top:1px dashed #999}
+  .vol-tiras div{border-right:1px dashed #999;padding:4mm 1mm;font-size:9pt;writing-mode:vertical-rl;transform:rotate(180deg);height:45mm}
+}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+</style>
+</head>
+<body>
+<div class="lock hidden" id="lock">
+  <img src="icons/icon-192.png" alt="">
+  <h2 style="margin:0">Fragancias Araceli</h2>
+  <p class="muted" style="margin:0">Escribe tu PIN para entrar</p>
+  <input id="pinIn" type="password" inputmode="numeric" maxlength="6" autocomplete="off" aria-label="PIN">
+  <button id="pinBtn">Entrar</button>
+  <p class="muted" id="pinMsg" role="alert"></p>
+  <button class="ghost small" id="pinOlvide">Olvidé mi PIN</button>
+</div>
+<header style="position:relative">
+  <button onclick="guia()" aria-label="Cómo usar la app" title="Cómo usar la app" style="position:absolute;top:14px;right:max(16px, env(safe-area-inset-right, 0px));background:rgba(255,255,255,.2);color:var(--brand-ink);border-radius:99px;width:36px;height:36px;padding:0;font-size:1.1rem">?</button>
+  <h1>🌸 Fragancias Araceli</h1>
+  <p id="saludo">Tu negocio Zermat desde casa</p>
+  <p id="sync">Conectando…</p>
+</header>
+<main id="app"></main>
+
+<nav aria-label="Secciones">
+  <div class="nav-marca"><img src="icons/icon-192.png" alt="" width="36" height="36"><span>Fragancias<br><b>Araceli</b></span></div>
+  <button data-tab="hoy" class="on"><span class="i">🏠</span>Hoy</button>
+  <button data-tab="clientas"><span class="i">💁‍♀️</span>Clientas</button>
+  <button data-tab="mensajes"><span class="i">💬</span>Mensajes</button>
+  <button data-tab="negocios"><span class="i">🏪</span>Negocios</button>
+  <button data-tab="equipo"><span class="i">👭</span>Equipo</button>
+  <button data-tab="mas"><span class="i">✨</span>Más</button>
+  <a class="nav-tienda" href="./" target="_blank" rel="noopener">🌐 Ver mi tienda</a>
+</nav>
+
+<dialog id="dlg"><div class="dlg" id="dlgBody"></div></dialog>
+<div class="toast" id="toast"></div>
+
+<script src="vendor/qrcode.min.js"></script>
+<script src="negocios-chicago.js"></script>
+<script>
+/* ===================== Datos ===================== */
+const KEY = 'misFragancias.v1';
+const hoyISO = () => new Date().toISOString().slice(0,10);
+const uid = () => Math.random().toString(36).slice(2,10);
+const defaults = () => ({
+  ajustes:{miNombre:'',miWhats:'',pais:'1',desde:'',inscripcion:'',comision:'',anticipo:'',promo:''},
+  clientas:[], equipo:[], perfumes:[], plan:{semana:'',hechos:[]}, seguridad:null, ultimoRespaldo:'', interesadas:[], planRec:null, negocios:[]
+});
+const LOCAL = 'Guardado en este aparato';
+let S;
+try{ S = Object.assign(defaults(), JSON.parse(localStorage.getItem(KEY)||'{}')); }catch(e){ S = defaults(); }
+
+/* Nube: tus datos se guardan en tu cuenta, en una carpeta privada que solo tú ves */
+let nube = null, subiendo = false, pendiente = false, timerNube = null;
+function estadoSync(t){ const el=document.getElementById('sync'); if(el) el.textContent=t; }
+function guardar(){
+  try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){}
+  if(!nube) return;
+  clearTimeout(timerNube); timerNube = setTimeout(subir, 800);
+}
+async function subir(){
+  if(!nube) return;
+  if(subiendo){ pendiente = true; return; }
+  subiendo = true; estadoSync('Guardando…');
+  try{ await nube.set({estado: JSON.stringify(S), actualizado: new Date().toISOString()}); estadoSync('☁️ Guardado en tu cuenta (privado)'); }
+  catch(e){ estadoSync(e && e.code==='quota_exceeded' ? '⚠️ Tu espacio está lleno. Descarga un respaldo.' : '⚠️ No se pudo guardar en tu cuenta. '+LOCAL+'.'); }
+  subiendo = false;
+  if(pendiente){ pendiente = false; subir(); }
+}
+async function conectarNube(){
+  try{
+    if(!window.claude || !window.claude.use){ estadoSync('📱 '+LOCAL); return; }
+    const [db, user] = await Promise.all([claude.use('db'), claude.use('user')]);
+    if(!db || !user){ estadoSync('📱 '+LOCAL); return; }
+    const id = await user.id();
+    if(!id){ estadoSync('📱 '+LOCAL); return; }
+    const ref = db.doc('data/users/' + id + '/estado');
+    const snap = await ref.get();
+    nube = ref;
+    if(snap.exists){
+      try{ S = Object.assign(defaults(), JSON.parse(snap.data().estado||'{}')); localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){}
+      estadoSync('☁️ Guardado en tu cuenta (privado)'); render();
+    } else if(S.clientas.length || S.perfumes.length || S.equipo.length || S.ajustes.miNombre){
+      subir();
+    } else estadoSync('☁️ Guardado en tu cuenta (privado)');
+  }catch(e){ estadoSync('📱 '+LOCAL); }
+}
+
+const esc = s => String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const dias = iso => iso ? Math.floor((new Date(hoyISO()) - new Date(iso))/864e5) : 0;
+const fmtFecha = iso => iso ? new Date(iso+'T12:00').toLocaleDateString('es-MX',{day:'numeric',month:'short'}) : '';
+const dinero = n => '$' + (Number(n)||0).toLocaleString('es-MX',{maximumFractionDigits:2});
+
+/* ===================== Mensajes ===================== */
+const CATS = ['Vender','Clientas','Leads','Estados','Mayoreo','Grupos y negocios','Equipo','Reclutar','Fechas'];
+const MENSAJES = [
+ {id:'muestra',cat:'Vender',t:'🎁 Al regalar una muestra',x:'¡Hola {nombre}! 🌸 Te traje una muestra de {perfume}, una de mis fragancias favoritas de Zermat. Pruébala unos días y me cuentas qué te parece 😊 Si te gusta, el frasco completo cuesta {precio} y te lo puedo apartar.'},
+ {id:'seguimiento',cat:'Vender',t:'💬 Seguimiento de muestra (a los 3 días)',x:'¡Hola {nombre}! ¿Cómo te fue con la muestra de {perfume}? 😊 ¿Te gustó cómo te duró? Esta semana te lo puedo entregar en {dia} y si quieres lo puedes pagar en 2 quincenas 💕'},
+ {id:'conocidas',cat:'Vender',t:'👋 Primer mensaje a conocidas',x:'¡Hola {nombre}! ¿Cómo estás? 😊 Te cuento que ahora estoy vendiendo fragancias y productos Zermat ✨ Tengo perfumes muy ricos para dama y caballero desde {desde}. Si quieres te mando el catálogo o te llevo muestras para que los pruebes, ¡sin compromiso! 🌸'},
+ {id:'apartado',cat:'Vender',t:'💳 Ofrecer apartado o pagos',x:'¿Te gustó pero no es buen momento? 😊 ¡No te preocupes! Te lo aparto con {anticipo} y el resto me lo pagas en 2 quincenas o cuando te quede mejor 💕'},
+ {id:'tarde',cat:'Vender',t:'🏡 Invitación a tarde de fragancias',x:'¡Hola {nombre}! 🌸 Te invito a una tarde de fragancias en mi casa el {dia} a las {hora} ☕✨ Vamos a probar perfumes y cremas, platicar y pasarla bonito. ¡Puedes traer a una amiga! ¿Te espero? 💕'},
+ {id:'referidas',cat:'Clientas',t:'🤝 Pedir referidas',x:'¡Gracias por tu compra, {nombre}! 💖 Te quiero pedir un favor: si conoces a alguien a quien le gusten los perfumes, ¿me recomendarías? Por cada amiga que me compre te regalo una muestra o un descuento en tu próxima compra 🎁'},
+ {id:'recompra',cat:'Clientas',t:'🔁 Clienta que ya compró (2–3 meses)',x:'¡Hola {nombre}! 🌸 ¿Cómo vas con tu {perfume}? Ya debe estar por acabarse 😄 ¿Quieres que te aparte otro, o te gustaría probar algo nuevo? Este mes tengo {promo} ✨'},
+ {id:'cobro',cat:'Clientas',t:'💵 Recordatorio de pago (amable)',x:'¡Hola {nombre}! 😊 Te escribo para recordarte con cariño el pago pendiente de {saldo} de tu {perfume}. ¿Cuándo te queda bien que pase o me transfieres? ¡Gracias por tu confianza! 💕'},
+ {id:'gracias',cat:'Clientas',t:'💖 Gracias por tu compra',x:'¡Muchas gracias por tu compra, {nombre}! 💖 Espero que disfrutes mucho tu {perfume}. Cualquier cosa que necesites aquí estoy 🌸'},
+ {id:'est1',cat:'Estados',t:'✨ Perfume del día',x:'✨ Perfume del día: {perfume} ✨\nAroma: {aroma}\nIdeal para: el diario / salir de noche / regalar\n💲 {precio}\n📩 Escríbeme y te lo aparto 💕'},
+ {id:'est2',cat:'Estados',t:'🎁 Sets de regalo',x:'¿Tienes un cumpleaños, aniversario o quieres quedar bien? 🎁 Te armo un set de regalo con perfume + crema desde {desde}. ¡Escríbeme! 💌'},
+ {id:'est3',cat:'Estados',t:'💸 Huele rico sin gastar de más',x:'💸 Huele rico sin gastar de más 💸\nPerfumes Zermat desde {desde}. Aceptamos pagos en quincenas 🙌\nPregúntame por tu favorito 🌸'},
+ {id:'est4',cat:'Estados',t:'📦 Entregas de la semana',x:'📦 ¡Entregas de esta semana listas! Gracias a todas mis clientas por su confianza 💖 ¿Tú también quieres el tuyo? Escríbeme 😊'},
+ {id:'fb',cat:'Grupos y negocios',t:'📢 Publicación para grupos de Facebook',x:'🌸 PERFUMES ZERMAT 🌸\nFragancias para dama y caballero que duran todo el día ✨\n💲 Desde {desde}\n💳 Apartado y pagos en quincenas\n🚗 Entrega en {zona}\n🎁 Pregunta por muestras GRATIS\n📲 WhatsApp: {miWhats}'},
+ {id:'negocio',cat:'Grupos y negocios',t:'💇‍♀️ Para estética, salón o boutique',x:'¡Hola! Me llamo {miNombre} y vendo fragancias Zermat 🌸 Me gustaría dejarle un probador y unas tarjetas en su negocio. Por cada venta que salga de aquí le doy {comision} o un producto de regalo. ¿Le interesaría? 😊'},
+ {id:'invitar',cat:'Equipo',t:'👭 Invitar a una clienta a vender',x:'¡Hola {nombre}! 😊 Veo que te encantan los productos Zermat, así que te quiero contar algo: tú también puedes comprarlos con descuento y ganar un dinero extra vendiéndolos desde tu casa, en tus tiempos 💕 Empezar cuesta {inscripcion} y yo te enseño todo paso a paso. ¿Te platico más?'},
+ {id:'buscar',cat:'Equipo',t:'📣 Buscar vendedoras',x:'💼 ¿Buscas un ingreso extra desde casa? 💼\nEstoy formando mi equipo de ventas de fragancias y cosméticos Zermat 🌸\n✅ Tú pones tus horarios\n✅ Compras con descuento\n✅ Te enseño a vender paso a paso\nInscripción: {inscripcion}\n📲 Escríbeme y te explico sin compromiso 😊'},
+ {id:'bienvenida',cat:'Equipo',t:'🎉 Bienvenida a tu nueva integrante',x:'¡Bienvenida al equipo, {nombre}! 🎉💖 Estoy muy feliz de tenerte. Te voy a agregar a nuestro grupo, donde comparto fotos, textos y ofertas que puedes usar. Tu primer reto: regala 5 muestras esta semana. ¡Aquí estoy para ayudarte en todo! 🌸'},
+ {id:'l_muestra',cat:'Leads',t:'🎁 Respuesta: pidió muestra en tu tienda',x:'¡Hola {nombre}! 🌸 Gracias por escribirme desde mi página. Con lo que me contaste ({aromas}) te voy a preparar 2 o 3 muestras que van con tu gusto. ¿Qué día y a qué hora te queda bien que te las lleve en {zona}? 💕'},
+ {id:'l_producto',cat:'Leads',t:'🛍️ Respuesta: preguntó por un producto',x:'¡Hola! 🌸 Gracias por escribirme. {perfume} este mes está en {precio}. Si quieres te llevo una muestra para que la pruebes primero, y puedes apartarlo con {anticipo} y pagar en quincenas. ¿En qué zona estás? 😊'},
+ {id:'l_mayoreo',cat:'Leads',t:'🏪 Respuesta: negocio pidió mayoreo',x:'¡Hola {nombre}! Gracias por escribirme 🌸 Con gusto le surto a {negocio}. Trabajo con dos opciones: compra de mayoreo con {descMayoreo} de descuento, o exhibidor a consignación donde solo me paga lo que se vende y su negocio gana {comisionNeg} por venta. ¿Le puedo visitar esta semana para enseñarle muestras (15 minutos)? ¿Qué día le acomoda?'},
+ {id:'m_presenta',cat:'Mayoreo',t:'👋 Presentación a un negocio',x:'¡Hola, buen día! Me llamo {miNombre} y soy distribuidora independiente de fragancias Zermat aquí en {zona} 🌸 Le escribo a {negocio} porque creo que a sus clientas les encantaría encontrar perfumes ahí mismo. Le puedo dejar un exhibidor pequeño a consignación (solo me paga lo que se vende) o surtirle a precio de mayoreo. ¿Le puedo pasar a enseñar muestras 10 minutos esta semana?'},
+ {id:'m_guion',cat:'Mayoreo',t:'🗣️ Guion para la visita (para leer tú)',x:'1. Saluda y preséntate: "Soy {miNombre}, vendo fragancias Zermat aquí en el barrio".\n2. Regala una muestra a la dueña o encargada.\n3. Pregunta: "¿Sus clientas le preguntan por regalos o perfumes?"\n4. Ofrece poco riesgo: "Le dejo 6 fragancias en un exhibidor; solo me paga lo que se venda y usted gana {comisionNeg} por cada una".\n5. Acuerda fecha para volver: "Paso en 2 semanas a ver cómo va y a resurtir".\n6. Deja tu tarjeta con WhatsApp: {miWhats}.'},
+ {id:'m_seguimiento',cat:'Mayoreo',t:'🔁 Seguimiento a un negocio',x:'¡Hola! Soy {miNombre}, la de las fragancias Zermat 🌸 Le escribo para saber si pudo pensar lo del exhibidor para {negocio}. Esta semana ando por la zona y le puedo llevar muestras nuevas del catálogo. ¿Qué día le queda bien?'},
+ {id:'m_propuesta',cat:'Mayoreo',t:'📄 Propuesta por escrito',x:'Propuesta para {negocio} 🌸\n\nOpción A · Mayoreo\n• Compra con {descMayoreo} de descuento sobre precio de catálogo\n• Usted pone el precio de venta\n\nOpción B · Consignación\n• Le dejo un exhibidor con 6 a 8 fragancias\n• Solo me paga lo que se vende, cada 2 semanas\n• Su negocio gana {comisionNeg} por cada venta\n\nEn las dos: le resurto, le doy muestras para sus clientas y catálogo del mes.\n{miNombre} · {miWhats}'},
+ {id:'m_resurtido',cat:'Mayoreo',t:'📦 Resurtido a un cliente de mayoreo',x:'¡Hola! Soy {miNombre} 🌸 Ya llegó el catálogo nuevo. ¿Le paso esta semana a {negocio} a revisar qué se vendió y resurtirle? También traigo las promociones del mes.'},
+ {id:'m_evento',cat:'Mayoreo',t:'🎪 Pedir un puesto en mercado o evento',x:'Hola, buen día. Me llamo {miNombre} y vendo fragancias y cosméticos Zermat en {zona}. Me interesa rentar un espacio o puesto como vendedora{negocio_en}. ¿Me podría decir los requisitos, el costo y las fechas disponibles? Gracias. {miWhats}'},
+ {id:'r_fb',cat:'Reclutar',t:'📢 Publicación para grupos de Facebook',x:'🌸 ¿Te gustaría ganar un dinero extra desde casa? 🌸\n\nVendo fragancias y cosméticos Zermat y estoy formando mi equipo en {zona}.\n✅ Tú decides tus horarios\n✅ Compras tus productos con descuento\n✅ Te enseño paso a paso y te paso fotos y textos listos\n✅ Funciona desde el celular\n\nInscripción: {inscripcion}. Lo que ganes depende de lo que vendas, y yo te acompaño desde el primer día 💕\n\n📲 Escríbeme "INFO" o aquí: {enlace}'},
+ {id:'r_ig',cat:'Reclutar',t:'🎥 Texto para video de Instagram/TikTok',x:'Un día vendiendo perfumes desde casa 🌸📦\nPreparo muestras, entrego pedidos y todo lo organizo desde mi celular.\n¿Quieres intentarlo? Comenta "INFO" y te escribo 💕\n#ventasdesdecasa #zermat #ingresoextra #mamaemprendedora'},
+ {id:'r_estado',cat:'Reclutar',t:'📱 Estado de WhatsApp para reclutar',x:'💼 Busco 3 personas que quieran vender desde casa 🌸\nFragancias Zermat · tus horarios · te enseño todo.\nRespóndeme este estado y te cuento 😊'},
+ {id:'r_comento',cat:'Reclutar',t:'💬 Responder a quien escribió "INFO"',x:'¡Hola {nombre}! 😊 Gracias por tu interés. Te cuento rápido: vendo fragancias y cosméticos Zermat desde casa y te puedo inscribir para que tú también vendas. Compras con descuento, vendes a tu ritmo y yo te enseño todo. ¿Te queda bien que te llame 10 minutos hoy o mañana para explicarte? 💕'},
+ {id:'r_seg',cat:'Reclutar',t:'🔁 Seguimiento a una interesada',x:'¡Hola {nombre}! 🌸 ¿Pudiste pensar lo de vender conmigo? Si tienes dudas, con gusto te las resuelvo. Esta semana estoy ayudando a las nuevas con su primer pedido, así que es un buen momento para empezar 😊'},
+ {id:'r_reunion',cat:'Reclutar',t:'📹 Invitación a plática por videollamada',x:'¡Hola {nombre}! 😊 El {dia} a las {hora} voy a hacer una plática corta (20 minutos) por videollamada para explicar cómo vender Zermat desde casa: cuánto cuesta empezar, cómo se gana y cómo te ayudo. ¿Te mando el enlace? 💕'},
+ {id:'r_historia',cat:'Reclutar',t:'💖 Mi historia (para publicar)',x:'Hace un tiempo empecé a vender fragancias Zermat desde mi casa 🌸\nAl principio solo regalaba muestras a mis vecinas. Hoy tengo clientas que me compran cada mes y organizo todo desde mi celular.\nNo es dinero fácil: es constancia. Pero me encanta y lo hago a mi ritmo 💪\nSi tú también quieres intentarlo, escríbeme: {enlace}'},
+ {id:'animo',cat:'Equipo',t:'💪 Ánimo para tu equipo',x:'¡Hola {nombre}! 💪 ¿Cómo vas con tus ventas esta semana? Recuerda: cada muestra que regalas es una venta en camino 🌸 Si necesitas fotos, textos o ayuda con una clienta, aquí estoy 💕'},
+ {id:'fecha',cat:'Fechas',t:'💐 Fecha especial',x:'💐 ¡Se acerca {ocasion}! 💐\nRegala un perfume que le va a encantar 🎁\nSets desde {desde}, con envoltura de regalo incluida ✨\nAparta el tuyo antes del {fecha} 📲'},
+];
+
+function rellenar(texto, ctx={}){
+  const a = S.ajustes;
+  const val = {
+    miNombre:a.miNombre, miWhats:a.miWhats, desde:a.desde&&('$'+String(a.desde).replace(/^\$/,'')),
+    inscripcion:a.inscripcion&&('$'+String(a.inscripcion).replace(/^\$/,'')),
+    comision:a.comision&&('$'+String(a.comision).replace(/^\$/,'')),
+    anticipo:a.anticipo&&('$'+String(a.anticipo).replace(/^\$/,'')),
+    promo:a.promo, zona:a.zona, descMayoreo:a.descMayoreo&&(String(a.descMayoreo).replace(/%$/,'')+'%'), comisionNeg:a.comisionNeg&&(String(a.comisionNeg).replace(/%$/,'')+'%'), negocio_en:ctx.negocio?' en '+ctx.negocio:'', enlace:a.miWhats?'wa.me/'+telWa(a.miWhats):undefined, ...ctx
+  };
+  return texto.replace(/\{(\w+)\}/g,(m,k)=> (val[k]!==undefined && val[k]!=='' && val[k]!==null) ? val[k] : '['+({miNombre:'tu nombre',miWhats:'tu número',saldo:'cantidad'}[k]||k)+']');
+}
+
+/* ===================== Utilidades UI ===================== */
+const $ = s => document.querySelector(s);
+function toast(t){ const el=$('#toast'); el.textContent=t; el.classList.add('show'); clearTimeout(toast._t); toast._t=setTimeout(()=>el.classList.remove('show'),1800); }
+const dlg = $('#dlg');
+function abrir(html){ $('#dlgBody').innerHTML = html; dlg.showModal(); }
+function cerrar(){ dlg.close(); despuesDeGuardar = null; }
+dlg.addEventListener('click',e=>{ if(e.target===dlg) cerrar(); });
+
+async function copiar(t){
+  try{ await navigator.clipboard.writeText(t); }
+  catch(e){ const ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); }
+  toast('¡Copiado! 📋');
+}
+function telWa(tel){
+  let d = String(tel||'').replace(/\D/g,'');
+  if(!d) return '';
+  const p = String(S.ajustes.pais||'').replace(/\D/g,'');
+  if(p && d.length<=10) d = p + d;
+  return d;
+}
+const urlWhats = (texto, tel) => 'https://wa.me/'+(telWa(tel)||'')+'?text='+encodeURIComponent(texto);
+
+/* Confirmación dentro de la página */
+let accionConfirmar = null;
+function confirmar(texto, fn, boton='Sí, borrar'){
+  accionConfirmar = fn;
+  abrir(`<h3>¿Estás segura?</h3><p>${esc(texto)}</p>
+    <div class="dlg-actions"><button style="background:var(--bad);color:#fff" onclick="const f=accionConfirmar;accionConfirmar=null;cerrar();f()">${esc(boton)}</button><button class="sec" onclick="cerrar()">Cancelar</button></div>`);
+}
+
+/* Ventana para editar un mensaje y mandarlo */
+let compCtx = null;
+function componer(id, ctx={}, tel=''){
+  const m = MENSAJES.find(x=>x.id===id);
+  compCtx = {tel, onSent:ctx._onSent};
+  ventanaTexto(m.t, rellenar(m.x,ctx), tel, 'Revisa y cambia lo que esté entre [corchetes].');
+}
+function ventanaTexto(titulo, texto, tel='', nota=''){
+  abrir(`<h3>${esc(titulo)}</h3>
+    ${nota?`<p class="muted">${esc(nota)}</p>`:''}
+    <textarea id="compTxt">${esc(texto)}</textarea>
+    <div class="dlg-actions">
+      <button onclick="copiar(document.getElementById('compTxt').value);contarMensaje()">📋 Copiar</button>
+      <a class="btn" id="waLink" target="_blank" rel="noopener" onclick="enviado()">🟢 WhatsApp${tel?'':' (elegir chat)'}</a>
+      <button class="sec" onclick="cerrar()">Cerrar</button>
+    </div>
+    <p class="muted" style="margin-bottom:0">Si WhatsApp no se abre, usa "Copiar" y pégalo en el chat.</p>`);
+  const ta=$('#compTxt'), a=$('#waLink');
+  const act=()=>{ a.href=urlWhats(ta.value, tel); };
+  ta.oninput=act; act();
+}
+function contarMensaje(){ if(compCtx && !compCtx.contado){ compCtx.contado=true; registrar('msg'); } }
+function enviado(){
+  contarMensaje();
+  if(compCtx && compCtx.onSent){ const f=compCtx.onSent; compCtx.onSent=null; setTimeout(f,300); }
+  setTimeout(cerrar,300);
+}
+
+/* ===================== Pestañas ===================== */
+let tab = 'hoy', catSel = 'Vender', filtroCli = '';
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{ tab=b.dataset.tab; document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x===b)); render(); scrollTo(0,0); });
+
+function render(){
+  $('#saludo').textContent = S.ajustes.miNombre ? `¡Hola, ${S.ajustes.miNombre}! 💕` : 'Tu negocio Zermat desde casa';
+  ({hoy:vHoy,clientas:vClientas,mensajes:vMensajes,negocios:vNegocios,equipo:vEquipo,mas:vMas})[tab]();
+}
+
+/* ---------- HOY ---------- */
+const PLAN = [
+  'Configurar WhatsApp Business y subir 10 fragancias al catálogo',
+  'Preparar 20 muestras y regalarlas',
+  'Publicar un estado diario con un perfume diferente',
+  'Escribirle a 10 conocidas y pedir 2 referidas a cada una',
+  'Organizar una tarde de fragancias con amigas',
+  'Invitar a 2–3 clientas entusiastas a vender conmigo'
+];
+function semanaActual(){ const d=new Date(); const j=new Date(d.getFullYear(),0,1); return d.getFullYear()+'-'+Math.ceil(((d-j)/864e5+j.getDay()+1)/7); }
+
+function pendientes(){
+  const L=[];
+  S.clientas.forEach(c=>{
+    c.muestras.forEach(m=>{ if(!m.seguida && dias(m.fecha)>=3) L.push({orden:1,ic:'🎁',t:`Seguimiento de muestra a ${c.nombre}`,d:`${m.perfume||'muestra'} · hace ${dias(m.fecha)} días`,
+      acc:`componer('seguimiento',{nombre:${JSON.stringify(c.nombre)},perfume:${JSON.stringify(m.perfume||'')},_onSent:()=>marcarMuestra('${c.id}','${m.id}')},${JSON.stringify(c.tel)})`,
+      hecho:`marcarMuestra('${c.id}','${m.id}')`}); });
+    c.compras.forEach(p=>{
+      const saldo=(Number(p.precio)||0)-(Number(p.abonado)||0);
+      if(saldo>0) L.push({orden:2,ic:'💵',t:`Cobrar a ${c.nombre}`,d:`${dinero(saldo)} pendiente · ${p.perfume||''}`,
+        acc:`componer('cobro',{nombre:${JSON.stringify(c.nombre)},perfume:${JSON.stringify(p.perfume||'')},saldo:'${dinero(saldo)}'},${JSON.stringify(c.tel)})`,
+        hecho:`abonar('${c.id}','${p.id}')`, hechoTxt:'Registrar pago'});
+    });
+    const ult = c.compras.slice().sort((a,b)=>b.fecha.localeCompare(a.fecha))[0];
+    if(ult && !ult.avisado && dias(ult.fecha)>=60) L.push({orden:3,ic:'🔁',t:`Ofrecer recompra a ${c.nombre}`,d:`Compró ${ult.perfume||''} hace ${dias(ult.fecha)} días`,
+      acc:`componer('recompra',{nombre:${JSON.stringify(c.nombre)},perfume:${JSON.stringify(ult.perfume||'')},_onSent:()=>marcarAvisado('${c.id}','${ult.id}')},${JSON.stringify(c.tel)})`,
+      hecho:`marcarAvisado('${c.id}','${ult.id}')`});
+  });
+  (S.negocios||[]).forEach(n=>{
+    const d=dias(n.ultimo);
+    if(['contactado','visitado','interesado'].includes(n.etapa) && n.ultimo && d>=4) L.push({orden:2,ic:'🏪',t:`Seguimiento a ${n.nombre}`,d:`${ETAPAS_N[n.etapa]} · hace ${d} días`,acc:`mensajeNeg('${n.id}')`,hecho:`etapaN('${n.id}','${n.etapa}')`});
+    const ult=(n.ventas||[]).map(v=>v.fecha).sort().pop();
+    if(n.etapa==='cliente' && ult && dias(ult)>=14 && dias(n.ultimo)>=7) L.push({orden:3,ic:'📦',t:`Resurtir a ${n.nombre}`,d:`Última venta hace ${dias(ult)} días`,acc:`componer('m_resurtido',{negocio:${JSON.stringify(n.nombre)},_onSent:()=>etapaN('${n.id}','cliente')},${JSON.stringify(n.telefono||'')})`,hecho:`etapaN('${n.id}','cliente')`});
+  });
+  (S.interesadas||[]).forEach(i=>{
+    if(['nueva','platique','interesada'].includes(i.etapa) && dias(i.ultimo||i.fecha)>=2) L.push({orden:2,ic:'🌱',t:`Seguimiento a ${i.nombre}`,d:`${ETAPAS[i.etapa]} · último contacto hace ${dias(i.ultimo||i.fecha)} días`,
+      acc:`componer('${i.etapa==='nueva'?'r_comento':'r_seg'}',{nombre:${JSON.stringify(i.nombre)},_onSent:()=>contactoInteresada('${i.id}')},${JSON.stringify(i.tel)})`,
+      hecho:`contactoInteresada('${i.id}')`});
+  });
+  S.equipo.forEach(e=>{
+    if(!e.bienvenida) L.push({orden:0,ic:'🎉',t:`Darle la bienvenida a ${e.nombre}`,d:'Nueva en tu equipo',
+      acc:`componer('bienvenida',{nombre:${JSON.stringify(e.nombre)},_onSent:()=>marcarBienvenida('${e.id}')},${JSON.stringify(e.tel)})`,
+      hecho:`marcarBienvenida('${e.id}')`});
+  });
+  return L.sort((a,b)=>a.orden-b.orden);
+}
+function marcarMuestra(cid,mid){ const m=cli(cid).muestras.find(x=>x.id===mid); m.seguida=true; guardar(); render(); }
+function marcarAvisado(cid,pid){ const p=cli(cid).compras.find(x=>x.id===pid); p.avisado=true; guardar(); render(); }
+function marcarBienvenida(eid){ S.equipo.find(x=>x.id===eid).bienvenida=true; guardar(); render(); }
+
+function vHoy(){
+  if(S.plan.semana!==semanaActual()){ S.plan={semana:semanaActual(),hechos:[]}; guardar(); }
+  const mes = hoyISO().slice(0,7);
+  let ventasMes=0, porCobrar=0;
+  S.clientas.forEach(c=>c.compras.forEach(p=>{ if(p.fecha.startsWith(mes)) ventasMes+=Number(p.precio)||0; porCobrar+=Math.max(0,(Number(p.precio)||0)-(Number(p.abonado)||0)); }));
+  const P = pendientes();
+  const sinAjustes = !S.ajustes.miNombre || !S.ajustes.miWhats;
+  $('#app').innerHTML = `
+    ${sinAjustes?`<div class="banner alto"><img src="img/bienvenida.webp" alt="Flores al sol"><div class="velo"></div><div class="txt"><h2>¡Bienvenida! 🌸</h2><p>Aquí llevas tus clientas, muestras, cobros y tu equipo. Empieza poniendo tus datos.</p><button style="margin-top:10px" onclick="irA('mas');setTimeout(()=>document.querySelector('[data-a=miNombre]')?.focus(),100)">Poner mis datos</button></div></div>`
+      :`<div class="banner"><img src="img/portada.webp" alt="Frasco de perfume con luz dorada"><div class="velo"></div><div class="txt"><h2>${esc(saludoHora())}, ${esc(S.ajustes.miNombre)} 💕</h2><p>${P.length?`Tienes ${P.length} pendiente${P.length===1?'':'s'} hoy`:'Todo al día. ¡A vender!'}</p></div></div>`}
+    <div class="acciones">
+      <button onclick="accionRapida('muestra')"><span class="i">🎁</span>Anotar muestra</button>
+      <button onclick="accionRapida('venta')"><span class="i">🛍️</span>Anotar venta</button>
+      <button onclick="mandarCatalogo()"><span class="i">📲</span>Mandar catálogo</button>
+      <button onclick="bandeja()"><span class="i">📥</span>Nuevo lead</button>
+    </div>
+    ${S.guiaVista?'':`<div class="card" style="border-color:var(--brand)"><div class="spread"><div><h3>📖 ¿Primera vez?</h3><p class="muted" style="margin:0">Te enseño en 5 pasos a poner tus datos, anotar ventas y mandar tu catálogo.</p></div></div><div class="row" style="margin-top:10px"><button class="small" onclick="guia()">Ver la guía</button><button class="small ghost" onclick="S.guiaVista=true;guardar();render()">Ya sé usarla</button></div></div>`}
+    ${tarjetaMeta()}
+    ${avisoRespaldo()}
+    <div class="stats">
+      <div class="stat"><b>${dinero(ventasMes)}</b><span>Vendido este mes</span></div>
+      <div class="stat"><b>${dinero(porCobrar)}</b><span>Por cobrar</span></div>
+      <div class="stat"><b>${S.clientas.length}</b><span>Clientas</span></div>
+    </div>
+    <h2>📋 Pendientes de hoy</h2>
+    <div class="lista">${P.length? P.map(p=>`<div class="card"><div class="spread"><div><h3>${p.ic} ${esc(p.t)}</h3><div class="muted">${esc(p.d)}</div></div></div>
+      <div class="row" style="margin-top:10px"><button class="small" onclick="${esc(p.acc)}">💬 Escribirle</button><button class="small sec" onclick="${esc(p.hecho)}">✔ ${p.hechoTxt||'Listo'}</button></div></div>`).join('')
+      : `<div class="card empty">🌸 No tienes pendientes. ¡Regala unas muestras y anótalas en Clientas!</div>`}</div>
+    <h2>🗓️ Mi plan de la semana</h2>
+    <div class="card">${PLAN.map((t,i)=>{const on=S.plan.hechos.includes(i);return `<label class="check ${on?'done':''}"><input type="checkbox" ${on?'checked':''} onchange="togPlan(${i})"><span>${esc(t)}</span></label>`}).join('')}
+      <p class="muted" style="margin:8px 0 0">${S.plan.hechos.length}/${PLAN.length} hechos · se reinicia cada semana</p></div>`;
+}
+function saludoHora(){ const h=new Date().getHours(); return h<12?'Buenos días':h<19?'Buenas tardes':'Buenas noches'; }
+let despuesDeGuardar = null;
+function accionRapida(tipo){
+  const sig = id => tipo==='venta' ? formCompra(id) : formMuestra(id);
+  const lista = S.clientas.slice().sort((a,b)=>a.nombre.localeCompare(b.nombre));
+  abrir(`<h3>${tipo==='venta'?'🛍️ ¿A quién le vendiste?':'🎁 ¿A quién le diste la muestra?'}</h3>
+    ${lista.length>6?'<input id="qBus" placeholder="🔎 Buscar" style="margin-bottom:8px">':''}
+    <div id="qLista" style="max-height:45vh;overflow:auto">${lista.map(c=>`<button class="sec" data-n="${esc(c.nombre.toLowerCase())}" style="width:100%;text-align:left;margin:3px 0" onclick="(${tipo==='venta'?'formCompra':'formMuestra'})('${c.id}')">${esc(c.nombre)}</button>`).join('') || '<p class="muted">Aún no tienes clientas.</p>'}</div>
+    <div class="dlg-actions"><button onclick="despuesDeGuardar=id=>${tipo==='venta'?'formCompra':'formMuestra'}(id);formClienta()">+ Clienta nueva</button><button class="sec" onclick="cerrar()">Cancelar</button></div>`);
+  const b=$('#qBus'); if(b) b.oninput=()=>document.querySelectorAll('#qLista button').forEach(x=>x.hidden=!x.dataset.n.includes(b.value.toLowerCase()));
+}
+function togPlan(i){ const h=S.plan.hechos; const k=h.indexOf(i); k<0?h.push(i):h.splice(k,1); guardar(); render(); }
+function irA(t){ document.querySelector(`nav button[data-tab="${t}"]`).click(); }
+
+/* ---------- CLIENTAS ---------- */
+const cli = id => S.clientas.find(c=>c.id===id);
+function vClientas(){
+  const q = filtroCli.toLowerCase();
+  const lista = S.clientas.filter(c=>!q || c.nombre.toLowerCase().includes(q)).sort((a,b)=>a.nombre.localeCompare(b.nombre));
+  $('#app').innerHTML = `
+    <div class="row"><input id="busca" placeholder="🔎 Buscar clienta" value="${esc(filtroCli)}" style="flex:1"><button onclick="formClienta()">+ Nueva</button></div>
+    <div class="lista" style="margin-top:12px">${lista.length? lista.map(tarjetaClienta).join('') : `<div class="card empty">Aún no tienes clientas anotadas.<br>Agrega a la primera persona a la que le regales una muestra 🎁</div>`}</div>`;
+  const b=$('#busca'); b.oninput=()=>{ filtroCli=b.value; const pos=b.selectionStart; vClientas(); const n=$('#busca'); n.focus(); n.setSelectionRange(pos,pos); };
+}
+function tarjetaClienta(c){
+  const saldo = c.compras.reduce((s,p)=>s+Math.max(0,(Number(p.precio)||0)-(Number(p.abonado)||0)),0);
+  const ult = c.compras.slice().sort((a,b)=>b.fecha.localeCompare(a.fecha))[0];
+  const mp = c.muestras.filter(m=>!m.seguida).length;
+  const N = JSON.stringify(c.nombre), T = JSON.stringify(c.tel), UP = JSON.stringify(ult?.perfume||'');
+  return `<div class="card">
+    <div class="spread"><div><h3>${esc(c.nombre)}</h3><div class="muted">${esc(c.tel||'Sin teléfono')}${c.notas?' · '+esc(c.notas):''}</div></div>
+      <button class="ghost small" onclick="formClienta('${c.id}')">Editar</button></div>
+    <div style="margin:6px 0">
+      ${saldo>0?`<span class="pill bad">Debe ${dinero(saldo)}</span>`:''}
+      ${mp?`<span class="pill warn">${mp} muestra(s) sin seguimiento</span>`:''}
+      ${ult?`<span class="pill">Última compra: ${esc(ult.perfume||'')} · ${fmtFecha(ult.fecha)}</span>`:''}
+    </div>
+    <details><summary class="muted">Historial (${c.compras.length} compras, ${c.muestras.length} muestras)</summary>
+      ${c.compras.slice().sort((a,b)=>b.fecha.localeCompare(a.fecha)).map(p=>{const s=(Number(p.precio)||0)-(Number(p.abonado)||0);return `<div class="spread" style="padding:6px 0;border-bottom:1px solid var(--line)"><div>🛍️ ${esc(p.perfume)} · ${dinero(p.precio)}<div class="muted">${fmtFecha(p.fecha)} ${s>0?'· debe '+dinero(s):'· pagado ✅'}</div></div><div class="row">${s>0?`<button class="small sec" onclick="abonar('${c.id}','${p.id}')">Abono</button>`:''}<button class="small danger" onclick="borrarItem('${c.id}','compras','${p.id}')">✕</button></div></div>`}).join('')}
+      ${c.muestras.slice().reverse().map(m=>`<div class="spread" style="padding:6px 0;border-bottom:1px solid var(--line)"><div>🎁 Muestra: ${esc(m.perfume)}<div class="muted">${fmtFecha(m.fecha)} ${m.seguida?'· seguimiento hecho ✅':''}</div></div><button class="small danger" onclick="borrarItem('${c.id}','muestras','${m.id}')">✕</button></div>`).join('')}
+    </details>
+    <div class="row" style="margin-top:10px">
+      <button class="small" onclick="formCompra('${c.id}')">🛍️ Venta</button>
+      <button class="small sec" onclick="formMuestra('${c.id}')">🎁 Muestra</button>
+      <button class="small sec" onclick="elegirMensaje('${c.id}')">💬 Mensaje</button>
+    </div></div>`;
+}
+function opcionesPerfume(){ return `<datalist id="dlPerf">${S.perfumes.map(p=>`<option value="${esc(p.nombre)}" label="${esc((TIPOS[p.tipo||'']||'')+(p.precio?' · '+dinero(p.precio):''))}">`).join('')}</datalist>`; }
+function formClienta(id){
+  const c = id?cli(id):{nombre:'',tel:'',notas:''};
+  abrir(`<h3>${id?'Editar':'Nueva'} clienta</h3>
+    <label>Nombre</label><input id="fNom" value="${esc(c.nombre)}">
+    <label>Teléfono / WhatsApp</label><input id="fTel" type="tel" value="${esc(c.tel)}" placeholder="Ej. 773 555 1234">
+    <label>Notas (qué aromas le gustan, cumpleaños…)</label><input id="fNot" value="${esc(c.notas)}">
+    <div class="dlg-actions"><button onclick="guardarClienta('${id||''}')">Guardar</button><button class="sec" onclick="cerrar()">Cancelar</button>
+    ${id?`<button class="danger" onclick="borrarClienta('${id}')">Borrar</button>`:''}</div>`);
+  setTimeout(()=>$('#fNom').focus(),50);
+}
+function guardarClienta(id){
+  const nombre=$('#fNom').value.trim(); if(!nombre){ toast('Escribe el nombre'); return; }
+  if(id){ Object.assign(cli(id),{nombre,tel:$('#fTel').value.trim(),notas:$('#fNot').value.trim()}); }
+  else { const nueva={id:uid(),nombre,tel:$('#fTel').value.trim(),notas:$('#fNot').value.trim(),compras:[],muestras:[]}; S.clientas.push(nueva);
+    if(despuesDeGuardar){ const f=despuesDeGuardar; despuesDeGuardar=null; guardar(); render(); f(nueva.id); return; } }
+  despuesDeGuardar=null; guardar(); cerrar(); render(); toast('Guardada 💕');
+}
+function borrarClienta(id){ confirmar('Se borrará a esta clienta y todo su historial.', ()=>{ S.clientas=S.clientas.filter(c=>c.id!==id); guardar(); render(); toast('Borrada'); }); }
+function borrarItem(cid,tipo,iid){ confirmar('Se borrará este registro.', ()=>{ const c=cli(cid); c[tipo]=c[tipo].filter(x=>x.id!==iid); guardar(); render(); }); }
+function precioDe(nombre){ const p=S.perfumes.find(x=>x.nombre.toLowerCase()===String(nombre).toLowerCase()); return p?p.precio:''; }
+function formCompra(cid){
+  abrir(`<h3>🛍️ Venta a ${esc(cli(cid).nombre)}</h3>${opcionesPerfume()}
+    <label>Producto</label><input id="fPer" list="dlPerf" oninput="const p=precioDe(this.value); if(p) document.getElementById('fPre').value=p">
+    <label>Precio</label><input id="fPre" type="number" inputmode="decimal">
+    <label>¿Cuánto te pagó hoy?</label><input id="fAbo" type="number" inputmode="decimal" placeholder="Si pagó todo, pon el precio completo">
+    <label>Fecha</label><input id="fFec" type="date" value="${hoyISO()}">
+    <div class="dlg-actions"><button onclick="guardarCompra('${cid}')">Guardar</button><button class="sec" onclick="cerrar()">Cancelar</button></div>`);
+}
+function guardarCompra(cid){
+  const c=cli(cid), perfume=$('#fPer').value.trim(), precio=Number($('#fPre').value)||0;
+  if(!perfume||!precio){ toast('Pon producto y precio'); return; }
+  const abo=$('#fAbo').value===''?precio:Number($('#fAbo').value)||0;
+  c.compras.push({id:uid(),perfume,precio,abonado:abo,fecha:$('#fFec').value||hoyISO()});
+  c.muestras.forEach(m=>m.seguida=true);
+  guardar(); cerrar(); render(); toast('¡Venta anotada! 🎉');
+  setTimeout(()=>componer('gracias',{nombre:c.nombre,perfume},c.tel),300);
+}
+function abonar(cid,pid){
+  const p=cli(cid).compras.find(x=>x.id===pid); const s=(Number(p.precio)||0)-(Number(p.abonado)||0);
+  abrir(`<h3>💵 Registrar pago</h3><p class="muted">${esc(p.perfume)} · debe ${dinero(s)}</p>
+    <label>¿Cuánto te pagó?</label><input id="fAb" type="number" inputmode="decimal" value="${s}">
+    <div class="dlg-actions"><button onclick="(()=>{const p=cli('${cid}').compras.find(x=>x.id==='${pid}');p.abonado=(Number(p.abonado)||0)+(Number(document.getElementById('fAb').value)||0);guardar();cerrar();render();toast('Pago anotado ✅')})()">Guardar</button><button class="sec" onclick="cerrar()">Cancelar</button></div>`);
+}
+function formMuestra(cid){
+  abrir(`<h3>🎁 Muestra para ${esc(cli(cid).nombre)}</h3>${opcionesPerfume()}
+    <label>¿Qué perfume le diste?</label><input id="fPer" list="dlPerf">
+    <label>Fecha</label><input id="fFec" type="date" value="${hoyISO()}">
+    <p class="muted">En 3 días te aparecerá en "Hoy" para darle seguimiento.</p>
+    <div class="dlg-actions"><button onclick="guardarMuestra('${cid}')">Guardar</button><button class="sec" onclick="cerrar()">Cancelar</button></div>`);
+}
+function guardarMuestra(cid){
+  const c=cli(cid), perfume=$('#fPer').value.trim();
+  c.muestras.push({id:uid(),perfume,fecha:$('#fFec').value||hoyISO(),seguida:false});
+  guardar(); cerrar(); render(); toast('Muestra anotada 🎁');
+  setTimeout(()=>componer('muestra',{nombre:c.nombre,perfume,precio:precioDe(perfume)?dinero(precioDe(perfume)):undefined},c.tel),300);
+}
+function elegirMensaje(cid){
+  const c=cli(cid); const ult=c.compras.slice().sort((a,b)=>b.fecha.localeCompare(a.fecha))[0];
+  const ids=['conocidas','muestra','seguimiento','apartado','tarde','gracias','referidas','recompra','invitar'];
+  abrir(`<h3>💬 Mensaje para ${esc(c.nombre)}</h3>
+    ${ids.map(id=>{const m=MENSAJES.find(x=>x.id===id);return `<button class="sec" style="width:100%;text-align:left;margin:4px 0" onclick='componer("${id}",${esc(JSON.stringify({nombre:c.nombre,perfume:ult?.perfume||undefined}))},${esc(JSON.stringify(c.tel))})'>${esc(m.t)}</button>`}).join('')}
+    <div class="dlg-actions"><button class="sec" onclick="cerrar()">Cerrar</button></div>`);
+}
+
+/* ---------- MENSAJES ---------- */
+function vMensajes(){
+  $('#app').innerHTML = `
+    <p class="muted">Toca un mensaje para revisarlo, copiarlo o mandarlo por WhatsApp. Tus datos de "Más → Mis datos" se ponen solos.</p>
+    <div class="chips">${CATS.map(c=>`<button class="small ${c===catSel?'':'sec'}" onclick="catSel='${c}';vMensajes()">${c}</button>`).join('')}</div>
+    <div class="lista">${MENSAJES.filter(m=>m.cat===catSel).map(m=>`<div class="card"><h3>${esc(m.t)}</h3><div class="msg">${esc(rellenar(m.x))}</div>
+      <div class="row"><button class="small" onclick="componer('${m.id}')">✏️ Usar</button><button class="small sec" onclick="copiar(${esc(JSON.stringify(rellenar(m.x)))})">📋 Copiar</button></div></div>`).join('')}</div>`;
+}
+
+/* ---------- EQUIPO ---------- */
+/* ---------- Negocios (mayoreo) ---------- */
+const ETAPAS_N = {por_contactar:'📍 Por contactar', contactado:'📞 Contactado', visitado:'🚶 Visitado', interesado:'✨ Interesado', cliente:'🤝 Cliente', no:'⏸️ No por ahora'};
+const SIG_N = {por_contactar:'contactado', contactado:'visitado', visitado:'interesado', interesado:'cliente'};
+const TIPOS_N = {salon:'💇 Salón', barberia:'💈 Barbería', unas:'💅 Uñas', beauty_supply:'🧴 Beauty supply', regalos:'🎁 Regalos', boutique:'👗 Boutique', quince_novias:'👰 Quince y novias', mercado:'🛍️ Mercado', evento:'🎪 Evento', otro:'🏬 Otro'};
+const PESO_TIPO = {regalos:5, beauty_supply:5, boutique:4, quince_novias:4, salon:4, unas:3, barberia:3, mercado:3, evento:2, otro:2};
+let filN = {q:'', barrio:'', tipo:'', etapa:'', orden:'score'};
+const neg = id => S.negocios.find(n=>n.id===id);
+function ventasNeg(n, desde=''){ return (n.ventas||[]).filter(v=>v.fecha>=desde).reduce((a,v)=>a+(Number(v.monto)||0),0); }
+function puntaje(n){
+  let p = PESO_TIPO[n.tipo]||2;
+  if(/pilsen|villita/i.test(n.barrio)) p+=2;
+  if(n.telefono) p+=1;
+  if(n.origen==='lead') p+=3;
+  p += {contactado:1, visitado:2, interesado:4, cliente:5, no:-10}[n.etapa]||0;
+  return p;
+}
+const estrellas = p => p<=0 ? '—' : '★'.repeat(Math.max(1,Math.min(5,Math.round(p/3))));
+function cargarNegocios(){
+  const base = window.NEGOCIOS_CHICAGO||[]; let n=0;
+  S.negocios ||= [];
+  base.forEach(b=>{ if(!S.negocios.some(x=>x.nombre.toLowerCase()===b.nombre.toLowerCase())){ S.negocios.push({id:uid(),...b,etapa:'por_contactar',ultimo:'',notas:'',ventas:[],origen:'investigacion'}); n++; } });
+  guardar(); render(); toast(n?`Se agregaron ${n} negocios 🏪`:'Ya tenías todos los negocios');
+}
+function mapsUrl(n){ return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent((n.nombre+' '+(n.direccion||n.barrio+' Chicago IL')).trim()); }
+function rutaDelDia(){
+  const L = filtrarNeg().filter(n=>n.direccion && ['por_contactar','contactado','interesado'].includes(n.etapa)).slice(0,9);
+  if(L.length<2){ toast('Filtra un barrio con al menos 2 negocios con dirección'); return; }
+  const url='https://www.google.com/maps/dir/'+L.map(n=>encodeURIComponent(n.direccion)).join('/');
+  abrir(`<h3>🗺️ Ruta del día</h3><p class="muted">${L.length} paradas${filN.barrio?' en '+esc(filN.barrio):''}, empezando por los mejores leads. Google Maps acomoda el camino.</p>
+    <ol style="padding-left:20px">${L.map(n=>`<li><b>${esc(n.nombre)}</b> <span class="muted">· ${esc(n.direccion)}</span></li>`).join('')}</ol>
+    <p class="muted">Lleva: muestras, catálogo del mes, tus tarjetas y un exhibidor de ejemplo.</p>
+    <div class="dlg-actions"><a class="btn" href="${esc(url)}" target="_blank" rel="noopener">🗺️ Abrir en Google Maps</a><button class="sec" onclick="cerrar()">Cerrar</button></div>`);
+}
+function filtrarNeg(){
+  const q=filN.q.toLowerCase();
+  return (S.negocios||[]).filter(n=>(!q||(n.nombre+' '+n.direccion+' '+(n.notas||'')).toLowerCase().includes(q)) && (!filN.barrio||n.barrio===filN.barrio) && (!filN.tipo||n.tipo===filN.tipo) && (!filN.etapa||n.etapa===filN.etapa))
+    .sort((a,b)=> filN.orden==='score' ? puntaje(b)-puntaje(a)||a.nombre.localeCompare(b.nombre) : filN.orden==='barrio' ? a.barrio.localeCompare(b.barrio)||a.nombre.localeCompare(b.nombre) : a.nombre.localeCompare(b.nombre));
+}
+function etapaN(id,e){ const n=neg(id); n.etapa=e; n.ultimo=hoyISO(); guardar(); render(); if(e==='cliente') toast(`¡${n.nombre} ya es tu cliente! 🤝`); }
+function vNegocios(){
+  S.negocios ||= [];
+  const mes=hoyISO().slice(0,7), N=S.negocios;
+  const cuenta=e=>N.filter(n=>n.etapa===e).length, totalMes=N.reduce((a,n)=>a+ventasNeg(n,mes+'-01'),0);
+  const barrios=[...new Set(N.map(n=>n.barrio))].sort(), L=filtrarNeg();
+  $('#app').innerHTML = `
+    <div class="banner"><img src="img/mayoreo.webp" alt="Frascos de perfume en un mostrador" loading="lazy"><div class="velo"></div><div class="txt"><h2>🏪 Mayoreo y negocios</h2><p>Salones, boutiques, tiendas y mercados donde puedes surtir o poner tu puesto</p></div></div>
+    <div class="stats" style="grid-template-columns:repeat(4,1fr);margin-bottom:12px">
+      <div class="stat"><b>${N.length}</b><span>Negocios</span></div>
+      <div class="stat"><b>${cuenta('interesado')}</b><span>Interesados</span></div>
+      <div class="stat"><b>${cuenta('cliente')}</b><span>Clientes</span></div>
+      <div class="stat"><b>${dinero(totalMes)}</b><span>Mayoreo este mes</span></div>
+    </div>
+    ${N.some(n=>n.origen==='investigacion')?'':`<div class="card" style="border-color:var(--brand)"><h3>📍 ${(window.NEGOCIOS_CHICAGO||[]).length} negocios de Chicago listos para ti</h3><p class="muted">Salones, barberías, boutiques de quince, tiendas de regalos, mercados y eventos en Pilsen, La Villita, Cicero, Berwyn y más. Cada uno trae por qué conviene y cómo acercarte.</p><button onclick="cargarNegocios()">Cargar negocios de Chicago</button></div>`}
+    <div class="row" style="margin-bottom:10px"><button class="small" onclick="formNegocio()">+ Agregar negocio</button><button class="small sec" onclick="bandeja()">📥 Pegar lead</button><button class="small sec" onclick="rutaDelDia()">🗺️ Ruta del día</button><button class="small sec" onclick="componer('m_evento')">🎪 Pedir puesto</button></div>
+    <div class="barra-fil">
+      <input id="nQ" placeholder="🔎 Buscar" value="${esc(filN.q)}" aria-label="Buscar negocio">
+      <select onchange="filN.barrio=this.value;render()" aria-label="Barrio"><option value="">Todos los barrios</option>${barrios.map(b=>`<option ${b===filN.barrio?'selected':''}>${esc(b)}</option>`).join('')}</select>
+      <select onchange="filN.tipo=this.value;render()" aria-label="Tipo"><option value="">Todos los tipos</option>${Object.entries(TIPOS_N).map(([k,v])=>`<option value="${k}" ${k===filN.tipo?'selected':''}>${v}</option>`).join('')}</select>
+      <select onchange="filN.etapa=this.value;render()" aria-label="Etapa"><option value="">Todas las etapas</option>${Object.entries(ETAPAS_N).map(([k,v])=>`<option value="${k}" ${k===filN.etapa?'selected':''}>${v}</option>`).join('')}</select>
+      <select onchange="filN.orden=this.value;render()" aria-label="Ordenar"><option value="score" ${filN.orden==='score'?'selected':''}>⭐ Mejores leads primero</option><option value="barrio" ${filN.orden==='barrio'?'selected':''}>Por barrio</option><option value="nombre" ${filN.orden==='nombre'?'selected':''}>Por nombre</option></select>
+    </div>
+    <p class="muted" style="margin:0 0 8px">${L.length} de ${N.length} negocios</p>
+    <div class="lista tres">${L.length? L.map(tarjetaNeg).join('') : `<div class="card empty">No hay negocios con estos filtros.</div>`}</div>
+    <h2>💡 Cómo cerrar con negocios</h2>
+    <div class="card"><ul class="tips">
+      <li><b>Empieza por las ⭐⭐⭐⭐:</b> tiendas de regalos, beauty supply, boutiques de quince y salones en Pilsen y La Villita.</li>
+      <li><b>Ve en persona entre semana</b>, de 10 a 12, cuando hay menos clientas. Lleva muestras para la dueña.</li>
+      <li><b>Ofrece poco riesgo:</b> un exhibidor pequeño con 6 a 8 fragancias. Consignación para empezar, mayoreo cuando ya se venda.</li>
+      <li><b>Regresa cada 2 semanas</b> a resurtir. La app te avisa cuándo.</li>
+      <li><b>Pon tus condiciones por escrito</b> (precio, comisión, quién responde si se daña un producto) y confirma con tu líder lo que permite Zermat para reventa.</li>
+    </ul></div>`;
+  const q=$('#nQ'); q.oninput=()=>{ filN.q=q.value; const pos=q.selectionStart; render(); const n=$('#nQ'); n.focus(); n.setSelectionRange(pos,pos); };
+}
+function tarjetaNeg(n){
+  const p=puntaje(n), sig=SIG_N[n.etapa], tot=ventasNeg(n);
+  return `<div class="card">
+    <div class="spread"><div style="min-width:0"><h3>${esc(n.nombre)}</h3><div class="muted">${TIPOS_N[n.tipo]||TIPOS_N.otro} · ${esc(n.barrio)}</div></div><span class="score" title="Qué tan buen lead es">${estrellas(p)}</span></div>
+    <div style="margin:8px 0"><span class="pill ${n.etapa==='cliente'?'ok':n.etapa==='interesado'?'warn':''}">${ETAPAS_N[n.etapa]}</span>${n.origen==='lead'?'<span class="pill warn">📥 Te escribió</span>':''}${tot?`<span class="pill">${dinero(tot)} vendido</span>`:''}${n.ultimo?`<span class="pill">Último: ${fmtFecha(n.ultimo)}</span>`:''}</div>
+    ${n.por_que?`<p style="margin:4px 0;font-size:.92rem">${esc(n.por_que)}</p>`:''}
+    ${n.como?`<p class="muted" style="margin:4px 0;font-size:.88rem">💡 ${esc(n.como)}</p>`:''}
+    ${n.notas?`<p class="muted" style="margin:4px 0;font-size:.88rem">📝 ${esc(n.notas)}</p>`:''}
+    <p style="margin:6px 0;font-size:.88rem">${n.direccion?`<a href="${esc(mapsUrl(n))}" target="_blank" rel="noopener">📍 ${esc(n.direccion)}</a>`:'<span class="muted">Sin dirección</span>'}${n.telefono?` · <a href="tel:${esc(n.telefono.replace(/[^\d+]/g,''))}">📞 ${esc(n.telefono)}</a>`:''}${n.web?` · <a href="${esc(n.web)}" target="_blank" rel="noopener">Web</a>`:''}</p>
+    <div class="row" style="margin-top:8px">
+      <button class="small" onclick="mensajeNeg('${n.id}')">💬 Mensaje</button>
+      ${sig?`<button class="small sec" onclick="etapaN('${n.id}','${sig}')">→ ${ETAPAS_N[sig]}</button>`:''}
+      ${n.etapa==='cliente'||n.etapa==='interesado'?`<button class="small sec" onclick="ventaNeg('${n.id}')">🧾 Venta</button>`:''}
+      <button class="small ghost" onclick="formNegocio('${n.id}')">Editar</button>
+    </div>
+    ${n.fuente?`<p class="muted" style="margin:8px 0 0;font-size:.75rem">Fuente: <a href="${esc(n.fuente)}" target="_blank" rel="noopener">${esc(n.fuente.replace(/^https?:\/\/(www\.)?/,'').split('/')[0])}</a> · confirma que siga abierto</p>`:''}
+  </div>`;
+}
+function mensajeNeg(id){
+  const n=neg(id), ctx={negocio:n.nombre}, tel=n.telefono||'';
+  const ids = n.tipo==='evento'||n.tipo==='mercado' ? ['m_evento','m_presenta','m_seguimiento'] : n.etapa==='cliente' ? ['m_resurtido','m_propuesta','m_seguimiento'] : ['m_presenta','m_guion','m_seguimiento','m_propuesta'];
+  abrir(`<h3>💬 ${esc(n.nombre)}</h3>${tel?`<p class="muted">Si el número no tiene WhatsApp, usa "Copiar" y llama o manda SMS.</p>`:''}
+    ${ids.map(i=>{const m=MENSAJES.find(x=>x.id===i);return `<button class="sec" style="width:100%;text-align:left;margin:4px 0" onclick='componer("${i}",${esc(JSON.stringify(ctx))},${esc(JSON.stringify(tel))});compCtx.onSent=()=>{const x=neg("${id}");x.ultimo=hoyISO();if(x.etapa==="por_contactar")x.etapa="contactado";guardar();render();}'>${esc(m.t)}</button>`}).join('')}
+    <div class="dlg-actions"><button class="sec" onclick="cerrar()">Cerrar</button></div>`);
+}
+function formNegocio(id){
+  const n = id ? neg(id) : {nombre:'',tipo:'salon',barrio:'',direccion:'',telefono:'',web:'',notas:''};
+  abrir(`<h3>${id?'Editar':'Nuevo'} negocio</h3>
+    <label for="gN">Nombre</label><input id="gN" value="${esc(n.nombre)}">
+    <label for="gT">Tipo</label><select id="gT">${Object.entries(TIPOS_N).map(([k,v])=>`<option value="${k}" ${k===n.tipo?'selected':''}>${v}</option>`).join('')}</select>
+    <label for="gB">Barrio</label><input id="gB" value="${esc(n.barrio)}" list="dlBarrios"><datalist id="dlBarrios">${['Pilsen','La Villita','Back of the Yards','Brighton Park','Gage Park','Archer Heights','Cicero','Berwyn','Belmont Cragin','Humboldt Park'].map(b=>`<option value="${b}">`).join('')}</datalist>
+    <label for="gD">Dirección</label><input id="gD" value="${esc(n.direccion)}">
+    <label for="gP">Teléfono</label><input id="gP" type="tel" value="${esc(n.telefono)}">
+    <label for="gX">Notas (con quién hablaste, qué pidió…)</label><input id="gX" value="${esc(n.notas||'')}">
+    <div class="dlg-actions"><button onclick="guardarNegocio('${id||''}')">Guardar</button><button class="sec" onclick="cerrar()">Cancelar</button>
+    ${id?`<button class="danger" onclick="confirmar('Se borrará este negocio y sus ventas.',()=>{S.negocios=S.negocios.filter(x=>x.id!=='${id}');guardar();render();})">Borrar</button>`:''}</div>`);
+}
+function guardarNegocio(id){
+  const d={nombre:$('#gN').value.trim(),tipo:$('#gT').value,barrio:$('#gB').value.trim()||'Otro',direccion:$('#gD').value.trim(),telefono:$('#gP').value.trim(),notas:$('#gX').value.trim()};
+  if(!d.nombre){ toast('Escribe el nombre'); return; }
+  S.negocios ||= [];
+  if(id) Object.assign(neg(id),d); else S.negocios.push({id:uid(),...d,web:'',fuente:'',por_que:'',como:'',etapa:'por_contactar',ultimo:'',ventas:[],origen:'manual'});
+  guardar(); cerrar(); render(); toast('Guardado 🏪');
+}
+function ventaNeg(id){
+  const n=neg(id);
+  abrir(`<h3>🧾 Venta de mayoreo · ${esc(n.nombre)}</h3>
+    <label for="vM">Monto ($)</label><input id="vM" type="number" inputmode="decimal">
+    <label for="vN">Qué se llevó</label><input id="vN" placeholder="Ej. 6 perfumes dama, 4 caballero">
+    <label for="vF">Fecha</label><input id="vF" type="date" value="${hoyISO()}">
+    <div class="dlg-actions"><button onclick="(()=>{const m=Number(document.getElementById('vM').value)||0;if(!m){toast('Pon el monto');return;}const x=neg('${id}');(x.ventas||=[]).push({id:uid(),monto:m,nota:document.getElementById('vN').value.trim(),fecha:document.getElementById('vF').value||hoyISO()});x.etapa='cliente';x.ultimo=hoyISO();guardar();cerrar();render();toast('Venta de mayoreo anotada 🎉')})()">Guardar</button><button class="sec" onclick="cerrar()">Cancelar</button></div>`);
+}
+
+/* ---------- Bandeja: convierte los mensajes de la tienda en registros ---------- */
+function leerLead(texto){
+  const m = texto.match(/#LEAD-(MUESTRA|PRODUCTO|MAYOREO|EQUIPO)/i);
+  const campos = {};
+  texto.split(/\n/).forEach(l=>{ const k=l.match(/^\s*([A-Za-zÁÉÍÓÚáéíóúñÑ]+)\s*:\s*(.+)$/); if(k) campos[k[1].toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')]=k[2].trim(); });
+  return {tipo: m ? m[1].toUpperCase() : '', campos};
+}
+function bandeja(){
+  abrir(`<h3>📥 Nuevo lead</h3>
+    <p class="muted">Cuando alguien llene un formulario de tu tienda, te llega un WhatsApp con <b>#LEAD</b>. Mantén presionado el mensaje, cópialo y pégalo aquí. La app lo guarda donde va y te prepara la respuesta.</p>
+    <textarea id="bT" placeholder="Pega aquí el mensaje…" style="min-height:140px"></textarea>
+    <label for="bP">Teléfono de quien te escribió (opcional, para contestarle directo)</label><input id="bP" type="tel">
+    <p class="muted" id="bV"></p>
+    <div class="dlg-actions"><button onclick="procesarLead()">Guardar y responder</button><button class="sec" onclick="cerrar()">Cancelar</button></div>`);
+  const t=$('#bT'), v=$('#bV');
+  t.oninput=()=>{ const L=leerLead(t.value); v.textContent = L.tipo ? ({MUESTRA:'🎁 Pide muestra → se guarda en Clientas',PRODUCTO:'🛍️ Pregunta por un producto → se guarda en Clientas',MAYOREO:'🏪 Negocio interesado en mayoreo → se guarda en Negocios',EQUIPO:'🌱 Quiere vender contigo → se guarda en Interesadas'}[L.tipo]) : (t.value.trim()?'No encontré #LEAD. Se guardará como clienta nueva.':''); };
+  setTimeout(()=>t.focus(),50);
+}
+function procesarLead(){
+  const texto=$('#bT').value.trim(); if(!texto){ toast('Pega el mensaje'); return; }
+  const {tipo,campos:c}=leerLead(texto), tel=$('#bP').value.trim(), hoy=hoyISO();
+  const nombre = c.nombre || c.negocio || 'Lead '+fmtFecha(hoy);
+  if(tipo==='MAYOREO'){
+    const tipos={'salon':'salon','barberia':'barberia','unas':'unas','boutique':'boutique','regalos':'regalos','beauty':'beauty_supply','mercado':'mercado'};
+    const tk=Object.keys(tipos).find(k=>(c.tipo||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').includes(k));
+    S.negocios ||= [];
+    S.negocios.push({id:uid(),nombre:c.negocio||nombre,tipo:tk?tipos[tk]:'otro',barrio:c.zona||'Otro',direccion:'',telefono:tel,web:'',fuente:'',por_que:'Te escribió desde tu tienda pidiendo información de mayoreo.',como:'Contéstale hoy y agenda una visita con muestras.',etapa:'interesado',ultimo:hoy,notas:`Contacto: ${c.nombre||''}${c.origen?' · origen: '+c.origen:''}`,ventas:[],origen:'lead'});
+    guardar(); cerrar(); render(); componer('l_mayoreo',{nombre:c.nombre||'',negocio:c.negocio||''},tel);
+  } else if(tipo==='EQUIPO'){
+    S.interesadas ||= [];
+    S.interesadas.push({id:uid(),nombre,tel,origen:'Tienda web',notas:c.origen?'origen: '+c.origen:'',etapa:'platique',fecha:hoy,ultimo:hoy});
+    guardar(); cerrar(); render(); componer('r_comento',{nombre},tel);
+  } else {
+    const notas=[c.zona&&'Zona: '+c.zona, c.para, c.aromas&&'Le gusta: '+c.aromas, c.uso&&'Uso: '+c.uso, c.producto&&'Preguntó por: '+c.producto, c.origen&&'Origen: '+c.origen].filter(Boolean).join(' · ');
+    let cl=S.clientas.find(x=>x.nombre.toLowerCase()===nombre.toLowerCase());
+    if(!cl){ cl={id:uid(),nombre,tel,notas,compras:[],muestras:[]}; S.clientas.push(cl); } else { cl.notas=[cl.notas,notas].filter(Boolean).join(' · '); if(tel&&!cl.tel) cl.tel=tel; }
+    guardar(); cerrar(); render();
+    componer(tipo==='PRODUCTO'?'l_producto':'l_muestra',{nombre:c.nombre||'',perfume:c.producto||undefined,aromas:c.aromas||undefined,zona:c.zona||undefined},cl.tel);
+  }
+  toast('Lead guardado 📥');
+}
+
+/* ---------- Reclutar ---------- */
+const ETAPAS = {nueva:'🆕 Nueva', platique:'💬 Ya le escribí', interesada:'✨ Interesada', inscrita:'🎉 Inscrita', no:'⏸️ Por ahora no'};
+const ORIGENES = ['Facebook','Instagram','TikTok','WhatsApp','Clienta','Volante','Conocida','Otro'];
+let subEq = 'equipo';
+function enlaceReclutar(){
+  const n = telWa(S.ajustes.miWhats);
+  return 'https://wa.me/'+n+'?text='+encodeURIComponent(`Hola${S.ajustes.miNombre?' '+S.ajustes.miNombre:''}, me interesa saber más de vender fragancias desde casa 🌸`);
+}
+function contactoInteresada(id){ const i=S.interesadas.find(x=>x.id===id); i.ultimo=hoyISO(); if(i.etapa==='nueva') i.etapa='platique'; guardar(); render(); }
+function etapa(id,e){
+  const i=S.interesadas.find(x=>x.id===id); i.etapa=e; i.ultimo=hoyISO();
+  if(e==='inscrita' && !S.equipo.some(x=>x.origen===id)){ S.equipo.push({id:uid(),nombre:i.nombre,tel:i.tel,fecha:hoyISO(),notas:i.notas||'',reto:0,bienvenida:false,origen:id}); toast(`¡${i.nombre} ya está en tu equipo! 🎉`); }
+  guardar(); render();
+}
+function formInteresada(id){
+  const i = id ? S.interesadas.find(x=>x.id===id) : {nombre:'',tel:'',origen:'Facebook',notas:''};
+  abrir(`<h3>${id?'Editar':'Nueva'} interesada</h3>
+    <label for="iN">Nombre</label><input id="iN" value="${esc(i.nombre)}">
+    <label for="iT">Teléfono / WhatsApp</label><input id="iT" type="tel" value="${esc(i.tel)}">
+    <label for="iO">¿De dónde llegó?</label><select id="iO">${ORIGENES.map(o=>`<option ${o===i.origen?'selected':''}>${o}</option>`).join('')}</select>
+    <label for="iX">Notas (qué le interesa, cuándo llamarle…)</label><input id="iX" value="${esc(i.notas||'')}">
+    <div class="dlg-actions"><button onclick="guardarInteresada('${id||''}')">Guardar</button><button class="sec" onclick="cerrar()">Cancelar</button>
+    ${id?`<button class="danger" onclick="confirmar('Se borrará a esta persona de tu lista.',()=>{S.interesadas=S.interesadas.filter(x=>x.id!=='${id}');guardar();render();})">Borrar</button>`:''}</div>`);
+  setTimeout(()=>$('#iN').focus(),50);
+}
+function guardarInteresada(id){
+  const d={nombre:$('#iN').value.trim(),tel:$('#iT').value.trim(),origen:$('#iO').value,notas:$('#iX').value.trim()};
+  if(!d.nombre){ toast('Escribe el nombre'); return; }
+  S.interesadas ||= [];
+  if(id) Object.assign(S.interesadas.find(x=>x.id===id),d); else S.interesadas.push({id:uid(),...d,etapa:'nueva',fecha:hoyISO(),ultimo:''});
+  guardar(); cerrar(); render(); toast('Guardada 🌱');
+}
+function qrSVG(texto, celda=5){
+  try{ const q=qrcode(0,'M'); q.addData(unescape(encodeURIComponent(texto))); q.make(); return q.createSvgTag({cellSize:celda,margin:2,scalable:true}); }catch(e){ return ''; }
+}
+const PLAN_REC = {
+  '💻 Desde la computadora':[
+    'Unirme a 3 grupos de Facebook de mi ciudad (empleo, mamás, compra-venta) y leer sus reglas',
+    'Publicar en 2 grupos que lo permitan, con foto de mis productos',
+    'Imprimir 10 volantes con mi código QR',
+    'Contestar comentarios y escribirle por mensaje a quien pregunte',
+    'Programar las publicaciones de la semana (Meta Business Suite)'],
+  '📱 Desde el teléfono':[
+    'Publicar un estado diario (producto, entrega o resultado)',
+    'Grabar un video corto de "un día vendiendo desde casa"',
+    'Invitar a 5 clientas contentas a vender conmigo',
+    'Dar seguimiento a todas mis interesadas',
+    'Hacer una plática corta por videollamada']
+};
+function togRec(k){ const h=S.planRec.hechos; const i=h.indexOf(k); i<0?h.push(k):h.splice(i,1); guardar(); render(); }
+function imprimirVolante(){
+  if(!S.ajustes.miWhats){ toast('Primero pon tu WhatsApp en Más → Mis datos'); return; }
+  let v=document.getElementById('volante'); if(!v){ v=document.createElement('div'); v.id='volante'; document.body.appendChild(v); }
+  v.innerHTML = `<div class="vol"><p class="vol-top">🌸 ¿Quieres ganar un dinero extra desde casa? 🌸</p>
+    <h1>Vende fragancias y cosméticos</h1>
+    <ul><li>Tú decides tus horarios</li><li>Compras con descuento</li><li>Te enseño paso a paso</li><li>Todo desde tu celular</li></ul>
+    <div class="vol-qr">${qrSVG(enlaceReclutar(),8)}</div>
+    <p class="vol-cta">Escanea con la cámara de tu celular y escríbeme por WhatsApp</p>
+    <p class="vol-yo">${esc(S.ajustes.miNombre||'')} · ${esc(S.ajustes.miWhats)}</p>
+    <div class="vol-tiras">${Array.from({length:6}).map(()=>`<div>🌸 Vende desde casa<br><b>${esc(S.ajustes.miWhats)}</b></div>`).join('')}</div></div>`;
+  document.body.classList.add('imprimiendo');
+  setTimeout(()=>{ window.print(); setTimeout(()=>document.body.classList.remove('imprimiendo'),500); },100);
+}
+function vReclutar(){
+  if(!S.planRec || S.planRec.semana!==semanaActual()){ S.planRec={semana:semanaActual(),hechos:[]}; }
+  const tieneW=!!S.ajustes.miWhats, enlace=tieneW?enlaceReclutar():'';
+  const total=Object.values(PLAN_REC).flat().length;
+  return `
+    <div class="card"><h3>🔗 Tu enlace para que te escriban</h3>
+      ${tieneW?`<p class="muted">Ponlo en tus publicaciones, en tu perfil de Instagram/TikTok y en tus estados. Al tocarlo, la persona te escribe por WhatsApp con un mensaje ya listo.</p>
+      <div class="row" style="flex-wrap:nowrap"><input readonly value="${esc(enlace)}" id="enl" style="flex:1;min-width:0;font-size:.8rem"><button class="small" onclick="copiar(document.getElementById('enl').value)">📋 Copiar</button></div>
+      <div style="display:flex;gap:12px;align-items:center;margin-top:12px;flex-wrap:wrap"><div style="width:130px;background:#fff;border-radius:10px;padding:6px">${qrSVG(enlace)}</div>
+      <div style="flex:1;min-width:160px"><p class="muted" style="margin:0 0 8px">Tu código QR: la persona lo escanea con la cámara y te escribe.</p><button class="small" onclick="imprimirVolante()">🖨️ Imprimir volante</button></div></div>`
+      :`<p class="muted">Pon tu WhatsApp en <b>Más → Mis datos</b> y aquí aparecerá tu enlace y tu código QR.</p><button class="small" onclick="irA('mas')">Poner mi WhatsApp</button>`}
+    </div>
+    <h2>🗓️ Plan de reclutamiento de la semana</h2>
+    <div class="card">${Object.entries(PLAN_REC).map(([g,L])=>`<p style="margin:4px 0;font-weight:700">${g}</p>`+L.map((t,i)=>{const k=g.slice(0,2)+i, on=S.planRec.hechos.includes(k); return `<label class="check ${on?'done':''}"><input type="checkbox" ${on?'checked':''} onchange="togRec('${k}')"><span>${esc(t)}</span></label>`}).join('')).join('')}
+      <p class="muted" style="margin:8px 0 0">${S.planRec.hechos.length}/${total} hechos · se reinicia cada semana</p></div>
+    <h2>📣 Textos listos para publicar</h2>
+    ${MENSAJES.filter(m=>m.cat==='Reclutar').map(m=>`<div class="card"><h3>${esc(m.t)}</h3><div class="msg">${esc(rellenar(m.x))}</div><div class="row"><button class="small" onclick="componer('${m.id}')">✏️ Usar</button><button class="small sec" onclick="copiar(${esc(JSON.stringify(rellenar(m.x)))})">📋 Copiar</button></div></div>`).join('')}
+    <h2>📍 Dónde encontrar personas</h2>
+    <div class="card"><ul class="tips">
+      <li><b>Tus clientas contentas:</b> son las que mejor venden, porque ya aman los productos.</li>
+      <li><b>Grupos de Facebook de tu ciudad:</b> empleo, mamás, latinos, compra-venta. Lee las reglas: muchos prohíben publicar negocios fuera del día permitido.</li>
+      <li><b>Instagram y TikTok:</b> videos cortos de tu día real. Pon tu enlace en la biografía.</li>
+      <li><b>Estados y listas de difusión de WhatsApp:</b> un estado diario y una invitación por semana.</li>
+      <li><b>Volantes:</b> con permiso, en lavanderías, tiendas latinas, salones y la iglesia.</li>
+      <li><b>Quien te dice "qué bonito, ¿cómo le haces?":</b> esa persona ya está interesada.</li>
+    </ul>
+    <p class="muted" style="margin:8px 0 0">⚖️ No prometas cantidades de dinero ni "ingresos seguros". Di cuánto cuesta empezar y que lo que se gana depende de lo que cada una venda. Así lo pide la ley de EE. UU. (FTC) y así la gente confía más en ti.</p></div>`;
+}
+function vInteresadas(){
+  const L=(S.interesadas||[]).slice().sort((a,b)=>(a.etapa==='no')-(b.etapa==='no')||(b.ultimo||b.fecha).localeCompare(a.ultimo||a.fecha));
+  const cuenta=e=>(S.interesadas||[]).filter(i=>i.etapa===e).length;
+  return `
+    <div class="stats" style="grid-template-columns:repeat(4,1fr)">${['nueva','platique','interesada','inscrita'].map(e=>`<div class="stat"><b>${cuenta(e)}</b><span>${ETAPAS[e]}</span></div>`).join('')}</div>
+    <div class="spread" style="margin:12px 0"><p class="muted" style="margin:0">Anota a cada persona que pregunte. La app te recuerda darle seguimiento a los 2 días.</p><button onclick="formInteresada()">+ Nueva</button></div>
+    <div class="lista">${L.length? L.map(i=>{const sig={nueva:'platique',platique:'interesada',interesada:'inscrita'}[i.etapa]; return `<div class="card">
+      <div class="spread"><div style="min-width:0"><h3>${esc(i.nombre)}</h3><div class="muted">${esc(i.tel||'Sin teléfono')} · vino de ${esc(i.origen)}${i.notas?' · '+esc(i.notas):''}</div></div><button class="ghost small" onclick="formInteresada('${i.id}')">Editar</button></div>
+      <div style="margin:6px 0"><span class="pill ${i.etapa==='inscrita'?'ok':i.etapa==='no'?'':'warn'}">${ETAPAS[i.etapa]}</span>${i.ultimo?`<span class="pill">Último contacto: ${fmtFecha(i.ultimo)}</span>`:''}</div>
+      <div class="row">
+        ${i.etapa!=='inscrita'&&i.etapa!=='no'?`<button class="small" onclick='componer("${i.etapa==='nueva'?'r_comento':'r_seg'}",${esc(JSON.stringify({nombre:i.nombre,_x:0}))},${esc(JSON.stringify(i.tel))});compCtx.onSent=()=>contactoInteresada("${i.id}")'>💬 Escribirle</button>`:''}
+        ${sig?`<button class="small sec" onclick="etapa('${i.id}','${sig}')">→ ${ETAPAS[sig]}</button>`:''}
+        ${i.etapa!=='no'&&i.etapa!=='inscrita'?`<button class="small ghost" onclick="etapa('${i.id}','no')">Por ahora no</button>`:''}
+        ${i.etapa==='no'?`<button class="small sec" onclick="etapa('${i.id}','platique')">Volver a intentar</button>`:''}
+      </div></div>`}).join('')
+      : `<div class="card empty">Aún no tienes interesadas.<br>Publica uno de los textos de <b>Reclutar</b> y anota aquí a quien te escriba 🌱</div>`}</div>`;
+}
+function vEquipo(){
+  const tabs=[['equipo','👭 Mi equipo'],['interesadas',`🌱 Interesadas${(S.interesadas||[]).filter(i=>['nueva','platique','interesada'].includes(i.etapa)).length?' ('+(S.interesadas||[]).filter(i=>['nueva','platique','interesada'].includes(i.etapa)).length+')':''}`],['reclutar','📣 Reclutar']];
+  const chips=`<div class="chips">${tabs.map(([k,v])=>`<button class="small ${k===subEq?'':'sec'}" onclick="subEq='${k}';render()">${v}</button>`).join('')}</div>`;
+  if(subEq!=='equipo'){ $('#app').innerHTML = `<div class="banner"><img src="img/equipo.webp" alt="Frasco de esencia" loading="lazy"><div class="velo"></div><div class="txt"><h2>${subEq==='reclutar'?'📣 Haz crecer tu equipo':'🌱 Personas interesadas'}</h2><p>${S.equipo.length} en tu equipo · ${(S.interesadas||[]).length} interesada${(S.interesadas||[]).length===1?'':'s'}</p></div></div>${chips}${subEq==='reclutar'?vReclutar():vInteresadas()}`; return; }
+  $('#app').innerHTML = `
+    <div class="banner"><img src="img/equipo.webp" alt="Frasco de esencia" loading="lazy"><div class="velo"></div><div class="txt"><h2>👭 Mi equipo</h2><p>${S.equipo.length} integrante${S.equipo.length===1?'':'s'} · acompáñalas en su primera semana</p></div></div>
+    ${chips}
+    <div class="spread"><p class="muted" style="margin:0">Las personas que venden contigo.</p><button onclick="formEquipo()">+ Nueva</button></div>
+    <div class="lista" style="margin-top:12px">${S.equipo.length? S.equipo.map(e=>`<div class="card">
+      <div class="spread"><div><h3>${esc(e.nombre)}</h3><div class="muted">${esc(e.tel||'')} · se unió ${fmtFecha(e.fecha)}</div></div><button class="ghost small" onclick="formEquipo('${e.id}')">Editar</button></div>
+      <div style="margin:8px 0"><span class="muted">Reto: 5 muestras</span>
+        <div class="row" style="margin-top:4px">${[1,2,3,4,5].map(n=>`<span style="font-size:1.3rem;opacity:${n<=(e.reto||0)?1:.25}">🎁</span>`).join('')}
+        <button class="small sec" onclick="reto('${e.id}',1)">+1</button>${(e.reto||0)>0?`<button class="small ghost" onclick="reto('${e.id}',-1)">−1</button>`:''}</div></div>
+      ${e.notas?`<p class="muted">${esc(e.notas)}</p>`:''}
+      <div class="row"><button class="small" onclick='componer("animo",${esc(JSON.stringify({nombre:e.nombre}))},${esc(JSON.stringify(e.tel))})'>💪 Darle ánimo</button>
+      <button class="small sec" onclick='componer("bienvenida",${esc(JSON.stringify({nombre:e.nombre}))},${esc(JSON.stringify(e.tel))})'>🎉 Bienvenida</button></div>
+    </div>`).join('') : `<div class="card empty">Aún no tienes equipo.<br>Invita a tus clientas más entusiastas 👭</div>`}</div>
+    <h2>📣 Para invitar</h2>
+    <div class="row"><button class="sec" onclick="componer('invitar')">👭 Invitar a una clienta</button><button class="sec" onclick="subEq='reclutar';render()">📣 Kit para reclutar</button></div>
+    <h2>💡 Consejos</h2>
+    <div class="card"><ul class="tips">
+      <li>Empieza por tus mejores clientas: ya conocen y aman los productos.</li>
+      <li>Habla del beneficio: "ingreso extra desde casa, en tus horarios".</li>
+      <li>Muestra tus resultados: fotos de pedidos, entregas y premios.</li>
+      <li>Acompáñalas en su primera venta y haz un grupo de WhatsApp del equipo.</li>
+      <li>Sé honesta con cuánto cuesta entrar y cuánto se gana de verdad.</li>
+    </ul></div>`;
+}
+function formEquipo(id){
+  const e = id?S.equipo.find(x=>x.id===id):{nombre:'',tel:'',fecha:hoyISO(),notas:''};
+  abrir(`<h3>${id?'Editar':'Nueva'} integrante</h3>
+    <label>Nombre</label><input id="fNom" value="${esc(e.nombre)}">
+    <label>Teléfono / WhatsApp</label><input id="fTel" type="tel" value="${esc(e.tel)}">
+    <label>Fecha en que se unió</label><input id="fFec" type="date" value="${esc(e.fecha)}">
+    <label>Notas</label><input id="fNot" value="${esc(e.notas)}">
+    <div class="dlg-actions"><button onclick="guardarEquipo('${id||''}')">Guardar</button><button class="sec" onclick="cerrar()">Cancelar</button>
+    ${id?`<button class="danger" onclick="confirmar('Se borrará a esta integrante de tu lista.',()=>{S.equipo=S.equipo.filter(x=>x.id!=='${id}');guardar();render();})">Borrar</button>`:''}</div>`);
+}
+function guardarEquipo(id){
+  const nombre=$('#fNom').value.trim(); if(!nombre){ toast('Escribe el nombre'); return; }
+  const d={nombre,tel:$('#fTel').value.trim(),fecha:$('#fFec').value||hoyISO(),notas:$('#fNot').value.trim()};
+  if(id) Object.assign(S.equipo.find(x=>x.id===id),d); else S.equipo.push({id:uid(),reto:0,bienvenida:false,...d});
+  guardar(); cerrar(); render(); toast('Guardada 💕');
+}
+function reto(id,n){ const e=S.equipo.find(x=>x.id===id); e.reto=Math.max(0,Math.min(5,(e.reto||0)+n)); guardar(); render(); if(e.reto===5&&n>0) toast(`¡${e.nombre} completó su reto! 🎉`); }
+
+/* ---------- MÁS ---------- */
+function vMas(){
+  const a=S.ajustes;
+  $('#app').innerHTML = `
+    <div class="banner"><img src="img/catalogo.webp" alt="Frascos de perfume" loading="lazy"><div class="velo"></div><div class="txt"><h2>🧴 Mi catálogo</h2><p>${S.perfumes.length} fragancia${S.perfumes.length===1?'':'s'}${S.perfumes.some(p=>p.ref)?' · revisa los precios marcados':''}</p></div></div>
+    <div class="row" style="margin-bottom:10px">
+      <button class="small" onclick="cargarZermat()">⭐ Cargar fragancias Zermat</button>
+      <button class="small sec" onclick="pegarLista()">📋 Pegar mi lista</button>
+      <button class="small sec" onclick="formPerfume()">+ Agregar una</button>
+      ${S.perfumes.length?`<button class="small sec" onclick="mandarCatalogo()">📲 Mandar catálogo</button>`:''}
+    </div>
+    <div class="card" id="listaCat">
+      ${S.perfumes.length? ['dama','caballero','unisex',''].map(t=>{const L=S.perfumes.filter(p=>(p.tipo||'')===t).sort((a,b)=>a.nombre.localeCompare(b.nombre)); return L.length?`<p class="muted" style="margin:6px 0 2px;font-weight:600">${TIPOS[t]}</p>`+L.map(p=>`<div class="spread" style="padding:7px 0;border-bottom:1px solid var(--line)"><div style="min-width:0"><b>${esc(p.nombre)}</b> · ${p.precio?dinero(p.precio):'<span class="pill warn">Pon el precio</span>'} ${p.ref&&p.precio?'<span class="pill warn">Revisa precio</span>':''}<div class="muted">${esc(p.aroma||'')}</div></div>
+        <div class="row" style="flex-wrap:nowrap"><button class="small sec" onclick="formPerfume('${p.id}')">Editar</button><button class="small sec" onclick='componer("est1",${esc(JSON.stringify({perfume:p.nombre,aroma:p.aroma||undefined,precio:p.precio?dinero(p.precio):undefined}))})'>Estado</button></div></div>`).join(''):''}).join('')
+        : '<p class="muted" style="margin:0">Toca <b>⭐ Cargar fragancias Zermat</b> para empezar con una lista lista, o <b>📋 Pegar mi lista</b> si tienes los precios de tu catálogo del mes.</p>'}
+    </div>
+
+    <h2>👤 Mis datos</h2>
+    <div class="card" id="misDatos">
+      <label>Mi nombre</label><input data-a="miNombre" value="${esc(a.miNombre)}">
+      <label>Mi WhatsApp</label><input data-a="miWhats" type="tel" value="${esc(a.miWhats)}">
+      <label>Código de país para WhatsApp (1 = EE. UU., 52 = México)</label><input data-a="pais" inputmode="numeric" value="${esc(a.pais)}">
+      <label>Zona de entrega</label><input data-a="zona" value="${esc(a.zona||'')}" placeholder="Ej. Chicago y alrededores">
+      <label>Perfumes desde ($)</label><input data-a="desde" inputmode="decimal" value="${esc(a.desde)}">
+      <label>Anticipo para apartar ($)</label><input data-a="anticipo" inputmode="decimal" value="${esc(a.anticipo)}">
+      <label>Comisión para negocios aliados ($)</label><input data-a="comision" inputmode="decimal" value="${esc(a.comision)}">
+      <label>Costo de inscripción ($) — confírmalo con tu líder</label><input data-a="inscripcion" inputmode="decimal" value="${esc(a.inscripcion)}">
+      <label>Descuento de mayoreo para negocios (%)</label><input data-a="descMayoreo" inputmode="decimal" value="${esc(a.descMayoreo||'')}" placeholder="Ej. 20">
+      <label>Comisión para negocios a consignación (%)</label><input data-a="comisionNeg" inputmode="decimal" value="${esc(a.comisionNeg||'')}" placeholder="Ej. 20">
+      <label>Promoción del mes</label><input data-a="promo" value="${esc(a.promo)}" placeholder="Ej. 2x1 en cremas">
+      <label>Mi ganancia como distribuidora (%) — cuánto te queda de cada venta</label><input data-a="ganancia" inputmode="decimal" value="${esc(a.ganancia||'')}" placeholder="Ej. 30">
+      <p class="muted">Se guarda solo ✔</p>
+    </div>
+
+    <h2>💡 Ideas para vender más</h2>
+    <div class="banner"><img src="img/ideas.webp" alt="Productos de belleza sobre una mesa" loading="lazy"><div class="velo"></div><div class="txt"><h2>Vende más desde casa</h2><p>Muestras, WhatsApp y fechas especiales</p></div></div>
+    <div class="card">
+      <details open><summary>🎁 Muestras</summary><ul class="tips"><li>Frasquitos de 2–5 ml con etiqueta: perfume, precio y tu WhatsApp.</li><li>A los 3 días pregunta "¿qué te pareció?" (la app te avisa).</li></ul></details>
+      <details><summary>🏡 Tu casa como perfumería</summary><ul class="tips"><li>Una repisa bonita con testers.</li><li>Tarde de fragancias: 5–8 amigas, café y galletas; regalo a la anfitriona si sus invitadas compran.</li></ul></details>
+      <details><summary>📱 WhatsApp</summary><ul class="tips"><li>WhatsApp Business con catálogo y mensaje de bienvenida.</li><li>Un estado diario: un perfume por día, con foto o video.</li><li>Lista de difusión para ofertas del mes.</li></ul></details>
+      <details><summary>💁‍♀️ Conseguir clientas</summary><ul class="tips"><li>Familia, vecinas, trabajo, escuela, iglesia, gimnasio.</li><li>Referidas con premio.</li><li>Grupos de Facebook de tu ciudad.</li><li>Estéticas, salones de uñas y boutiques con comisión.</li><li>Videos cortos: "perfumes que huelen caro", "mi top 3".</li></ul></details>
+      <details><summary>💳 Facilidades</summary><ul class="tips"><li>Apartado y pagos en quincenas.</li><li>Paquetes: perfume + crema, sets de regalo.</li></ul></details>
+      <details><summary>🗓️ Fechas que venden solas</summary><ul class="tips"><li>Día de las Madres, San Valentín, Navidad, graduaciones, Día del Padre, cumpleaños, quinceañeras.</li><li>Empieza a promocionar 2–3 semanas antes.</li></ul>
+        <div class="row">${['Día de las Madres','San Valentín','Navidad','Día del Padre','graduaciones'].map(o=>`<button class="small sec" onclick='componer("fecha",${esc(JSON.stringify({ocasion:o==='graduaciones'?'la temporada de graduaciones':'el '+o}))})'>${o}</button>`).join('')}</div></details>
+      <p class="muted" style="margin-top:10px">⚠️ Revisa el reglamento de distribuidoras de Zermat antes de vender en Mercado Libre/Amazon o usar su logo.</p>
+    </div>
+
+    <h2>📲 App y seguridad</h2>
+    <div class="card">
+      ${yaInstalada()?'<p style="margin-top:0">✅ Ya estás usando la app instalada.</p>':`<div class="spread"><div><h3>Instalar en tu celular</h3><p class="muted" style="margin:0">Ábrela desde tu pantalla de inicio, como cualquier app. Funciona aunque no tengas internet.</p></div></div><button class="small" style="margin-top:8px" onclick="instalar()">📲 Instalar app</button>`}
+      <hr style="border:0;border-top:1px solid var(--line);margin:14px 0">
+      <div class="spread"><div><h3>🔒 Bloqueo con PIN</h3><p class="muted" style="margin:0">${S.seguridad?.pin?'Activado. Se pide al abrir la app y después de 5 minutos sin usarla.':'Desactivado. Actívalo para proteger los datos de tus clientas.'}</p></div></div>
+      <button class="small ${S.seguridad?.pin?'sec':''}" style="margin-top:8px" onclick="configurarPin()">${S.seguridad?.pin?'Cambiar o quitar PIN':'Activar PIN'}</button>
+    </div>
+
+    <h2>💾 Respaldo</h2>
+    <div class="card">
+      <p class="muted">${nube?'Tus datos se guardan en tu cuenta de Claude, en un espacio privado que solo tú ves.':'Tus datos se guardan solo en este aparato, nunca en internet. Si cambias de teléfono, descarga un respaldo aquí y cárgalo en el nuevo.'} ${S.ultimoRespaldo?`Último respaldo: ${fmtFecha(S.ultimoRespaldo)}.`:'Aún no tienes respaldo.'}</p>
+      <div class="row"><button class="small" onclick="exportar()">⬇️ Descargar respaldo</button><button class="small sec" onclick="document.getElementById('imp').click()">⬆️ Cargar respaldo</button>
+      <input type="file" id="imp" accept=".json,application/json" class="hidden" onchange="importar(this.files[0])"></div>
+    </div>`;
+  document.querySelectorAll('[data-a]').forEach(i=>i.oninput=()=>{ S.ajustes[i.dataset.a]=i.value.trim(); guardar(); $('#saludo').textContent = S.ajustes.miNombre?`¡Hola, ${S.ajustes.miNombre}! 💕`:'Tu negocio Zermat desde casa'; });
+}
+/* ---------- Catálogo ---------- */
+const TIPOS = {dama:'👩 Dama', caballero:'👨 Caballero', unisex:'✨ Unisex', '':'Otros'};
+/* Precios de referencia (USD) de la tienda oficial zermatusa.com y la lista de precios de dic. 2025.
+   Cambian con cada catálogo: la app los marca con "Revisa precio" hasta que los edites. */
+const ZERMAT = [
+  {nombre:'Caribe', tipo:'dama', precio:56},
+  {nombre:'Kiwi Ocean', tipo:'dama', precio:50},
+  {nombre:'Amorel', tipo:'dama', precio:55},
+  {nombre:'Status', tipo:'dama', precio:48},
+  {nombre:'Sentimientos Be Dreamy', tipo:'dama', precio:24},
+  {nombre:'Feelings Be Dreamy', tipo:'dama', precio:24.90},
+  {nombre:'Soul', tipo:'', precio:59.90},
+  {nombre:'Spiced Vanilla', tipo:'', precio:48.40},
+  {nombre:'Status', tipo:'caballero', precio:55},
+  {nombre:'Skyline', tipo:'caballero', precio:0},
+  {nombre:'Deep Spirit', tipo:'caballero', precio:0},
+];
+const mismo = (a,b) => a.nombre.toLowerCase()===b.nombre.toLowerCase() && (a.tipo||'')===(b.tipo||'');
+function cargarZermat(){
+  let n=0;
+  ZERMAT.forEach(z=>{ if(!S.perfumes.some(p=>mismo(p,z))){ S.perfumes.push({id:uid(),...z,aroma:'',ref:true}); n++; } });
+  guardar(); render();
+  abrir(`<h3>⭐ ${n?`Se agregaron ${n} fragancias`:'Ya tenías estas fragancias'}</h3>
+    <p>Son fragancias de la tienda oficial de Zermat USA con <b>precios de referencia</b>. Los precios cambian con cada catálogo, así que:</p>
+    <ul class="tips"><li>Toca <b>Editar</b> en cada una y pon el precio de tu catálogo del mes.</li><li>Las que dicen <b>"Pon el precio"</b> no tenían precio oficial publicado.</li><li>Agrega las que falten con <b>+ Agregar una</b> o <b>📋 Pegar mi lista</b>.</li></ul>
+    <div class="dlg-actions"><button onclick="cerrar()">Entendido</button></div>`);
+}
+function formPerfume(id){
+  const p = id ? S.perfumes.find(x=>x.id===id) : {nombre:'',tipo:'dama',precio:'',aroma:''};
+  abrir(`<h3>${id?'Editar':'Nueva'} fragancia</h3>
+    <label for="fpN">Nombre</label><input id="fpN" value="${esc(p.nombre)}">
+    <label for="fpT">Para</label><select id="fpT">${Object.entries(TIPOS).map(([k,v])=>`<option value="${k}" ${k===(p.tipo||'')?'selected':''}>${v}</option>`).join('')}</select>
+    <label for="fpP">Precio de venta ($)</label><input id="fpP" type="number" inputmode="decimal" value="${p.precio||''}">
+    <label for="fpA">Aroma (floral, dulce, fresco, amaderado…)</label><input id="fpA" value="${esc(p.aroma||'')}">
+    <div class="dlg-actions"><button onclick="guardarPerfume('${id||''}')">Guardar</button><button class="sec" onclick="cerrar()">Cancelar</button>
+    ${id?`<button class="danger" onclick="confirmar('Se quitará esta fragancia de tu catálogo.',()=>{S.perfumes=S.perfumes.filter(x=>x.id!=='${id}');guardar();render();})">Quitar</button>`:''}</div>`);
+}
+function guardarPerfume(id){
+  const d={nombre:$('#fpN').value.trim(), tipo:$('#fpT').value, precio:Number($('#fpP').value)||0, aroma:$('#fpA').value.trim(), ref:false};
+  if(!d.nombre){ toast('Escribe el nombre'); return; }
+  if(id) Object.assign(S.perfumes.find(x=>x.id===id), d); else S.perfumes.push({id:uid(),...d});
+  guardar(); cerrar(); render(); toast('Guardada 🧴');
+}
+function leerLista(texto){
+  return texto.split(/\n+/).map(l=>l.trim()).filter(Boolean).map(l=>{
+    const m = l.match(/\$?\s*(\d+(?:[.,]\d{1,2})?)\s*(?:usd|dlls?|dólares)?\s*$/i);
+    const precio = m ? Number(m[1].replace(',','.')) : 0;
+    let nombre = (m ? l.slice(0,m.index) : l).replace(/[-–—:|·$]+\s*$/,'').trim();
+    const tipo = /caballero|hombre|\bmen\b|\bél\b/i.test(nombre)?'caballero':/dama|mujer|women|\bella\b/i.test(nombre)?'dama':'';
+    nombre = nombre.replace(/(^|[\s(])(eau de parfum|eau de toilette|edp|edt|para (dama|caballero|hombre|mujer)|fragancia|perfume|dama|caballero|hombre|mujer|men|women)(?=[\s)]|$|[-–—:|·(])/ig,' ').replace(/[()]/g,'').replace(/\s{2,}/g,' ').replace(/[-–—:|·]+\s*$/,'').trim();
+    return nombre ? {nombre, tipo, precio} : null;
+  }).filter(Boolean);
+}
+function pegarLista(){
+  abrir(`<h3>📋 Pegar mi lista</h3>
+    <p class="muted">Copia los perfumes de tu catálogo o lista de precios y pégalos aquí, <b>uno por renglón</b>, con el precio al final.</p>
+    <textarea id="plT" placeholder="Caribe dama 56&#10;Skyline caballero $54&#10;Kiwi Ocean - 50"></textarea>
+    <p class="muted" id="plV"></p>
+    <div class="dlg-actions"><button onclick="agregarLista()">Agregar al catálogo</button><button class="sec" onclick="cerrar()">Cancelar</button></div>`);
+  const t=$('#plT'), v=$('#plV');
+  t.oninput=()=>{ const L=leerLista(t.value); v.textContent = L.length?`Se van a agregar ${L.length}: `+L.slice(0,4).map(p=>`${p.nombre}${p.precio?' '+dinero(p.precio):''}`).join(', ')+(L.length>4?'…':''):''; };
+}
+function agregarLista(){
+  const L=leerLista($('#plT').value); if(!L.length){ toast('Pega al menos un perfume'); return; }
+  let nuevos=0, act=0;
+  L.forEach(x=>{ const e=S.perfumes.find(p=>mismo(p,x)) || S.perfumes.find(p=>p.nombre.toLowerCase()===x.nombre.toLowerCase() && !x.tipo);
+    if(e){ if(x.precio){ e.precio=x.precio; e.ref=false; } act++; } else { S.perfumes.push({id:uid(),...x,aroma:''}); nuevos++; } });
+  guardar(); cerrar(); render(); toast(`${nuevos} nuevas · ${act} actualizadas ✅`);
+}
+function mandarCatalogo(){
+  const L = S.perfumes.filter(p=>p.precio>0);
+  if(!L.length){ irA('mas'); toast('Primero pon precio a tus perfumes'); return; }
+  abrir(`<h3>📲 ¿Qué mandas?</h3>
+    <p class="muted">Elige qué fragancias van en el mensaje.</p>
+    <div class="row" style="margin-bottom:6px"><button class="small sec" onclick="document.querySelectorAll('.mcChk').forEach(c=>c.checked=true)">Todas</button>${['dama','caballero'].map(t=>`<button class="small sec" onclick="document.querySelectorAll('.mcChk').forEach(c=>c.checked=c.dataset.t==='${t}')">Solo ${TIPOS[t]}</button>`).join('')}</div>
+    <div style="max-height:40vh;overflow:auto">${L.map(p=>`<label class="check"><input type="checkbox" class="mcChk" data-id="${p.id}" data-t="${p.tipo||''}" checked><span>${esc(p.nombre)} ${p.tipo?'('+TIPOS[p.tipo].slice(3)+')':''} · ${dinero(p.precio)}</span></label>`).join('')}</div>
+    <div class="dlg-actions"><button onclick="armarCatalogo()">Armar mensaje</button><button class="sec" onclick="cerrar()">Cancelar</button></div>`);
+}
+function armarCatalogo(){
+  const ids=[...document.querySelectorAll('.mcChk:checked')].map(c=>c.dataset.id);
+  const L=S.perfumes.filter(p=>ids.includes(p.id)); if(!L.length){ toast('Elige al menos una'); return; }
+  const grupos=['dama','caballero','unisex',''].map(t=>{const G=L.filter(p=>(p.tipo||'')===t).sort((a,b)=>a.nombre.localeCompare(b.nombre)); return G.length?`*${TIPOS[t]}*\n`+G.map(p=>`✨ ${p.nombre} — ${dinero(p.precio)}${p.aroma?'\n    _'+p.aroma+'_':''}`).join('\n'):''}).filter(Boolean);
+  const t = `🌸 *Mi catálogo de fragancias Zermat* 🌸\n\n${grupos.join('\n\n')}${S.ajustes.promo?`\n\n🎉 *Promoción del mes:* ${S.ajustes.promo}`:''}\n\n💳 Apartado y pagos en quincenas\n🎁 Pregunta por muestras GRATIS\n📲 ${S.ajustes.miWhats||'[tu número]'}${S.ajustes.miNombre?'\n— '+S.ajustes.miNombre:''}`;
+  compCtx = {tel:''};
+  ventanaTexto('📲 Tu catálogo', t);
+}
+
+/* ---------- Metas y sistema de ventas ---------- */
+function registrar(tipo){ (S.actividad ||= []).push({f:hoyISO(), t:tipo}); if(S.actividad.length>800) S.actividad.splice(0,S.actividad.length-800); guardar(); }
+function inicioSemana(){ const d=new Date(); d.setDate(d.getDate()-((d.getDay()+6)%7)); return d.toISOString().slice(0,10); }
+function numeros(){
+  const mes=hoyISO().slice(0,7), sem=inicioSemana();
+  let ventasMes=0, piezasMes=0, ventasSem=0, muestrasSem=0, muestrasMes=0, convertidas=0, muestrasTot=0;
+  S.clientas.forEach(c=>{
+    c.compras.forEach(p=>{ if(p.fecha.startsWith(mes)){ ventasMes+=Number(p.precio)||0; piezasMes++; } if(p.fecha>=sem) ventasSem++; });
+  });
+  (S.negocios||[]).forEach(n=>(n.ventas||[]).forEach(v=>{ if(v.fecha.startsWith(mes)) ventasMes+=Number(v.monto)||0; if(v.fecha>=sem) ventasSem++; }));
+  S.clientas.forEach(c=>{
+    c.muestras.forEach(m=>{ muestrasTot++; if(m.fecha>=sem) muestrasSem++; if(m.fecha.startsWith(mes)) muestrasMes++; if(c.compras.some(p=>p.fecha>=m.fecha)) convertidas++; });
+  });
+  const mensajesSem=(S.actividad||[]).filter(a=>a.f>=sem).length;
+  const conv = muestrasTot>=5 ? convertidas/muestrasTot : 0.3;
+  const precios=S.perfumes.map(p=>Number(p.precio)).filter(Boolean);
+  const promedio = piezasMes ? ventasMes/piezasMes : (precios.length? precios.reduce((a,b)=>a+b,0)/precios.length : 45);
+  const hoy=new Date(), finMes=new Date(hoy.getFullYear(),hoy.getMonth()+1,0).getDate(), quedan=finMes-hoy.getDate()+1;
+  return {ventasMes,piezasMes,ventasSem,muestrasSem,muestrasMes,mensajesSem,conv,convReal:muestrasTot>=5,promedio,quedan};
+}
+function tarjetaMeta(){
+  const meta=Number(S.ajustes.meta)||0, N=numeros(), g=Number(S.ajustes.ganancia)||0;
+  if(!meta) return `<div class="card"><h3>🎯 Ponte una meta del mes</h3><p class="muted">Dime cuánto quieres vender y la app te dice cuántos perfumes, muestras y mensajes necesitas cada semana.</p><button class="small" onclick="formMeta()">Poner mi meta</button></div>`;
+  const pct=Math.min(100,Math.round(N.ventasMes/meta*100)), falta=Math.max(0,meta-N.ventasMes);
+  const piezas=Math.ceil(falta/N.promedio), semanas=Math.max(1,Math.ceil(N.quedan/7));
+  const muestrasNec=Math.ceil(piezas/Math.max(0.1,N.conv)), muestrasSemana=Math.ceil(muestrasNec/semanas), mensajesSemana=muestrasSemana*2;
+  const consejo = falta<=0 ? '🎉 ¡Llegaste a tu meta! Aprovecha para pedir referidas a tus clientas felices.'
+    : N.muestrasSem < muestrasSemana ? `🎁 Esta semana llevas ${N.muestrasSem} de ${muestrasSemana} muestras. Regala ${muestrasSemana-N.muestrasSem} más.`
+    : N.mensajesSem < mensajesSemana ? `💬 Manda ${mensajesSemana-N.mensajesSem} mensajes más esta semana: catálogo, seguimiento o recompra.`
+    : '💪 Vas muy bien esta semana. Dale seguimiento a tus muestras para cerrar las ventas.';
+  return `<div class="card">
+    <div class="spread"><h3>🎯 Mi meta: ${dinero(meta)}</h3><button class="ghost small" onclick="formMeta()">Cambiar</button></div>
+    <div style="background:var(--soft);border-radius:99px;height:14px;overflow:hidden;margin:8px 0" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><div style="height:100%;width:${pct}%;background:var(--brand);border-radius:99px"></div></div>
+    <p style="margin:0"><b>${dinero(N.ventasMes)}</b> vendido (${pct}%)${g?` · ganancia aprox. <b>${dinero(N.ventasMes*g/100)}</b>`:''}</p>
+    ${falta>0?`<p class="muted" style="margin:4px 0 10px">Te faltan ${dinero(falta)} y quedan ${N.quedan} días. Son unos <b>${piezas} perfume${piezas===1?'':'s'}</b> (${dinero(Math.ceil(falta/N.quedan))} al día).</p>`:''}
+    <p class="muted" style="margin:0 0 4px;font-weight:600">Tu semana</p>
+    <div class="stats">
+      <div class="stat"><b>${N.mensajesSem}${falta>0?`<small style="font-size:.7em;color:var(--muted)">/${mensajesSemana}</small>`:''}</b><span>Mensajes</span></div>
+      <div class="stat"><b>${N.muestrasSem}${falta>0?`<small style="font-size:.7em;color:var(--muted)">/${muestrasSemana}</small>`:''}</b><span>Muestras</span></div>
+      <div class="stat"><b>${N.ventasSem}</b><span>Ventas</span></div>
+    </div>
+    <p style="margin:10px 0 0">${consejo}</p>
+    <p class="muted" style="margin:6px 0 0;font-size:.8rem">${N.convReal?`De cada 10 muestras, ${Math.round(N.conv*10)} terminan en venta.`:'Calculado con 3 ventas por cada 10 muestras, hasta que tengas tus propios números.'}</p>
+  </div>`;
+}
+function formMeta(){
+  abrir(`<h3>🎯 Mi meta del mes</h3>
+    <label for="mM">¿Cuánto quieres vender este mes? ($)</label><input id="mM" type="number" inputmode="decimal" value="${esc(S.ajustes.meta||'')}" placeholder="Ej. 800">
+    <label for="mG">¿Qué porcentaje te queda de ganancia? (opcional)</label><input id="mG" type="number" inputmode="decimal" value="${esc(S.ajustes.ganancia||'')}" placeholder="Ej. 30">
+    <p class="muted">Si no sabes tu porcentaje, pregúntale a tu líder. Puedes dejarlo vacío.</p>
+    <div class="dlg-actions"><button onclick="S.ajustes.meta=document.getElementById('mM').value.trim();S.ajustes.ganancia=document.getElementById('mG').value.trim();guardar();cerrar();render();toast('Meta guardada 🎯')">Guardar</button><button class="sec" onclick="cerrar()">Cancelar</button></div>`);
+}
+
+/* ---------- Guía ---------- */
+const GUIA = [
+  {t:'1. Pon tus datos', x:'Ve a <b>✨ Más → 👤 Mis datos</b>. Escribe tu nombre y tu WhatsApp con lada (ej. 773 555 1234). Pon el código de país: <b>1</b> si vendes en EE. UU. o <b>52</b> en México. Todo se guarda solo, sin botón de guardar.', b:'Ir a Mis datos', a:"irA('mas');setTimeout(()=>document.getElementById('misDatos')?.scrollIntoView({behavior:'smooth'}),100)"},
+  {t:'2. Arma tu catálogo', x:'En <b>✨ Más → 🧴 Mi catálogo</b> toca <b>⭐ Cargar fragancias Zermat</b>. Luego toca <b>Editar</b> en cada una y pon el precio de tu catálogo del mes. Si tienes la lista de precios, usa <b>📋 Pegar mi lista</b> y se agregan todas de un jalón.', b:'Ir a Mi catálogo', a:"irA('mas')"},
+  {t:'3. Anota una muestra o una venta', x:'En <b>🏠 Hoy</b> toca <b>🎁 Anotar muestra</b> o <b>🛍️ Anotar venta</b>. Elige a la clienta (o crea una nueva), escoge el perfume y el precio se pone solo. Si te pagó una parte, escribe cuánto: la app te recuerda cobrar el resto.', b:'Anotar una venta', a:"cerrar();accionRapida('venta')"},
+  {t:'4. Manda tu catálogo', x:'Toca <b>📲 Mandar catálogo</b>, elige qué fragancias van (todas, solo dama o solo caballero) y toca <b>Armar mensaje</b>. Luego <b>🟢 WhatsApp</b> y escoge el chat, grupo o lista de difusión.', b:'Mandar catálogo', a:"cerrar();mandarCatalogo()"},
+  {t:'5. Sigue tu meta', x:'En <b>🏠 Hoy</b> pon tu <b>🎯 meta del mes</b>. La app te dice cuántas muestras y mensajes necesitas cada semana, y en <b>Pendientes</b> te avisa a quién darle seguimiento, cobrar u ofrecer otro perfume.', b:'Poner mi meta', a:"cerrar();irA('hoy');formMeta()"},
+];
+function guia(i=0){
+  const g=GUIA[i];
+  abrir(`<p class="muted" style="margin:0">Cómo usar la app · paso ${i+1} de ${GUIA.length}</p>
+    <h3 style="margin-top:6px">${g.t}</h3><p>${g.x}</p>
+    <div class="dlg-actions"><button onclick="${g.a}">${g.b}</button>
+    ${i>0?`<button class="sec" onclick="guia(${i-1})">← Atrás</button>`:''}
+    ${i<GUIA.length-1?`<button class="sec" onclick="guia(${i+1})">Siguiente →</button>`:`<button class="sec" onclick="S.guiaVista=true;guardar();cerrar();render()">Terminar</button>`}</div>`);
+}
+function marcarRespaldo(){ S.ultimoRespaldo = hoyISO(); guardar(); render(); toast('Respaldo guardado 💾'); }
+async function exportar(){
+  const texto = JSON.stringify(S,null,2);
+  const nombre = 'mis-fragancias-respaldo-'+hoyISO()+'.json';
+  if(window.claude && window.claude.use){
+    try{
+      const dl = await claude.use('downloads');
+      if(dl){ await dl.save({filename:nombre, data:texto}); marcarRespaldo(); return; }
+    }catch(e){ if(e && e.code==='cancelled') return; }
+  } else {
+    try{
+      const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([texto],{type:'application/json'})); a.download=nombre;
+      document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+      marcarRespaldo(); return;
+    }catch(e){}
+  }
+  compCtx = null;
+  abrir(`<h3>💾 Respaldo</h3><p class="muted">Copia este texto y guárdalo (por ejemplo, mándatelo por correo).</p><textarea id="compTxt" readonly>${esc(texto)}</textarea>
+    <div class="dlg-actions"><button onclick="copiar(document.getElementById('compTxt').value)">📋 Copiar</button><button class="sec" onclick="cerrar()">Cerrar</button></div>`);
+}
+function importar(f){
+  if(!f) return; const r=new FileReader();
+  r.onload=()=>{ try{ const d=JSON.parse(r.result); if(!d.clientas) throw 0;
+    confirmar('Tus datos actuales se reemplazarán con los del respaldo.', ()=>{ S=Object.assign(defaults(),d); guardar(); render(); toast('Respaldo cargado ✅'); }, 'Sí, cargar respaldo');
+  }catch(e){ toast('Ese archivo no es un respaldo válido'); } };
+  r.readAsText(f);
+}
+
+/* ===================== App instalable, PIN y respaldo ===================== */
+let eventoInstalar = null;
+window.addEventListener('beforeinstallprompt', e=>{ e.preventDefault(); eventoInstalar = e; if(tab==='mas') render(); });
+async function instalar(){
+  if(eventoInstalar){ eventoInstalar.prompt(); try{ await eventoInstalar.userChoice; }catch(e){} eventoInstalar=null; render(); return; }
+  abrir(`<h3>📲 Instalar en tu celular</h3>
+    <p><b>iPhone (Safari):</b> toca el botón Compartir <span aria-hidden="true">⬆️</span> y luego "Agregar a inicio".</p>
+    <p><b>Android (Chrome):</b> toca el menú ⋮ y luego "Instalar app" o "Agregar a pantalla principal".</p>
+    <div class="dlg-actions"><button onclick="cerrar()">Entendido</button></div>`);
+}
+const yaInstalada = () => window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+
+async function hashPin(pin){
+  const sal = S.seguridad?.sal || '';
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(sal + ':' + pin));
+  return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+function configurarPin(){
+  const activo = !!S.seguridad?.pin;
+  abrir(`<h3>🔒 Bloqueo con PIN</h3>
+    <p class="muted">Pide un PIN cada vez que abras la app, para que nadie más vea tus clientas si toman tu teléfono.</p>
+    <label for="nPin">${activo?'Nuevo PIN':'PIN'} (4 a 6 números)</label><input id="nPin" type="password" inputmode="numeric" maxlength="6" autocomplete="new-password">
+    <label for="nPin2">Repite el PIN</label><input id="nPin2" type="password" inputmode="numeric" maxlength="6" autocomplete="new-password">
+    <div class="dlg-actions"><button onclick="guardarPin()">Guardar PIN</button>${activo?'<button class="danger" onclick="quitarPin()">Quitar PIN</button>':''}<button class="sec" onclick="cerrar()">Cancelar</button></div>`);
+}
+async function guardarPin(){
+  const a=$('#nPin').value, b=$('#nPin2').value;
+  if(!/^\d{4,6}$/.test(a)){ toast('El PIN debe tener de 4 a 6 números'); return; }
+  if(a!==b){ toast('Los PIN no son iguales'); return; }
+  const sal = [...crypto.getRandomValues(new Uint8Array(16))].map(b=>b.toString(16).padStart(2,'0')).join('');
+  S.seguridad = {sal, pin:''}; S.seguridad.pin = await hashPin(a);
+  guardar(); cerrar(); render(); toast('PIN activado 🔒');
+}
+function quitarPin(){ S.seguridad = null; guardar(); cerrar(); render(); toast('PIN quitado'); }
+let intentos = 0;
+function bloquear(){
+  if(!S.seguridad?.pin) return;
+  const L=$('#lock'); L.classList.remove('hidden'); document.body.style.overflow='hidden';
+  const inp=$('#pinIn'); inp.value=''; setTimeout(()=>inp.focus(),50);
+  const probar = async ()=>{
+    if(intentos>=5){ $('#pinMsg').textContent='Demasiados intentos. Espera 30 segundos.'; return; }
+    if(await hashPin(inp.value)===S.seguridad.pin){ intentos=0; L.classList.add('hidden'); document.body.style.overflow=''; $('#pinMsg').textContent=''; }
+    else { intentos++; inp.value=''; $('#pinMsg').textContent='PIN incorrecto'; if(intentos>=5) setTimeout(()=>{intentos=0;$('#pinMsg').textContent='';},30000); }
+  };
+  $('#pinBtn').onclick=probar; inp.onkeydown=e=>{ if(e.key==='Enter') probar(); };
+  $('#pinOlvide').onclick=()=>{
+    $('#pinMsg').innerHTML='Si olvidaste tu PIN, la única forma de entrar es borrar los datos de este aparato y cargar un respaldo. <button class="small danger" id="pinBorrar">Borrar datos de este aparato</button>';
+    $('#pinBorrar').onclick=()=>{ try{ localStorage.removeItem(KEY); }catch(e){} S=defaults(); L.classList.add('hidden'); document.body.style.overflow=''; render(); toast('Datos borrados. Puedes cargar tu respaldo en Más.'); };
+  };
+}
+let oculta = 0;
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden') oculta=Date.now(); else if(oculta && Date.now()-oculta>5*60*1000){ oculta=0; bloquear(); } });
+
+function avisoRespaldo(){
+  const hay = S.clientas.length || S.perfumes.length;
+  const ult = S.ultimoRespaldo ? dias(S.ultimoRespaldo) : 999;
+  return hay && ult>=14 ? `<div class="card aviso"><h3>💾 Haz un respaldo</h3><p class="muted">${S.ultimoRespaldo?`Tu último respaldo fue hace ${ult} días.`:'Todavía no has guardado un respaldo.'} Tus datos viven en este aparato; si se pierde o se borra, el respaldo los recupera.</p><button class="small" onclick="exportar()">⬇️ Descargar respaldo</button></div>` : '';
+}
+
+try{ navigator.storage && navigator.storage.persist && navigator.storage.persist(); }catch(e){}
+if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost')){ window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{})); }
+
+render();
+bloquear();
+conectarNube();
+</script>
+</body>
+</html>
