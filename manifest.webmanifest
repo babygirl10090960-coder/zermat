@@ -1,6 +1,6 @@
 {
-  "name": "Panel Fragancias Araceli",
-  "short_name": "Fragancias",
+  "name": "Panel Aromas que Enamoran",
+  "short_name": "Aromas",
   "description": "Tu negocio de fragancias desde casa: clientas, muestras, cobros, mensajes para WhatsApp y tu equipo.",
   "lang": "es",
   "start_url": "./admin.html",

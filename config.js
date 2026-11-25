@@ -1,6 +1,7 @@
 /* Datos públicos de la tienda. Cambia aquí y se actualiza toda la página. */
 window.TIENDA = {
-  marca: 'Fragancias Araceli',
+  marca: 'Aromas que Enamoran',
+  firma: 'con Araceli Urquiza',
   whatsapp: '7738271587',        // sin espacios ni guiones
   pais: '1',                      // 1 = EE. UU.
   telefonoVisible: '(773) 827-1587',

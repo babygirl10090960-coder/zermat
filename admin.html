@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Panel · Fragancias Araceli</title>
+<title>Panel · Aromas que Enamoran</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="Tu negocio de fragancias desde casa: clientas, muestras, cobros, mensajes para WhatsApp y tu equipo.">
 <meta name="theme-color" content="#b0476f">
@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Mis Fragancias">
+<meta name="apple-mobile-web-app-title" content="Aromas que Enamoran">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="preload" as="image" href="img/portada.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -156,7 +156,7 @@ nav button{border-radius:12px}
 <body>
 <div class="lock hidden" id="lock">
   <img src="icons/icon-192.png" alt="">
-  <h2 style="margin:0">Fragancias Araceli</h2>
+  <h2 style="margin:0">Aromas que Enamoran</h2>
   <p class="muted" style="margin:0">Escribe tu PIN para entrar</p>
   <input id="pinIn" type="password" inputmode="numeric" maxlength="6" autocomplete="off" aria-label="PIN">
   <button id="pinBtn">Entrar</button>
@@ -165,14 +165,14 @@ nav button{border-radius:12px}
 </div>
 <header style="position:relative">
   <button onclick="guia()" aria-label="Cómo usar la app" title="Cómo usar la app" style="position:absolute;top:14px;right:max(16px, env(safe-area-inset-right, 0px));background:rgba(255,255,255,.2);color:var(--brand-ink);border-radius:99px;width:36px;height:36px;padding:0;font-size:1.1rem">?</button>
-  <h1>🌸 Fragancias Araceli</h1>
+  <h1>🌸 Aromas que Enamoran</h1>
   <p id="saludo">Tu negocio Zermat desde casa</p>
   <p id="sync">Conectando…</p>
 </header>
 <main id="app"></main>
 
 <nav aria-label="Secciones">
-  <div class="nav-marca"><img src="icons/icon-192.png" alt="" width="36" height="36"><span>Fragancias<br><b>Araceli</b></span></div>
+  <div class="nav-marca"><img src="icons/icon-192.png" alt="" width="36" height="36"><span>Aromas que<br><b>Enamoran</b></span></div>
   <button data-tab="hoy" class="on"><span class="i">🏠</span>Hoy</button>
   <button data-tab="clientas"><span class="i">💁‍♀️</span>Clientas</button>
   <button data-tab="mensajes"><span class="i">💬</span>Mensajes</button>
@@ -280,6 +280,7 @@ const MENSAJES = [
  {id:'buscar',cat:'Equipo',t:'📣 Buscar vendedoras',x:'💼 ¿Buscas un ingreso extra desde casa? 💼\nEstoy formando mi equipo de ventas de fragancias y cosméticos Zermat 🌸\n✅ Tú pones tus horarios\n✅ Compras con descuento\n✅ Te enseño a vender paso a paso\nInscripción: {inscripcion}\n📲 Escríbeme y te explico sin compromiso 😊'},
  {id:'bienvenida',cat:'Equipo',t:'🎉 Bienvenida a tu nueva integrante',x:'¡Bienvenida al equipo, {nombre}! 🎉💖 Estoy muy feliz de tenerte. Te voy a agregar a nuestro grupo, donde comparto fotos, textos y ofertas que puedes usar. Tu primer reto: regala 5 muestras esta semana. ¡Aquí estoy para ayudarte en todo! 🌸'},
  {id:'l_muestra',cat:'Leads',t:'🎁 Respuesta: pidió muestra en tu tienda',x:'¡Hola {nombre}! 🌸 Gracias por escribirme desde mi página. Con lo que me contaste ({aromas}) te voy a preparar 2 o 3 muestras que van con tu gusto. ¿Qué día y a qué hora te queda bien que te las lleve en {zona}? 💕'},
+ {id:'l_pedido',cat:'Leads',t:'🛍️ Respuesta: mandó un pedido de su bolsita',x:'¡Hola {nombre}! 🌸 Gracias por tu pedido: {pedido}. Ya lo estoy revisando. Te confirmo existencias, el precio final con las promociones del mes y el día de entrega en {zona}. ¿Qué día y a qué hora te queda mejor? 💕'},
  {id:'l_producto',cat:'Leads',t:'🛍️ Respuesta: preguntó por un producto',x:'¡Hola! 🌸 Gracias por escribirme. {perfume} este mes está en {precio}. Si quieres te llevo una muestra para que la pruebes primero, y puedes apartarlo con {anticipo} y pagar en quincenas. ¿En qué zona estás? 😊'},
  {id:'l_mayoreo',cat:'Leads',t:'🏪 Respuesta: negocio pidió mayoreo',x:'¡Hola {nombre}! Gracias por escribirme 🌸 Con gusto le surto a {negocio}. Trabajo con dos opciones: compra de mayoreo con {descMayoreo} de descuento, o exhibidor a consignación donde solo me paga lo que se vende y su negocio gana {comisionNeg} por venta. ¿Le puedo visitar esta semana para enseñarle muestras (15 minutos)? ¿Qué día le acomoda?'},
  {id:'m_presenta',cat:'Mayoreo',t:'👋 Presentación a un negocio',x:'¡Hola, buen día! Me llamo {miNombre} y soy distribuidora independiente de fragancias Zermat aquí en {zona} 🌸 Le escribo a {negocio} porque creo que a sus clientas les encantaría encontrar perfumes ahí mismo. Le puedo dejar un exhibidor pequeño a consignación (solo me paga lo que se vende) o surtirle a precio de mayoreo. ¿Le puedo pasar a enseñar muestras 10 minutos esta semana?'},
@@ -721,7 +722,7 @@ function ventaNeg(id){
 
 /* ---------- Bandeja: convierte los mensajes de la tienda en registros ---------- */
 function leerLead(texto){
-  const m = texto.match(/#LEAD-(MUESTRA|PRODUCTO|MAYOREO|EQUIPO)/i);
+  const m = texto.match(/#LEAD-(MUESTRA|PRODUCTO|MAYOREO|EQUIPO|PEDIDO)/i);
   const campos = {};
   texto.split(/\n/).forEach(l=>{ const k=l.match(/^\s*([A-Za-zÁÉÍÓÚáéíóúñÑ]+)\s*:\s*(.+)$/); if(k) campos[k[1].toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')]=k[2].trim(); });
   return {tipo: m ? m[1].toUpperCase() : '', campos};
@@ -734,7 +735,7 @@ function bandeja(){
     <p class="muted" id="bV"></p>
     <div class="dlg-actions"><button onclick="procesarLead()">Guardar y responder</button><button class="sec" onclick="cerrar()">Cancelar</button></div>`);
   const t=$('#bT'), v=$('#bV');
-  t.oninput=()=>{ const L=leerLead(t.value); v.textContent = L.tipo ? ({MUESTRA:'🎁 Pide muestra → se guarda en Clientas',PRODUCTO:'🛍️ Pregunta por un producto → se guarda en Clientas',MAYOREO:'🏪 Negocio interesado en mayoreo → se guarda en Negocios',EQUIPO:'🌱 Quiere vender contigo → se guarda en Interesadas'}[L.tipo]) : (t.value.trim()?'No encontré #LEAD. Se guardará como clienta nueva.':''); };
+  t.oninput=()=>{ const L=leerLead(t.value); v.textContent = L.tipo ? ({MUESTRA:'🎁 Pide muestra → se guarda en Clientas',PRODUCTO:'🛍️ Pregunta por un producto → se guarda en Clientas',PEDIDO:'🛍️ Pedido de su bolsita → se guarda en Clientas con el pedido en sus notas',MAYOREO:'🏪 Negocio interesado en mayoreo → se guarda en Negocios',EQUIPO:'🌱 Quiere vender contigo → se guarda en Interesadas'}[L.tipo]) : (t.value.trim()?'No encontré #LEAD. Se guardará como clienta nueva.':''); };
   setTimeout(()=>t.focus(),50);
 }
 function procesarLead(){
@@ -752,10 +753,11 @@ function procesarLead(){
     S.interesadas.push({id:uid(),nombre,tel,origen:'Tienda web',notas:c.origen?'origen: '+c.origen:'',etapa:'platique',fecha:hoy,ultimo:hoy});
     guardar(); cerrar(); render(); componer('r_comento',{nombre},tel);
   } else {
-    const notas=[c.zona&&'Zona: '+c.zona, c.para, c.perfil&&'Test: '+c.perfil, c.aromas&&'Le gusta: '+c.aromas, c.recomendado&&'Recomendadas: '+c.recomendado, c.temporada&&'Temporada: '+c.temporada, c.uso&&'Uso: '+c.uso, c.producto&&'Preguntó por: '+c.producto, c.origen&&'Origen: '+c.origen].filter(Boolean).join(' · ');
+    const notas=[c.pedido&&'🛍️ Pedido web '+fmtFecha(hoy)+': '+c.pedido+(c.total?' ($'+c.total+')':'')+(c.entrega?' · '+c.entrega:'')+(c.pago?' · '+c.pago:'')+(c.regalo==='Sí'?' · para regalo':'')+(c.nota?' · nota: '+c.nota:''), c.zona&&'Zona: '+c.zona, c.para, c.perfil&&'Test: '+c.perfil, c.aromas&&'Le gusta: '+c.aromas, c.recomendado&&'Recomendadas: '+c.recomendado, c.temporada&&'Temporada: '+c.temporada, c.uso&&'Uso: '+c.uso, c.producto&&'Preguntó por: '+c.producto, c.origen&&'Origen: '+c.origen].filter(Boolean).join(' · ');
     let cl=S.clientas.find(x=>x.nombre.toLowerCase()===nombre.toLowerCase());
     if(!cl){ cl={id:uid(),nombre,tel,notas,compras:[],muestras:[]}; S.clientas.push(cl); } else { cl.notas=[cl.notas,notas].filter(Boolean).join(' · '); if(tel&&!cl.tel) cl.tel=tel; }
     guardar(); cerrar(); render();
+    if(tipo==='PEDIDO'){ componer('l_pedido',{nombre:c.nombre||'',pedido:c.pedido||'',zona:c.zona||undefined},cl.tel); toast('Pedido guardado en sus notas 🛍️'); return; }
     componer(tipo==='PRODUCTO'?'l_producto':'l_muestra',{nombre:c.nombre||'',perfume:c.producto||undefined,aromas:c.aromas||undefined,zona:c.zona||undefined},cl.tel);
   }
   toast('Lead guardado 📥');

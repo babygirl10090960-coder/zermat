@@ -1,8 +1,8 @@
-# Fragancias Araceli
+# Aromas que Enamoran con Araceli Urquiza
 
 Tienda pública y panel de ventas para una distribuidora independiente Zermat en Chicago.
 
-- **Tienda** (`/`): catálogo de 40 fragancias con fotos y precios de lista de Zermat USA, test de personalidad olfativa, guía por temporada, mayoreo para negocios y "vende conmigo". Cada formulario abre WhatsApp con un mensaje marcado `#LEAD-…`.
+- **Tienda** (`/`): catálogo de 40 fragancias con buscador, fotos y precios de lista de Zermat USA, **bolsita** que manda un solo pedido por WhatsApp (`#LEAD-PEDIDO`), test de personalidad olfativa, guía por temporada, mayoreo para negocios y "vende conmigo". Cada formulario abre WhatsApp con un mensaje marcado `#LEAD-…`.
 - **Panel** (`/admin.html`): clientas, muestras, ventas y cobros, metas, mensajes, equipo, reclutamiento, **ayudantes y comisiones**, y **Negocios** (mayoreo) con 64 negocios y eventos de Chicago investigados. La **Bandeja** convierte los mensajes `#LEAD-…` en registros y prepara la respuesta.
 - Funciona en celular, iPad y computadora, y sin internet (app instalable).
 
