@@ -37,7 +37,7 @@
 <style>
 /* Concepto: tienda de perfumes de barrio con aire de boutique. Fondo ciruela profundo arriba, tarjetas claras abajo. */
 :root{
-  --plum:#2a0f22; --wine:#5b1a43; --rose:#c2577f; --rose-2:#e48aab; --blush:#fbeef3;
+  --plum:#2a0f22; --wine:#5b1a43; --rose:#b04870; --rose-2:#e48aab; --blush:#fbeef3;
   --paper:#fffafc; --ink:#22131c; --muted:#76606d; --line:#efdde6; --gold:#d4a85a; --ok:#1f8a5b;
   --display:"Fraunces", Georgia, "Times New Roman", serif;
   --body:"Outfit", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -56,7 +56,7 @@ h1,h2,h3{font-family:var(--display);line-height:1.1;text-wrap:balance;margin:0}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 1rem var(--body);border:0;border-radius:99px;padding:14px 22px;cursor:pointer;text-decoration:none;transition:transform .15s, box-shadow .15s, background .15s}
 .btn:hover{transform:translateY(-1px)}
 .btn:focus-visible,a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-.btn-wa{background:#1fae5b;color:#fff;box-shadow:0 6px 18px rgba(31,174,91,.3)}
+.btn-wa{background:#13814a;color:#fff;box-shadow:0 6px 18px rgba(31,174,91,.3)}
 .btn-rose{background:var(--rose);color:#fff;box-shadow:0 6px 18px rgba(194,87,127,.35)}
 .btn-ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.5)}
 .btn-line{background:#fff;color:var(--wine);border:1.5px solid var(--line)}
@@ -284,7 +284,7 @@ footer .legal{opacity:.7;max-width:60ch}
       <a href="#mayoreo">Mayoreo</a>
       <a href="#equipo">Vende conmigo</a>
     </nav>
-    <a class="btn btn-wa" data-wa="Hola Araceli 🌸 Vi tu página y quiero información." href="#" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.7 11.7 0 0 0 4.5 4c1.7.7 2.3.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.5-.3Z"/></svg><span>Escríbeme</span></a>
+    <a class="btn btn-wa" data-wa="Hola Araceli 🌸 Vi tu página y quiero información." href="https://wa.me/17738271587" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.7 11.7 0 0 0 4.5 4c1.7.7 2.3.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.5-.3Z"/></svg><span>Escríbeme</span></a>
   </div>
 </header>
 
@@ -381,13 +381,13 @@ footer .legal{opacity:.7;max-width:60ch}
       <form class="panel" id="fMayoreo" novalidate>
         <h3 style="font-size:1.5rem;margin-bottom:14px">Pide información de mayoreo</h3>
         <div class="campos">
-          <div class="campo"><label for="nNeg">Nombre del negocio</label><input id="nNeg" name="negocio" autocomplete="organization" required></div>
+          <div class="campo"><label for="nNeg">Nombre del negocio</label><input id="nNeg" name="negocio" autocomplete="organization" required maxlength="80"></div>
           <div class="campo"><label for="nTipo">Tipo de negocio</label><select id="nTipo" name="tipo"><option>Salón o estética</option><option>Barbería</option><option>Uñas</option><option>Boutique</option><option>Tienda de regalos o novedades</option><option>Beauty supply</option><option>Puesto en mercado</option><option>Otro</option></select></div>
-          <div class="campo"><label for="nCont">Tu nombre</label><input id="nCont" name="contacto" autocomplete="name" required></div>
+          <div class="campo"><label for="nCont">Tu nombre</label><input id="nCont" name="contacto" autocomplete="name" required maxlength="60"></div>
           <div class="campo"><label for="nZona">Zona</label><select id="nZona" name="zona"></select></div>
         </div>
         <button class="btn btn-wa" type="submit" style="width:100%">Enviar por WhatsApp</button>
-        <p class="nota">Te respondo con precios y opciones para tu negocio.</p>
+        <p class="nota">Te respondo con precios y opciones para tu negocio. Al enviar aceptas el <a href="privacidad.html">aviso de privacidad</a>.</p>
       </form>
     </div>
   </section>
@@ -399,7 +399,7 @@ footer .legal{opacity:.7;max-width:60ch}
         <h2 style="font-size:clamp(1.9rem,3.6vw,2.8rem)">Gana un dinero extra vendiendo desde casa</h2>
         <p style="color:var(--muted)">Te inscribo como distribuidora Zermat y te enseño paso a paso: cómo dar muestras, cómo usar WhatsApp para vender y cómo organizar tus pedidos. Tú pones tus horarios. Lo que ganes depende de lo que vendas, y yo te acompaño desde el primer día.</p>
         <form id="fEquipo" class="campos" style="margin-top:20px;align-items:end" novalidate>
-          <div class="campo"><label for="eNom">Tu nombre</label><input id="eNom" name="nombre" autocomplete="given-name" required></div>
+          <div class="campo"><label for="eNom">Tu nombre</label><input id="eNom" name="nombre" autocomplete="given-name" required maxlength="60"></div>
           <button class="btn btn-rose" type="submit">Quiero saber más</button>
         </form>
       </div>
@@ -427,13 +427,30 @@ footer .legal{opacity:.7;max-width:60ch}
 
 <footer>
   <div class="wrap">
-    <div><b style="font-family:var(--display);font-size:1.2rem" id="marcaPie">Fragancias Araceli</b><br>WhatsApp: <a id="telPie" data-wa="Hola Araceli 🌸" href="#" target="_blank" rel="noopener">(773) 827-1587</a></div>
-    <p class="legal">Distribuidora independiente Zermat. Zermat es una marca de su respectivo dueño; esta no es la página oficial de Zermat. Precios y promociones según el catálogo vigente. · <a href="admin.html" rel="nofollow">Panel</a></p>
+    <div><b style="font-family:var(--display);font-size:1.2rem" id="marcaPie">Fragancias Araceli</b><br>WhatsApp: <a id="telPie" data-wa="Hola Araceli 🌸" href="https://wa.me/17738271587" target="_blank" rel="noopener">(773) 827-1587</a></div>
+    <p class="legal">Distribuidora independiente Zermat. Zermat es una marca de su respectivo dueño; esta no es la página oficial de Zermat. Precios y promociones según el catálogo vigente. · <a href="privacidad.html">Aviso de privacidad y términos</a> · <a href="admin.html" rel="nofollow">Panel</a></p>
   </div>
 </footer>
 
-<a class="flotante" data-wa="Hola Araceli 🌸 Vi tu página y quiero información." href="#" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp"><svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.7 11.7 0 0 0 4.5 4c1.7.7 2.3.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.5-.3Z"/></svg></a>
+<a class="flotante" data-wa="Hola Araceli 🌸 Vi tu página y quiero información." href="https://wa.me/17738271587" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp"><svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.7 11.7 0 0 0 4.5 4c1.7.7 2.3.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.5-.3Z"/></svg></a>
 
+<script>
+/* Errores: mensaje amable sin detalles técnicos; se guardan los últimos 20 en este aparato para revisarlos */
+(function(){
+  let aviso=0;
+  function anotar(msg){
+    try{ const L=JSON.parse(localStorage.getItem('mf.errores')||'[]'); L.push({f:new Date().toISOString(),m:String(msg).slice(0,300),p:location.pathname}); localStorage.setItem('mf.errores',JSON.stringify(L.slice(-20))); }catch(e){}
+    if(aviso++) return;
+    const d=document.createElement('div'); d.setAttribute('role','alert');
+    d.style.cssText='position:fixed;left:16px;right:16px;bottom:16px;z-index:9999;background:#2a0f22;color:#fff;padding:14px 16px;border-radius:14px;font:15px/1.4 system-ui,sans-serif;box-shadow:0 8px 30px rgba(0,0,0,.25);max-width:520px;margin:auto';
+    d.textContent='Algo no salió bien. Recarga la página; tus datos siguen guardados. ';
+    const b=document.createElement('button'); b.textContent='Recargar'; b.style.cssText='margin-left:6px;background:#fff;color:#2a0f22;border:0;border-radius:999px;padding:6px 14px;font-weight:600;cursor:pointer';
+    b.onclick=()=>location.reload(); d.appendChild(b); (document.body||document.documentElement).appendChild(d);
+  }
+  addEventListener('error', e=>{ if(e.target && e.target!==window) return; anotar(e.message); });
+  addEventListener('unhandledrejection', e=>anotar(e.reason && e.reason.message || e.reason));
+})();
+</script>
 <script src="config.js"></script>
 <script src="catalogo.js"></script>
 <script src="perfil.js"></script>
@@ -551,7 +568,7 @@ footer .legal{opacity:.7;max-width:60ch}
         <h3>🎁 Te regalo una muestra de ${esc(g.p.nombre)}</h3>
         <p>Pruébala unos días en tu piel. Si te enamora, te la llevo.</p>
         <div class="campos">
-          <div class="campo"><label for="tNom">Tu nombre</label><input id="tNom" name="nombre" autocomplete="given-name" required></div>
+          <div class="campo"><label for="tNom">Tu nombre</label><input id="tNom" name="nombre" autocomplete="given-name" required maxlength="60"></div>
           <div class="campo"><label for="tZona">Tu zona</label><select id="tZona" name="zona">${opcZonas}</select></div>
         </div>
         <button class="btn btn-wa" type="submit" style="width:100%">Pedir mi muestra por WhatsApp</button>
@@ -584,7 +601,7 @@ footer .legal{opacity:.7;max-width:60ch}
     if (req){ req.focus(); req.setCustomValidity('Escribe este dato'); req.reportValidity(); req.oninput = () => req.setCustomValidity(''); return; }
     window.open(wa(texto), '_blank', 'noopener') || (location.href = wa(texto));
   }
-  const val = (f, n) => (f.elements[n]?.value || '').trim();
+  const val = (f, n) => (f.elements[n]?.value || '').replace(/[\u0000-\u001f#]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 80);
   $('#fMayoreo').onsubmit = e => { e.preventDefault(); const f = e.target;
     enviar(f, conOrigen(`Hola Araceli 🌸 Me interesa vender fragancias en mi negocio.\n\n#LEAD-MAYOREO\nNegocio: ${val(f,'negocio')}\nTipo: ${val(f,'tipo')}\nNombre: ${val(f,'contacto')}\nZona: ${val(f,'zona')}`)); };
   $('#fEquipo').onsubmit = e => { e.preventDefault(); const f = e.target;
