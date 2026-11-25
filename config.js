@@ -7,7 +7,7 @@ window.TIENDA = {
   telefonoVisible: '(773) 827-1587',
   ciudad: 'Chicago',
   zonas: ['Pilsen', 'La Villita', 'Back of the Yards', 'Brighton Park', 'Gage Park', 'Archer Heights', 'McKinley Park', 'Cicero', 'Berwyn'],
-  url: 'https://mis-fragancias.onrender.com/',
+  url: 'https://aromas-que-enamoran.onrender.com/',
 
   /* Las fragancias, precios y fotos están en catalogo.js */
   mostrarPrecios: true          // false = esconde los precios y solo dice 'Pedir precio'

@@ -24,7 +24,7 @@ No necesita instalar nada ni compilar: son archivos HTML, CSS y JavaScript sin d
 
 ## Publicar
 
-Render publica solo cada vez que haces push a `main` (sitio estático `mis-fragancias`, https://mis-fragancias.onrender.com). Si cambias archivos que la app guarda sin internet, sube el número de `VERSION` en `sw.js` para que los celulares reciban la versión nueva.
+Render publica solo cada vez que haces push a `main` (sitio estático `aromas-que-enamoran`, https://aromas-que-enamoran.onrender.com). Si cambias archivos que la app guarda sin internet, sube el número de `VERSION` en `sw.js` para que los celulares reciban la versión nueva.
 
 ## Archivos
 

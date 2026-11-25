@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin.html
 
-Sitemap: https://mis-fragancias.onrender.com/sitemap.xml
+Sitemap: https://aromas-que-enamoran.onrender.com/sitemap.xml
