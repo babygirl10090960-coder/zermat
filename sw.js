@@ -1,7 +1,7 @@
 // Permite usar la tienda y el panel sin internet.
 // Páginas y datos: primero la red (para recibir cambios), si no hay internet la copia guardada.
 // Imágenes e íconos: primero la copia guardada (cargan al instante).
-const VERSION = 'mf-v5';
+const VERSION = 'mf-v6';
 const ARCHIVOS = [
   './', 'index.html', 'admin.html', 'config.js', 'catalogo.js', 'perfil.js', 'negocios-chicago.js', 'manifest.webmanifest', 'vendor/qrcode.min.js',
   'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png', 'icons/maskable-512.png',

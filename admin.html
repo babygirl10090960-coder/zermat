@@ -190,11 +190,11 @@ nav button{border-radius:12px}
 <script>
 /* ===================== Datos ===================== */
 const KEY = 'misFragancias.v1';
-const hoyISO = () => new Date().toISOString().slice(0,10);
+const hoyISO = () => { const d=new Date(); return new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,10); };
 const uid = () => Math.random().toString(36).slice(2,10);
 const defaults = () => ({
   ajustes:{miNombre:'',miWhats:'',pais:'1',desde:'',inscripcion:'',comision:'',anticipo:'',promo:''},
-  clientas:[], equipo:[], perfumes:[], plan:{semana:'',hechos:[]}, seguridad:null, ultimoRespaldo:'', interesadas:[], planRec:null, negocios:[]
+  clientas:[], equipo:[], perfumes:[], plan:{semana:'',hechos:[]}, seguridad:null, ultimoRespaldo:'', interesadas:[], planRec:null, negocios:[], ayudantes:[], pagosAyud:[]
 });
 const LOCAL = 'Guardado en este aparato';
 let S;
@@ -239,7 +239,7 @@ async function conectarNube(){
 const esc = s => String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const dias = iso => iso ? Math.floor((new Date(hoyISO()) - new Date(iso))/864e5) : 0;
 const fmtFecha = iso => iso ? new Date(iso+'T12:00').toLocaleDateString('es-MX',{day:'numeric',month:'short'}) : '';
-const dinero = n => '$' + (Number(n)||0).toLocaleString('es-MX',{maximumFractionDigits:2});
+const dinero = n => { const v=Number(n)||0; return '$' + v.toLocaleString('es-MX',{minimumFractionDigits:v%1?2:0,maximumFractionDigits:2}); };
 
 /* ===================== Mensajes ===================== */
 const CATS = ['Vender','Clientas','Leads','Estados','Mayoreo','Grupos y negocios','Equipo','Reclutar','Fechas'];
@@ -481,7 +481,7 @@ function tarjetaClienta(c){
       ${ult?`<span class="pill">Última compra: ${esc(ult.perfume||'')} · ${fmtFecha(ult.fecha)}</span>`:''}
     </div>
     <details><summary class="muted">Historial (${c.compras.length} compras, ${c.muestras.length} muestras)</summary>
-      ${c.compras.slice().sort((a,b)=>b.fecha.localeCompare(a.fecha)).map(p=>{const s=(Number(p.precio)||0)-(Number(p.abonado)||0);return `<div class="spread" style="padding:6px 0;border-bottom:1px solid var(--line)"><div>🛍️ ${esc(p.perfume)} · ${dinero(p.precio)}<div class="muted">${fmtFecha(p.fecha)} ${s>0?'· debe '+dinero(s):'· pagado ✅'}</div></div><div class="row">${s>0?`<button class="small sec" onclick="abonar('${c.id}','${p.id}')">Abono</button>`:''}<button class="small danger" onclick="borrarItem('${c.id}','compras','${p.id}')">✕</button></div></div>`}).join('')}
+      ${c.compras.slice().sort((a,b)=>b.fecha.localeCompare(a.fecha)).map(p=>{const s=(Number(p.precio)||0)-(Number(p.abonado)||0);return `<div class="spread" style="padding:6px 0;border-bottom:1px solid var(--line)"><div>🛍️ ${esc(p.perfume)} · ${dinero(p.precio)}<div class="muted">${fmtFecha(p.fecha)} ${s>0?'· debe '+dinero(s):'· pagado ✅'}${p.ayudante&&ayu(p.ayudante)?' · 🤝 '+esc(ayu(p.ayudante).nombre):''}</div></div><div class="row">${s>0?`<button class="small sec" onclick="abonar('${c.id}','${p.id}')">Abono</button>`:''}<button class="small danger" onclick="borrarItem('${c.id}','compras','${p.id}')">✕</button></div></div>`}).join('')}
       ${c.muestras.slice().reverse().map(m=>`<div class="spread" style="padding:6px 0;border-bottom:1px solid var(--line)"><div>🎁 Muestra: ${esc(m.perfume)}<div class="muted">${fmtFecha(m.fecha)} ${m.seguida?'· seguimiento hecho ✅':''}</div></div><button class="small danger" onclick="borrarItem('${c.id}','muestras','${m.id}')">✕</button></div>`).join('')}
     </details>
     <div class="row" style="margin-top:10px">
@@ -517,13 +517,16 @@ function formCompra(cid){
     <label>Precio</label><input id="fPre" type="number" inputmode="decimal">
     <label>¿Cuánto te pagó hoy?</label><input id="fAbo" type="number" inputmode="decimal" placeholder="Si pagó todo, pon el precio completo">
     <label>Fecha</label><input id="fFec" type="date" value="${hoyISO()}">
+    ${(S.ayudantes||[]).length?`<label>¿Te ayudó alguien a venderlo?</label><select id="fAyu"><option value="">Nadie, la vendí yo</option>${S.ayudantes.map(a=>`<option value="${a.id}">${esc(a.nombre)} · ${a.pct}% de comisión</option>`).join('')}</select>`:''}
     <div class="dlg-actions"><button onclick="guardarCompra('${cid}')">Guardar</button><button class="sec" onclick="cerrar()">Cancelar</button></div>`);
 }
 function guardarCompra(cid){
   const c=cli(cid), perfume=$('#fPer').value.trim(), precio=Number($('#fPre').value)||0;
   if(!perfume||!precio){ toast('Pon producto y precio'); return; }
   const abo=$('#fAbo').value===''?precio:Number($('#fAbo').value)||0;
-  c.compras.push({id:uid(),perfume,precio,abonado:abo,fecha:$('#fFec').value||hoyISO()});
+  const ay=$('#fAyu')?.value, nv={id:uid(),perfume,precio,abonado:abo,fecha:$('#fFec').value||hoyISO()};
+  if(ay&&ayu(ay)){ nv.ayudante=ay; nv.pct=ayu(ay).pct; }
+  c.compras.push(nv);
   c.muestras.forEach(m=>m.seguida=true);
   guardar(); cerrar(); render(); toast('¡Venta anotada! 🎉');
   setTimeout(()=>componer('gracias',{nombre:c.nombre,perfume},c.tel),300);
@@ -842,9 +845,9 @@ function vInteresadas(){
       : `<div class="card empty">Aún no tienes interesadas.<br>Publica uno de los textos de <b>Reclutar</b> y anota aquí a quien te escriba 🌱</div>`}</div>`;
 }
 function vEquipo(){
-  const tabs=[['equipo','👭 Mi equipo'],['interesadas',`🌱 Interesadas${(S.interesadas||[]).filter(i=>['nueva','platique','interesada'].includes(i.etapa)).length?' ('+(S.interesadas||[]).filter(i=>['nueva','platique','interesada'].includes(i.etapa)).length+')':''}`],['reclutar','📣 Reclutar']];
+  const tabs=[['equipo','👭 Mi equipo'],['interesadas',`🌱 Interesadas${(S.interesadas||[]).filter(i=>['nueva','platique','interesada'].includes(i.etapa)).length?' ('+(S.interesadas||[]).filter(i=>['nueva','platique','interesada'].includes(i.etapa)).length+')':''}`],['reclutar','📣 Reclutar'],['ayudantes','💸 Ayudantes']];
   const chips=`<div class="chips">${tabs.map(([k,v])=>`<button class="small ${k===subEq?'':'sec'}" onclick="subEq='${k}';render()">${v}</button>`).join('')}</div>`;
-  if(subEq!=='equipo'){ $('#app').innerHTML = `<div class="banner"><img src="img/equipo.webp" alt="Frasco de esencia" loading="lazy"><div class="velo"></div><div class="txt"><h2>${subEq==='reclutar'?'📣 Haz crecer tu equipo':'🌱 Personas interesadas'}</h2><p>${S.equipo.length} en tu equipo · ${(S.interesadas||[]).length} interesada${(S.interesadas||[]).length===1?'':'s'}</p></div></div>${chips}${subEq==='reclutar'?vReclutar():vInteresadas()}`; return; }
+  if(subEq!=='equipo'){ $('#app').innerHTML = `<div class="banner"><img src="img/equipo.webp" alt="Frasco de esencia" loading="lazy"><div class="velo"></div><div class="txt"><h2>${({reclutar:'📣 Haz crecer tu equipo',ayudantes:'💸 Ayudantes y comisiones'})[subEq]||'🌱 Personas interesadas'}</h2><p>${S.equipo.length} en tu equipo · ${(S.interesadas||[]).length} interesada${(S.interesadas||[]).length===1?'':'s'}</p></div></div>${chips}${subEq==='reclutar'?vReclutar():subEq==='ayudantes'?vAyudantes():vInteresadas()}`; return; }
   $('#app').innerHTML = `
     <div class="banner"><img src="img/equipo.webp" alt="Frasco de esencia" loading="lazy"><div class="velo"></div><div class="txt"><h2>👭 Mi equipo</h2><p>${S.equipo.length} integrante${S.equipo.length===1?'':'s'} · acompáñalas en su primera semana</p></div></div>
     ${chips}
@@ -886,6 +889,110 @@ function guardarEquipo(id){
   guardar(); cerrar(); render(); toast('Guardada 💕');
 }
 function reto(id,n){ const e=S.equipo.find(x=>x.id===id); e.reto=Math.max(0,Math.min(5,(e.reto||0)+n)); guardar(); render(); if(e.reto===5&&n>0) toast(`¡${e.nombre} completó su reto! 🎉`); }
+
+/* ---------- AYUDANTES Y COMISIONES ---------- */
+const TIPO_AYU = {recomienda:['Me recomienda clientas',10], vende:['Vende, entrega y cobra',20], otro:['Otro porcentaje',15]};
+const ayu = id => (S.ayudantes||[]).find(a=>a.id===id);
+const r2 = n => Math.round(n*100)/100;
+function ventasAyud(aid){
+  const r=[]; S.clientas.forEach(c=>c.compras.forEach(p=>{ if(p.ayudante===aid){ const precio=Number(p.precio)||0;
+    r.push({c,p,com:r2(precio*(Number(p.pct)||0)/100),cobrada:(Number(p.abonado)||0)>=precio}); } }));
+  return r.sort((a,b)=>b.p.fecha.localeCompare(a.p.fecha));
+}
+function cuentaAyud(aid){
+  const v=ventasAyud(aid), mes=hoyISO().slice(0,7);
+  const ganado=r2(v.filter(x=>x.cobrada).reduce((s,x)=>s+x.com,0));
+  const porCobrar=r2(v.filter(x=>!x.cobrada).reduce((s,x)=>s+x.com,0));
+  const pagos=(S.pagosAyud||[]).filter(x=>x.aid===aid).sort((a,b)=>b.fecha.localeCompare(a.fecha));
+  const pagado=r2(pagos.reduce((s,x)=>s+(Number(x.monto)||0),0));
+  const ventasMes=r2(v.filter(x=>x.p.fecha.startsWith(mes)).reduce((s,x)=>s+(Number(x.p.precio)||0),0));
+  return {v,pagos,ganado,porCobrar,pagado,debes:r2(Math.max(0,ganado-pagado)),ventasMes};
+}
+function vAyudantes(){
+  const L=S.ayudantes||[];
+  const totalDebes=r2(L.reduce((s,a)=>s+cuentaAyud(a.id).debes,0));
+  return `
+    <div class="card">
+      <div class="spread"><div><div class="muted">Le debes a tus ayudantes</div><h2 style="margin:2px 0">${dinero(totalDebes)}</h2></div><button onclick="formAyudante()">+ Nueva</button></div>
+      <p class="muted" style="margin:6px 0 0">Cuando anotes una venta en <b>Clientas</b>, elige quién te ayudó. La comisión cuenta <b>solo cuando la clienta ya pagó todo</b>.</p>
+    </div>
+    <div class="lista" style="margin-top:12px">${L.length? L.map(a=>{ const k=cuentaAyud(a.id); return `<div class="card">
+      <div class="spread"><div><h3>${esc(a.nombre)}</h3><div class="muted">${esc(a.tel||'Sin teléfono')}</div></div><button class="ghost small" onclick="formAyudante('${a.id}')">Editar</button></div>
+      <div style="margin:6px 0">
+        <span class="pill">${esc(TIPO_AYU[a.tipo]?.[0]||'Ayudante')} · ${a.pct}%</span>
+        ${k.debes>0?`<span class="pill bad">Le debes ${dinero(k.debes)}</span>`:`<span class="pill">Al corriente ✅</span>`}
+        ${k.porCobrar>0?`<span class="pill warn">${dinero(k.porCobrar)} cuando paguen sus clientas</span>`:''}
+      </div>
+      <div class="muted">Ventas este mes: <b>${dinero(k.ventasMes)}</b> · Ganado total: ${dinero(k.ganado)} · Ya le pagaste: ${dinero(k.pagado)}</div>
+      ${k.ventasMes>=300 && a.pct<25?`<p style="margin:6px 0 0">🏆 Ya pasó $300 este mes. Puedes premiarla subiéndole a 25%.</p>`:''}
+      <details><summary class="muted">Ventas (${k.v.length}) y pagos (${k.pagos.length})</summary>
+        ${k.v.map(x=>`<div class="spread" style="padding:6px 0;border-bottom:1px solid var(--line)"><div>🛍️ ${esc(x.p.perfume)} · ${esc(x.c.nombre)}<div class="muted">${fmtFecha(x.p.fecha)} · ${dinero(x.p.precio)} × ${x.p.pct}% = <b>${dinero(x.com)}</b> ${x.cobrada?'· cobrada ✅':'· la clienta aún debe ⏳'}</div></div></div>`).join('')}
+        ${k.pagos.map(x=>`<div class="spread" style="padding:6px 0;border-bottom:1px solid var(--line)"><div>💵 Le pagaste ${dinero(x.monto)}<div class="muted">${fmtFecha(x.fecha)}${x.nota?' · '+esc(x.nota):''}</div></div><button class="small danger" onclick="borrarPagoAyud('${x.id}')">✕</button></div>`).join('')}
+      </details>
+      <div class="row" style="margin-top:10px">
+        ${k.debes>0?`<button class="small" onclick="pagarAyud('${a.id}')">💵 Pagarle</button>`:''}
+        <button class="small sec" onclick="cuentaWhats('${a.id}')">📲 Mandarle su cuenta</button>
+      </div></div>`}).join('')
+      : `<div class="card empty">Aún no tienes ayudantes.<br>Agrega a quien te recomiende clientas o venda por ti 🤝</div>`}</div>
+    <h2>💡 Reglas para no perder dinero</h2>
+    <div class="card"><ul class="tips">
+      <li><b>10%</b> del precio si solo te recomienda (tú vendes, entregas y cobras).</li>
+      <li><b>20%</b> si ella vende, entrega y cobra. <b>25%</b> como premio si vende mucho, y no más.</li>
+      <li>Paga solo lo que ya se cobró, y en un día fijo (cada viernes o cada quincena).</li>
+      <li>Las muestras y el producto siguen siendo tuyos hasta que se venda.</li>
+      <li>Revisa con tu líder si Zermat permite pagar comisiones, o mejor inscríbela en tu red. Guarda este registro para tus impuestos.</li>
+    </ul></div>`;
+}
+function formAyudante(id){
+  const a = id?ayu(id):{nombre:'',tel:'',tipo:'vende',pct:20};
+  abrir(`<h3>${id?'Editar':'Nueva'} ayudante</h3>
+    <label>Nombre</label><input id="fNom" value="${esc(a.nombre)}">
+    <label>Teléfono / WhatsApp</label><input id="fTel" type="tel" value="${esc(a.tel)}">
+    <label>¿Qué hace?</label><select id="fTipo" onchange="document.getElementById('fPct').value=TIPO_AYU[this.value][1]">
+      ${Object.entries(TIPO_AYU).map(([k,[t,p]])=>`<option value="${k}" ${k===a.tipo?'selected':''}>${t}${k==='otro'?'':' ('+p+'%)'}</option>`).join('')}</select>
+    <label>Su comisión (% del precio de venta)</label><input id="fPct" type="number" inputmode="decimal" min="0" max="50" value="${esc(a.pct)}">
+    <p class="muted">Cambiarlo solo afecta las ventas nuevas.</p>
+    <div class="dlg-actions"><button onclick="guardarAyudante('${id||''}')">Guardar</button><button class="sec" onclick="cerrar()">Cancelar</button>
+    ${id?`<button class="danger" onclick="borrarAyudante('${id}')">Borrar</button>`:''}</div>`);
+  setTimeout(()=>$('#fNom')?.focus(),50);
+}
+function guardarAyudante(id){
+  const nombre=$('#fNom').value.trim(); if(!nombre){ toast('Escribe el nombre'); return; }
+  const pct=Math.max(0,Math.min(50,Number($('#fPct').value)||0));
+  const d={nombre,tel:$('#fTel').value.trim(),tipo:$('#fTipo').value,pct};
+  (S.ayudantes ||= []); if(id) Object.assign(ayu(id),d); else S.ayudantes.push({id:uid(),fecha:hoyISO(),...d});
+  guardar(); cerrar(); render(); toast('Guardada 🤝');
+}
+function borrarAyudante(id){
+  confirmar('Se borrará a esta ayudante y sus pagos. Las ventas se quedan en tus clientas.', ()=>{
+    S.ayudantes=S.ayudantes.filter(a=>a.id!==id); S.pagosAyud=(S.pagosAyud||[]).filter(x=>x.aid!==id);
+    S.clientas.forEach(c=>c.compras.forEach(p=>{ if(p.ayudante===id){ delete p.ayudante; delete p.pct; } }));
+    guardar(); render(); });
+}
+function pagarAyud(aid){
+  const a=ayu(aid), k=cuentaAyud(aid);
+  abrir(`<h3>💵 Pagarle a ${esc(a.nombre)}</h3><p class="muted">Le debes ${dinero(k.debes)} de ventas ya cobradas.</p>
+    <label>¿Cuánto le pagaste?</label><input id="fMon" type="number" inputmode="decimal" value="${k.debes}">
+    <label>Fecha</label><input id="fFec" type="date" value="${hoyISO()}">
+    <label>Nota (Zelle, efectivo…)</label><input id="fNot">
+    <div class="dlg-actions"><button onclick="guardarPagoAyud('${aid}')">Guardar</button><button class="sec" onclick="cerrar()">Cancelar</button></div>`);
+}
+function guardarPagoAyud(aid){
+  const monto=Number($('#fMon').value)||0; if(monto<=0){ toast('Pon cuánto le pagaste'); return; }
+  (S.pagosAyud ||= []).push({id:uid(),aid,monto,fecha:$('#fFec').value||hoyISO(),nota:$('#fNot').value.trim()});
+  guardar(); cerrar(); render(); toast('Pago anotado ✅');
+}
+function borrarPagoAyud(id){ confirmar('Se borrará este pago.', ()=>{ S.pagosAyud=S.pagosAyud.filter(x=>x.id!==id); guardar(); render(); }); }
+function cuentaWhats(aid){
+  const a=ayu(aid), k=cuentaAyud(aid);
+  const linea=x=>`• ${fmtFecha(x.p.fecha)} · ${x.p.perfume} (${dinero(x.p.precio)}) × ${x.p.pct}% = ${dinero(x.com)}`;
+  const cob=k.v.filter(x=>x.cobrada), pen=k.v.filter(x=>!x.cobrada);
+  const partes=[`Hola ${a.nombre} 💕 Aquí va tu cuenta de comisiones:`,
+    cob.length?'✅ Ventas ya cobradas:\n'+cob.map(linea).join('\n'):'Aún no hay ventas cobradas.'];
+  if(pen.length) partes.push('⏳ Pendientes (la clienta aún no termina de pagar):\n'+pen.map(linea).join('\n'));
+  partes.push(`Ganado: ${dinero(k.ganado)}\nYa te pagué: ${dinero(k.pagado)}\nTe debo: ${dinero(k.debes)}`,'¡Gracias por tu ayuda! 🙌');
+  ventanaTexto('📲 Cuenta de '+a.nombre, partes.join('\n\n'), a.tel);
+}
 
 /* ---------- MÁS ---------- */
 function vMas(){
